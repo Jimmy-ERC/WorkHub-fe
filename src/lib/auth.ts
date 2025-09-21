@@ -24,7 +24,7 @@ export interface AuthResponse {
     session?: any;
 }
 
-export class AuthHandler {
+export class AuthService {
     /**
      * Inicia sesión con email y contraseña usando Supabase
      */

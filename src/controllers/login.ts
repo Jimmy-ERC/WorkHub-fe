@@ -1,12 +1,12 @@
-import { AuthHandler, type LoginCredentials } from '../lib/auth';
+import { AuthService, type LoginCredentials } from '../lib/auth';
 
 export class LoginPage {
-    private authHandler: AuthHandler;
+    private authService: AuthService;
     private form: HTMLFormElement | null = null;
     private submitButton: HTMLButtonElement | null = null;
 
     constructor() {
-        this.authHandler = new AuthHandler();
+        this.authService = new AuthService();
         this.init();
     }
 
@@ -59,7 +59,7 @@ export class LoginPage {
         this.setLoading(true);
 
         try {
-            const result = await this.authHandler.login(loginData);
+            const result = await this.authService.login(loginData);
 
             if (result.success) {
                 // console.log('Login successful:', result);

@@ -1,12 +1,12 @@
-import { AuthHandler, type SignUpData } from '../lib/auth';
+import { AuthService, type SignUpData } from '../lib/auth';
 
 export class RegisterPage {
-    private authHandler: AuthHandler;
+    private authService: AuthService;
     private form: HTMLFormElement | null = null;
     private submitButton: HTMLButtonElement | null = null;
 
     constructor() {
-        this.authHandler = new AuthHandler();
+        this.authService = new AuthService();
         this.init();
     }
 
@@ -72,7 +72,7 @@ export class RegisterPage {
 
         try {
             // Attempt registration
-            const result = await this.authHandler.signUp(signUpData);
+            const result = await this.authService.signUp(signUpData);
 
             if (result.success) {
                 this.showSuccess(result.message || 'Registration successful! Confirm your email to log in.');
