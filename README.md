@@ -21,8 +21,8 @@ src/
 │   ├── client.ts    # Cliente HTTP / supabase wrapper
 │   ├── auth.ts      # Helpers de autenticación (token store, refresh)
 │   └── validation.ts# Validadores y utilidades reutilizables
-├── types/           # 📋 Tipos TypeScript
-│   └── supabase.ts
+├── types/           # 📋 Tipos TypeScript (ejemplo)
+│   └── User.ts
 └── styles/          # 🎨 Estilos SCSS
     ├── main.scss
     └── variables.scss
