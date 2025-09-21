@@ -1,0 +1,40 @@
+.env
+/node_modules
+/dist
+.DS_Store
+.vscode
+
+# Build / output
+public/js/
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+
+# Editor directories
+.vscode
+.idea/
+
+# Environment
+.env.local
+.env.*.local
+
+# Dependency folders
+/node_modules
+
+# Coverage
+coverage/
+
+# Optional npm cache
+.npm
+
+# Mac-specific
+.Spotlight-V100
+.Trashes
+

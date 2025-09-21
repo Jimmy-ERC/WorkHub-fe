@@ -1,0 +1,27 @@
+{
+  "name": "workhub-fe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "build:watch": "npx tsc --watch",
+    "dev": "npx tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jimmy-ERC/WorkHub-fe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Jimmy-ERC/WorkHub-fe/issues"
+  },
+  "homepage": "https://github.com/Jimmy-ERC/WorkHub-fe#readme",
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}
