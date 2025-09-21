@@ -60,6 +60,7 @@ export class RegisterPage {
             fullName: formData.get('fullName') as string,
             username: formData.get('username') as string,
             email: formData.get('email') as string,
+            userType: formData.get('userType') as string,
             password: formData.get('password') as string,
             confirmPassword: formData.get('confirmPassword') as string
         };
@@ -274,5 +275,4 @@ export class RegisterPage {
     }
 }
 
-// Initialize the register page when this script is loaded
 new RegisterPage();

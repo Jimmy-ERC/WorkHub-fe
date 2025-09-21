@@ -12,6 +12,7 @@ export interface SignUpData {
     fullName: string;
     username: string;
     email: string;
+    userType: string;
     password: string;
     confirmPassword: string;
 }
@@ -137,7 +138,8 @@ export class AuthService {
                 options: {
                     data: {
                         full_name: data.fullName,
-                        username: data.username
+                        username: data.username,
+                        user_type: data.userType
                     }
                 }
             });

@@ -65,9 +65,18 @@ export class LoginPage {
                 // console.log('Login successful:', result);
                 this.showSuccess('¡Inicio de sesión exitoso! Redirigiendo...');
 
-                setTimeout(() => {
-                    window.location.href = '../candidate/home.html';
-                }, 1500);
+                if (result.user.user_metadata?.user_type === 'Empresa') {
+                    setTimeout(() => {
+                        window.location.href = '../enterprise/home.html';
+                    }, 1500);
+                    return;
+                }
+                else if (result.user.user_metadata?.user_type === 'Candidato') {
+                    setTimeout(() => {
+                        window.location.href = '../candidate/home.html';
+                    }, 1500);
+                }
+
             } else {
                 this.showError(result.message || 'Error al iniciar sesión');
             }
