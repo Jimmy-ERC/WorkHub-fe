@@ -86,20 +86,21 @@
 
             <!-- seleccion de orden por fecha -->
             <div class="col-3">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Latest</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select class="form-select" aria-label="Default select example" id="ordenFecha"
+                    onchange="filtrarTrabajos()">
+                    <option selected value="recientes">Más recientes</option>
+                    <option value="antiguos">Más antiguos</option>
+
                 </select>
             </div>
             <!-- seleccion de cantidad por página -->
             <div class="col-3">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>12 por página</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select class="form-select" aria-label="Default select example" id="itemsPorPagina"
+                    onchange="actualizarItemsPorPagina()">
+                    <option selected value="12">12 por página</option>
+                    <option value="6">6 por pagina</option>
+                    <option value="3">3 por página</option>
+
                 </select>
             </div>
             <!-- seleccion de vista -->
@@ -347,23 +348,37 @@
         crossorigin="anonymous"></script>
 
     <script>
-        // Datos de ejemplo de trabajos
         const jobs = [
-            { title: "Marketing Manager", location: "New Mexico, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Remote"], icon: "https://img.icons8.com/color/48/000000/briefcase.png", modalidad: "Remota" },
-            { title: "Project Manager", location: "Dhaka, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/ios-filled/50/apple-logo.png", modalidad: "Presencial" },
-            { title: "Interaction Designer", location: "New York, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Full Time"], icon: "https://img.icons8.com/color/48/000000/design--v1.png", modalidad: "Híbrida" },
-            { title: "Networking Engineer", location: "Washington, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/networking-manager.png", modalidad: "Presencial" },
-            { title: "Product Designer", location: "Ohio, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/box.png", modalidad: "Remota" },
-            { title: "Junior Graphic Designer", location: "Natore, Bangladesh", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/adobe-illustrator.png", modalidad: "Híbrida" },
-            { title: "Software Engineer", location: "Montana, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Part Time"], icon: "https://img.icons8.com/color/48/000000/source-code.png", modalidad: "Remota" },
-            { title: "Front End Developer", location: "Sivas, Turkey", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Contract Base"], icon: "https://img.icons8.com/color/48/000000/code.png", modalidad: "Presencial" },
-            { title: "Technical Support Specialist", location: "Chattogram, Bangladesh", salary: "$10k–15k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/technical-support.png", modalidad: "Híbrida" },
-            { title: "Visual Designer", location: "Konya, Turkey", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/adobe-photoshop.png", modalidad: "Remota" },
-            { title: "Marketing Officer", location: "Paris, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Temporary"], icon: "https://img.icons8.com/color/48/000000/marketing.png", modalidad: "Presencial" },
-            { title: "Senior UX Designer", location: "Mymensingh, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/ux.png", modalidad: "Híbrida" }
+            { title: "Marketing Manager", location: "New Mexico, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Remote"], icon: "https://img.icons8.com/color/48/000000/briefcase.png", modalidad: "Remota", fechaPublicacion: "2024-06-01" },
+            { title: "Project Manager", location: "Dhaka, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/ios-filled/50/apple-logo.png", modalidad: "Presencial", fechaPublicacion: "2024-06-02" },
+            { title: "Interaction Designer", location: "New York, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Full Time"], icon: "https://img.icons8.com/color/48/000000/design--v1.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-03" },
+            { title: "Networking Engineer", location: "Washington, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/networking-manager.png", modalidad: "Presencial", fechaPublicacion: "2024-06-04" },
+            { title: "Product Designer", location: "Ohio, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/box.png", modalidad: "Remota", fechaPublicacion: "2024-06-05" },
+            { title: "Junior Graphic Designer", location: "Natore, Bangladesh", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/adobe-illustrator.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-06" },
+            { title: "Software Engineer", location: "Montana, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Part Time"], icon: "https://img.icons8.com/color/48/000000/source-code.png", modalidad: "Remota", fechaPublicacion: "2024-06-07" },
+            { title: "Front End Developer", location: "Sivas, Turkey", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Contract Base"], icon: "https://img.icons8.com/color/48/000000/code.png", modalidad: "Presencial", fechaPublicacion: "2024-06-08" },
+            { title: "Technical Support Specialist", location: "Chattogram, Bangladesh", salary: "$10k–15k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/technical-support.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-09" },
+            { title: "Visual Designer", location: "Konya, Turkey", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/adobe-photoshop.png", modalidad: "Remota", fechaPublicacion: "2024-06-10" },
+            { title: "Marketing Officer", location: "Paris, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Temporary"], icon: "https://img.icons8.com/color/48/000000/marketing.png", modalidad: "Presencial", fechaPublicacion: "2024-06-11" },
+            { title: "Senior UX Designer", location: "Mymensingh, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/ux.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-12" }
+        ];
+        // Datos de ejemplo de trabajos
+        let filteredJobs = [
+            { title: "Marketing Manager", location: "New Mexico, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Remote"], icon: "https://img.icons8.com/color/48/000000/briefcase.png", modalidad: "Remota", fechaPublicacion: "2024-06-01" },
+            { title: "Project Manager", location: "Dhaka, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/ios-filled/50/apple-logo.png", modalidad: "Presencial", fechaPublicacion: "2024-06-02" },
+            { title: "Interaction Designer", location: "New York, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Full Time"], icon: "https://img.icons8.com/color/48/000000/design--v1.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-03" },
+            { title: "Networking Engineer", location: "Washington, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/networking-manager.png", modalidad: "Presencial", fechaPublicacion: "2024-06-04" },
+            { title: "Product Designer", location: "Ohio, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/box.png", modalidad: "Remota", fechaPublicacion: "2024-06-05" },
+            { title: "Junior Graphic Designer", location: "Natore, Bangladesh", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/adobe-illustrator.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-06" },
+            { title: "Software Engineer", location: "Montana, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Part Time"], icon: "https://img.icons8.com/color/48/000000/source-code.png", modalidad: "Remota", fechaPublicacion: "2024-06-07" },
+            { title: "Front End Developer", location: "Sivas, Turkey", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Contract Base"], icon: "https://img.icons8.com/color/48/000000/code.png", modalidad: "Presencial", fechaPublicacion: "2024-06-08" },
+            { title: "Technical Support Specialist", location: "Chattogram, Bangladesh", salary: "$10k–15k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/technical-support.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-09" },
+            { title: "Visual Designer", location: "Konya, Turkey", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/adobe-photoshop.png", modalidad: "Remota", fechaPublicacion: "2024-06-10" },
+            { title: "Marketing Officer", location: "Paris, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Temporary"], icon: "https://img.icons8.com/color/48/000000/marketing.png", modalidad: "Presencial", fechaPublicacion: "2024-06-11" },
+            { title: "Senior UX Designer", location: "Mymensingh, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/ux.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-12" }
         ];
 
-        const jobsPerPage = 9;
+        let jobsPerPage = 9;
         let currentPage = 1;
 
         function renderJobs(page) {
@@ -372,7 +387,7 @@
 
             const start = (page - 1) * jobsPerPage;
             const end = start + jobsPerPage;
-            const paginatedJobs = jobs.slice(start, end);
+            const paginatedJobs = filteredJobs.slice(start, end);
 
             //creamos row inicial
             jobList.innerHTML += `<div class="row" style="justify-content: center; justify-self: center;"></div>`;
@@ -404,7 +419,7 @@
         function renderPagination() {
             const pagination = document.getElementById("pagination");
             pagination.innerHTML = "";
-            const totalPages = Math.ceil(jobs.length / jobsPerPage);
+            const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
 
             for (let i = 1; i <= totalPages; i++) {
                 pagination.innerHTML += `
@@ -419,6 +434,33 @@
             renderPagination();
         }
 
+        function filtrarTrabajos() {
+            const ordenFecha = document.getElementById("ordenFecha").value;
+            const itemsPorPagina = parseInt(document.getElementById("itemsPorPagina").value);
+
+            //filtramos 
+            if (ordenFecha === "recientes") {
+                const trabajosOrdenados = filteredJobs.slice().sort((a, b) => {
+                    return new Date(b.fechaPublicacion) - new Date(a.fechaPublicacion);
+                });
+                filteredJobs = trabajosOrdenados;
+            }
+            else {
+                const trabajosOrdenados = filteredJobs.slice().sort((a, b) => {
+                    return new Date(a.fechaPublicacion) - new Date(b.fechaPublicacion);
+                });
+                filteredJobs = trabajosOrdenados;
+            }
+
+            renderJobs(currentPage);
+            renderPagination();
+
+        }
+        function actualizarItemsPorPagina() {
+            jobsPerPage = parseInt(document.getElementById("itemsPorPagina").value);
+            renderJobs(currentPage);
+            renderPagination();
+        }
         // Inicializar
         renderJobs(currentPage);
         renderPagination();
