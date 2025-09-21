@@ -83,9 +83,9 @@
             <div class="dropdown ms-3">
                 <a href="#" class="d-flex align-items-center text-dark      text-decoration-none       dropdown-toggle"
                     data-bs-toggle="dropdown">
-                    <img src="https://i.pravatar.cc/40" alt="user" class="rounded-circle    me-2" width="35"
+                    <img src="/src/assets/img/avatar.jpg" alt="user" class="rounded-circle    me-2" width="35"
                         height="35">
-                    <span>John Doe</span>
+                    <span id="userNameDisplay">username</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="#">Ver perfil</a></li>
@@ -128,74 +128,8 @@
     <!-- Logout Controller Script -->
     <script type="module" src="../../controllers/logout.ts"></script>
 
-    <script>
-        // Datos de ejemplo de trabajos
-        const jobs = [
-            { title: "Marketing Manager", location: "New Mexico, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Remote"], icon: "https://img.icons8.com/color/48/000000/briefcase.png" },
-            { title: "Project Manager", location: "Dhaka, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/ios-filled/50/apple-logo.png" },
-            { title: "Interaction Designer", location: "New York, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Full Time"], icon: "https://img.icons8.com/color/48/000000/design--v1.png" },
-            { title: "Networking Engineer", location: "Washington, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/networking-manager.png" },
-            { title: "Product Designer", location: "Ohio, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/box.png" },
-            { title: "Junior Graphic Designer", location: "Natore, Bangladesh", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/adobe-illustrator.png" },
-            { title: "Software Engineer", location: "Montana, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Part Time"], icon: "https://img.icons8.com/color/48/000000/source-code.png" },
-            { title: "Front End Developer", location: "Sivas, Turkey", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Contract Base"], icon: "https://img.icons8.com/color/48/000000/code.png" },
-            { title: "Technical Support Specialist", location: "Chattogram, Bangladesh", salary: "$10k–15k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/technical-support.png" },
-            { title: "Visual Designer", location: "Konya, Turkey", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/adobe-photoshop.png" },
-            { title: "Marketing Officer", location: "Paris, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Temporary"], icon: "https://img.icons8.com/color/48/000000/marketing.png" },
-            { title: "Senior UX Designer", location: "Mymensingh, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/ux.png" }
-        ];
-
-        const jobsPerPage = 5;
-        let currentPage = 1;
-
-        function renderJobs(page) {
-            const jobList = document.getElementById("jobList");
-            jobList.innerHTML = "";
-
-            const start = (page - 1) * jobsPerPage;
-            const end = start + jobsPerPage;
-            const paginatedJobs = jobs.slice(start, end);
-
-            paginatedJobs.forEach(job => {
-                const badgesHtml = job.badges.map(b => `<span class="badge bg-primary ms-2">${b}</span>`).join("");
-                jobList.innerHTML += `
-                <div class="list-group-item job-card d-flex justify-content-between align-items-center p-3 mb-2">
-                    <div class="d-flex align-items-center">
-                        <img src="${job.icon}" class="me-3" alt="icon" width="40">
-                        <div>
-                            <h6 class="mb-1 fw-bold">${job.title} ${badgesHtml}</h6>
-                            <small class="text-muted">${job.location} • ${job.salary} • ${job.days}</small>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <i class="bi bi-bookmark save-icon"></i>
-                        <a href="#" class="btn apply-btn btn-sm">Apply Now →</a>
-                    </div>
-                </div>`;
-            });
-        }
-
-        function renderPagination() {
-            const pagination = document.getElementById("pagination");
-            pagination.innerHTML = "";
-            const totalPages = Math.ceil(jobs.length / jobsPerPage);
-
-            for (let i = 1; i <= totalPages; i++) {
-                pagination.innerHTML += `
-                <button class="${i === currentPage ? "active" : ""}" onclick="goToPage(${i})">${i}</button>`;
-            }
-        }
-
-        function goToPage(page) {
-            currentPage = page;
-            renderJobs(page);
-            renderPagination();
-        }
-
-        // Inicializar
-        renderJobs(currentPage);
-        renderPagination();
-    </script>
+    <!-- Candidate Home Controller -->
+    <script type="module" src="../../controllers/candidate/homeController.ts"></script>
 </body>
 
 </html>

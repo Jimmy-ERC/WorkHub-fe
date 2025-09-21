@@ -1,8 +1,5 @@
 import { supabase } from './client'
 
-// Simple session manager: persists session data in localStorage and listens to Supabase auth events.
-// Strategy: always use localStorage for session persistence.
-// We store user data (id, nombre, usuario, correo) not the full access token.
 
 export type StoredUser = {
     id: string;
@@ -12,6 +9,7 @@ export type StoredUser = {
     userType?: string | null | undefined;
 }
 
+// este es el nombre que tendrá la el campo key en el localStorage con el value de los datos del usuario no sensibles
 const STORAGE_KEY = 'workhub_session_v1'
 
 export const sessionManager = {
@@ -78,7 +76,6 @@ export const sessionManager = {
     }
 }
 
-// Auto-init
 sessionManager.init()
 
 export default sessionManager
