@@ -1,0 +1,47 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.job-card {
+    transition: all 0.2s ease;
+    border: 1px solid #eee;
+    border-radius: 12px;
+}
+
+.job-card:hover {
+    border: 1px solid #2563eb;
+    background-color: #fdfdfd;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.apply-btn {
+    background-color: #2563eb;
+    color: white;
+}
+
+.apply-btn:hover {
+    background-color: #1e40af;
+    color: white;
+}
+
+.save-icon {
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.carousel-indicators [data-bs-target] {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    text-indent: 0;
+}
+
+.carousel-indicators .active {
+    background-color: #2563eb;
+    color: #fff;
+}
+
+.row-space {
+    margin-bottom: 2%;
+}

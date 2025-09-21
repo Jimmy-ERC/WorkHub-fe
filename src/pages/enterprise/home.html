@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workhub - Encontrar Trabajo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/src/assets/img/logo_grande.png" />
+
+    <link rel="stylesheet" href="../../assets/css/enterprise-home.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="../../assets/img/logo.png" alt="Workhub" style="height: 30px;" class="me-2">
+            </a>
+            <!-- Buscador -->
+            <form class="d-none d-lg-flex mx-4 flex-grow-1">
+
+                <input class="form-control me-2" type="search" placeholder="Título, palabra clave o compañía"
+                    aria-label="Search">
+                <button class="btn btn-primary" type="submit">Encontrar</button>
+            </form>
+            <!-- Menú -->
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Empleos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Recursos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Foros</a></li>
+            </ul>
+
+            <div class="dropdown ms-3">
+                <a href="#" class="d-flex align-items-center text-dark      text-decoration-none       dropdown-toggle"
+                    data-bs-toggle="dropdown">
+                    <img src="https://i.pravatar.cc/40" alt="user" class="rounded-circle    me-2" width="35"
+                        height="35">
+                    <span>John Doe</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">Ver perfil</a></li>
+                    <li><a class="dropdown-item" href="#">Configuración</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item text-danger" href="/src/pages/auth/login.html">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Filtros de búsqueda -->
+    <div class="bg-light py-3 px-4 border-bottom">
+        <div class="row g-2">
+            <h6>Busca vacantes publicadas</h6>
+        </div>
+        <div class="row g-2">
+            <div class="col-md"><input type="text" class="form-control" placeholder="Título de Trabajo..."></div>
+            <div class="col-md"><input type="text" class="form-control" placeholder="Ubicación"></div>
+            <div class="col-md"><input type="text" class="form-control" placeholder="Salario"></div>
+            <div class="col-md"><select class="form-select">
+                    <option>Filtro Avanzado</option>
+                </select></div>
+            <div class="col-md-auto"><button class="btn btn-primary w-100">Encontrar</button></div>
+        </div>
+    </div>
+
+    <!-- Listado de trabajos -->
+    <div class="container my-4">
+        <!-- Filtros activos -->
+        <div class="row row-space">
+
+            <div class="col-5">
+                <!-- etiquetas de filtro -->
+                <span class="badge text-bg-secondary">Diseño <i class="bi bi-x"></i></span>
+                <span class="badge text-bg-secondary">Desarrollo <i class="bi bi-x"></i></span>
+                <span class="badge text-bg-secondary">Marketing <i class="bi bi-x"></i></span>
+                <span class="badge text-bg-secondary">New york <i class="bi bi-x"></i></span>
+            </div>
+
+            <!-- seleccion de orden por fecha -->
+            <div class="col-3">
+                <select class="form-select" aria-label="Default select example" id="ordenFecha"
+                    onchange="filtrarTrabajos()">
+                    <option selected value="recientes">Más recientes</option>
+                    <option value="antiguos">Más antiguos</option>
+
+                </select>
+            </div>
+            <!-- seleccion de cantidad por página -->
+            <div class="col-3">
+                <select class="form-select" aria-label="Default select example" id="itemsPorPagina"
+                    onchange="actualizarItemsPorPagina()">
+                    <option selected value="12">12 por página</option>
+                    <option value="6">6 por pagina</option>
+                    <option value="3">3 por página</option>
+
+                </select>
+            </div>
+            <!-- seleccion de vista -->
+            <div class="col-1">
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="btnradio1">
+                        <i class="bi bi-grid"></i>
+                    </label>
+
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio2">
+                        <i class="bi bi-list-ul"></i>
+                    </label>
+
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex row-space" style="justify-content: right;">
+            <button type="button" class="btn btn-primary col-2">Publicar trabajo</button>
+
+        </div>
+
+        <!-- lista de vacantes -->
+        <div id="jobList" class="container">
+
+
+            <div class="row" style="justify-content: center; justify-self: center;">
+                <!-- vacante -->
+                <div class="card col-md-4 col-6 m-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+                    <div class="card-body">
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+
+                            <h5 class="card-title">Full stack developer</h5>
+                            <span class="badge text-bg-secondary "
+                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
+                                <p style="margin: 0;">Remoto</p>
+                            </span>
+                        </div>
+                        <p class="card-text">Tiempo completo - $30k-$50k</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
+                    </div>
+                </div>
+
+                <!-- vacante -->
+                <div class="card col-md-4 col-6 m-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+                    <div class="card-body">
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+
+                            <h5 class="card-title">Full stack developer</h5>
+                            <span class="badge text-bg-secondary "
+                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
+                                <p style="margin: 0;">Remoto</p>
+                            </span>
+                        </div>
+                        <p class="card-text">Tiempo completo - $30k-$50k</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
+                    </div>
+                </div>
+
+                <!-- vacante -->
+                <div class="card col-md-4 col-6 m-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+                    <div class="card-body">
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+
+                            <h5 class="card-title">Full stack developer</h5>
+                            <span class="badge text-bg-secondary "
+                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
+                                <p style="margin: 0;">Remoto</p>
+                            </span>
+                        </div>
+                        <p class="card-text">Tiempo completo - $30k-$50k</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="justify-content: center; justify-self: center;">
+                <!-- vacante -->
+                <div class="card col-md-4 col-6 m-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+                    <div class="card-body">
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+
+                            <h5 class="card-title">Full stack developer</h5>
+                            <span class="badge text-bg-secondary "
+                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
+                                <p style="margin: 0;">Remoto</p>
+                            </span>
+                        </div>
+                        <p class="card-text">Tiempo completo - $30k-$50k</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
+                    </div>
+                </div>
+
+                <!-- vacante -->
+                <div class="card col-md-4 col-6 m-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+                    <div class="card-body">
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+
+                            <h5 class="card-title">Full stack developer</h5>
+                            <span class="badge text-bg-secondary "
+                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
+                                <p style="margin: 0;">Remoto</p>
+                            </span>
+                        </div>
+                        <p class="card-text">Tiempo completo - $30k-$50k</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
+                    </div>
+                </div>
+
+                <!-- vacante -->
+                <div class="card col-md-4 col-6 m-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+                    <div class="card-body">
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+
+                            <h5 class="card-title">Full stack developer</h5>
+                            <span class="badge text-bg-secondary "
+                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
+                                <p style="margin: 0;">Remoto</p>
+                            </span>
+                        </div>
+                        <p class="card-text">Tiempo completo - $30k-$50k</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="justify-content: center; justify-self: center;">
+                <!-- vacante -->
+                <div class="card col-md-4 col-6 m-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+                    <div class="card-body">
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+
+                            <h5 class="card-title">Full stack developer</h5>
+                            <span class="badge text-bg-secondary "
+                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
+                                <p style="margin: 0;">Remoto</p>
+                            </span>
+                        </div>
+                        <p class="card-text">Tiempo completo - $30k-$50k</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
+                    </div>
+                </div>
+
+                <!-- vacante -->
+                <div class="card col-md-4 col-6 m-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+                    <div class="card-body">
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+
+                            <h5 class="card-title">Full stack developer</h5>
+                            <span class="badge text-bg-secondary "
+                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
+                                <p style="margin: 0;">Remoto</p>
+                            </span>
+                        </div>
+                        <p class="card-text">Tiempo completo - $30k-$50k</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
+                    </div>
+                </div>
+
+                <!-- vacante -->
+                <div class="card col-md-4 col-6 m-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+                    <div class="card-body">
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+
+                            <h5 class="card-title">Full stack developer</h5>
+                            <span class="badge text-bg-secondary "
+                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
+                                <p style="margin: 0;">Remoto</p>
+                            </span>
+                        </div>
+                        <p class="card-text">Tiempo completo - $30k-$50k</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="justify-content: center; justify-self: center;">
+                <!-- vacante -->
+                <div class="card col-md-4 col-6 m-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+                    <div class="card-body">
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+
+                            <h5 class="card-title">Full stack developer</h5>
+                            <span class="badge text-bg-secondary "
+                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
+                                <p style="margin: 0;">Remoto</p>
+                            </span>
+                        </div>
+                        <p class="card-text">Tiempo completo - $30k-$50k</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
+                    </div>
+                </div>
+
+                <!-- vacante -->
+                <div class="card col-md-4 col-6 m-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+                    <div class="card-body">
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+
+                            <h5 class="card-title">Full stack developer</h5>
+                            <span class="badge text-bg-secondary "
+                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
+                                <p style="margin: 0;">Remoto</p>
+                            </span>
+                        </div>
+                        <p class="card-text">Tiempo completo - $30k-$50k</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
+                    </div>
+                </div>
+
+                <!-- vacante -->
+                <div class="card col-md-4 col-6 m-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+                    <div class="card-body">
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+
+                            <h5 class="card-title">Full stack developer</h5>
+                            <span class="badge text-bg-secondary "
+                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
+                                <p style="margin: 0;">Remoto</p>
+                            </span>
+                        </div>
+                        <p class="card-text">Tiempo completo - $30k-$50k</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="pagination text-center mt-4" id="pagination"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script>
+        let colorsPorModalidad = [
+            { remoto: "blue" },
+            { híbrido: 'red' },
+            { presencial: 'green' }
+
+
+        ]
+        const jobs = [
+            { title: "Marketing Manager", location: "New Mexico, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Remote"], icon: "https://img.icons8.com/color/48/000000/briefcase.png", modalidad: "Remota", fechaPublicacion: "2024-06-01" },
+            { title: "Project Manager", location: "Dhaka, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/ios-filled/50/apple-logo.png", modalidad: "Presencial", fechaPublicacion: "2024-06-02" },
+            { title: "Interaction Designer", location: "New York, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Full Time"], icon: "https://img.icons8.com/color/48/000000/design--v1.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-03" },
+            { title: "Networking Engineer", location: "Washington, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/networking-manager.png", modalidad: "Presencial", fechaPublicacion: "2024-06-04" },
+            { title: "Product Designer", location: "Ohio, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/box.png", modalidad: "Remota", fechaPublicacion: "2024-06-05" },
+            { title: "Junior Graphic Designer", location: "Natore, Bangladesh", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/adobe-illustrator.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-06" },
+            { title: "Software Engineer", location: "Montana, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Part Time"], icon: "https://img.icons8.com/color/48/000000/source-code.png", modalidad: "Remota", fechaPublicacion: "2024-06-07" },
+            { title: "Front End Developer", location: "Sivas, Turkey", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Contract Base"], icon: "https://img.icons8.com/color/48/000000/code.png", modalidad: "Presencial", fechaPublicacion: "2024-06-08" },
+            { title: "Technical Support Specialist", location: "Chattogram, Bangladesh", salary: "$10k–15k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/technical-support.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-09" },
+            { title: "Visual Designer", location: "Konya, Turkey", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/adobe-photoshop.png", modalidad: "Remota", fechaPublicacion: "2024-06-10" },
+            { title: "Marketing Officer", location: "Paris, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Temporary"], icon: "https://img.icons8.com/color/48/000000/marketing.png", modalidad: "Presencial", fechaPublicacion: "2024-06-11" },
+            { title: "Senior UX Designer", location: "Mymensingh, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/ux.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-12" }
+        ];
+        // Datos de ejemplo de trabajos
+        let filteredJobs = [
+            { title: "Marketing Manager", location: "New Mexico, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Remote"], icon: "https://img.icons8.com/color/48/000000/briefcase.png", modalidad: "Remota", fechaPublicacion: "2024-06-01" },
+            { title: "Project Manager", location: "Dhaka, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/ios-filled/50/apple-logo.png", modalidad: "Presencial", fechaPublicacion: "2024-06-02" },
+            { title: "Interaction Designer", location: "New York, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Full Time"], icon: "https://img.icons8.com/color/48/000000/design--v1.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-03" },
+            { title: "Networking Engineer", location: "Washington, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/networking-manager.png", modalidad: "Presencial", fechaPublicacion: "2024-06-04" },
+            { title: "Product Designer", location: "Ohio, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/box.png", modalidad: "Remota", fechaPublicacion: "2024-06-05" },
+            { title: "Junior Graphic Designer", location: "Natore, Bangladesh", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/adobe-illustrator.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-06" },
+            { title: "Software Engineer", location: "Montana, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Part Time"], icon: "https://img.icons8.com/color/48/000000/source-code.png", modalidad: "Remota", fechaPublicacion: "2024-06-07" },
+            { title: "Front End Developer", location: "Sivas, Turkey", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Contract Base"], icon: "https://img.icons8.com/color/48/000000/code.png", modalidad: "Presencial", fechaPublicacion: "2024-06-08" },
+            { title: "Technical Support Specialist", location: "Chattogram, Bangladesh", salary: "$10k–15k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/technical-support.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-09" },
+            { title: "Visual Designer", location: "Konya, Turkey", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/adobe-photoshop.png", modalidad: "Remota", fechaPublicacion: "2024-06-10" },
+            { title: "Marketing Officer", location: "Paris, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Temporary"], icon: "https://img.icons8.com/color/48/000000/marketing.png", modalidad: "Presencial", fechaPublicacion: "2024-06-11" },
+            { title: "Senior UX Designer", location: "Mymensingh, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/ux.png", modalidad: "Híbrida", fechaPublicacion: "2024-06-12" }
+        ];
+
+        let jobsPerPage = 9;
+        let currentPage = 1;
+
+        function renderJobs(page) {
+            const jobList = document.getElementById("jobList");
+            jobList.innerHTML = "";
+
+            const start = (page - 1) * jobsPerPage;
+            const end = start + jobsPerPage;
+            const paginatedJobs = filteredJobs.slice(start, end);
+
+            //creamos row inicial
+            jobList.innerHTML += `<div class="row" style="justify-content: center; justify-self: center;"></div>`;
+            for (let i = 1; i < paginatedJobs.length + 1; i++) {
+                const job = paginatedJobs[i - 1];
+                let colorBadge = "grey"
+                if (job.modalidad === "Remota") {
+                    colorBadge = "blue"
+                }
+                else if (job.modalidad === "Híbridad") {
+                    colorBadge = "red"
+                }
+                else {
+                    colorBadge = "green"
+                }
+                jobList.querySelector(".row:last-child").innerHTML += `<div class="card col-md-4 col-6 m-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+                    <div class="card-body">
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+
+                            <h5 class="card-title">${job.title}</h5>
+                            <span class="badge text-bg-secondary "
+                            style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center; background-color:${colorBadge}!important "> 
+                                <p style="margin: 0;">${job.modalidad}</p>
+                                </span>
+                                </div>
+                        <p class="card-text">${job.badges.concat(",")} - ${job.salary}</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i>${job.location}.</p>
+                        </div>
+                        </div>`;
+
+
+
+                if (i % 3 === 0) {
+                    //creamos nuevo row
+                    jobList.innerHTML += `<div class="row" style="justify-content: center; justify-self: center;"></div>`;
+                }
+            }
+        }
+
+        function renderPagination() {
+            const pagination = document.getElementById("pagination");
+            pagination.innerHTML = "";
+            const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+
+            for (let i = 1; i <= totalPages; i++) {
+                pagination.innerHTML += `
+        <button class="${i === currentPage ? "active" : ""}" onclick="goToPage(${i})">${i}</button>
+    `;
+            }
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            renderJobs(page);
+            renderPagination();
+        }
+
+        function filtrarTrabajos() {
+            const ordenFecha = document.getElementById("ordenFecha").value;
+            const itemsPorPagina = parseInt(document.getElementById("itemsPorPagina").value);
+
+            //filtramos 
+            if (ordenFecha === "recientes") {
+                const trabajosOrdenados = filteredJobs.slice().sort((a, b) => {
+                    return new Date(b.fechaPublicacion) - new Date(a.fechaPublicacion);
+                });
+                filteredJobs = trabajosOrdenados;
+            }
+            else {
+                const trabajosOrdenados = filteredJobs.slice().sort((a, b) => {
+                    return new Date(a.fechaPublicacion) - new Date(b.fechaPublicacion);
+                });
+                filteredJobs = trabajosOrdenados;
+            }
+
+            renderJobs(currentPage);
+            renderPagination();
+
+        }
+        function actualizarItemsPorPagina() {
+            jobsPerPage = parseInt(document.getElementById("itemsPorPagina").value);
+            renderJobs(currentPage);
+            renderPagination();
+        }
+        // Inicializar
+        renderJobs(currentPage);
+        renderPagination();
+    </script>
+</body>
+
+</html>
