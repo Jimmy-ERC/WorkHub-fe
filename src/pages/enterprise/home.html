@@ -348,6 +348,13 @@
         crossorigin="anonymous"></script>
 
     <script>
+        let colorsPorModalidad = [
+            { remoto: "blue" },
+            { híbrido: 'red' },
+            { presencial: 'green' }
+
+
+        ]
         const jobs = [
             { title: "Marketing Manager", location: "New Mexico, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Remote"], icon: "https://img.icons8.com/color/48/000000/briefcase.png", modalidad: "Remota", fechaPublicacion: "2024-06-01" },
             { title: "Project Manager", location: "Dhaka, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/ios-filled/50/apple-logo.png", modalidad: "Presencial", fechaPublicacion: "2024-06-02" },
@@ -393,6 +400,16 @@
             jobList.innerHTML += `<div class="row" style="justify-content: center; justify-self: center;"></div>`;
             for (let i = 1; i < paginatedJobs.length + 1; i++) {
                 const job = paginatedJobs[i - 1];
+                let colorBadge = "grey"
+                if (job.modalidad === "Remota") {
+                    colorBadge = "blue"
+                }
+                else if (job.modalidad === "Híbridad") {
+                    colorBadge = "red"
+                }
+                else {
+                    colorBadge = "green"
+                }
                 jobList.querySelector(".row:last-child").innerHTML += `<div class="card col-md-4 col-6 m-2"
                     style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
                     <div class="card-body">
@@ -400,7 +417,7 @@
 
                             <h5 class="card-title">${job.title}</h5>
                             <span class="badge text-bg-secondary "
-                            style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
+                            style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center; background-color:${colorBadge}!important "> 
                                 <p style="margin: 0;">${job.modalidad}</p>
                                 </span>
                                 </div>
@@ -408,6 +425,8 @@
                         <p class="card-text"><i class="bi bi-geo-alt"></i>${job.location}.</p>
                         </div>
                         </div>`;
+
+
 
                 if (i % 3 === 0) {
                     //creamos nuevo row
