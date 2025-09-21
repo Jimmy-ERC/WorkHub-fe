@@ -1,0 +1,125 @@
+// Import Bootstrap
+@import "bootstrap/scss/bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+// Custom styles for WorkHub
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #fff;
+
+    .form-control {
+        width: 350px;
+        max-width: 100%;
+    }
+
+    .navbar-brand img {
+        max-height: 40px;
+        height: auto;
+        width: auto;
+    }
+}
+
+.hero {
+    padding: 80px 0;
+    background-color: #f9f9f9;
+
+    h1 {
+        font-weight: bold;
+        font-size: 2.5rem;
+        color: #333;
+    }
+
+    p {
+        color: #666;
+        margin-top: 15px;
+    }
+}
+
+.search-section {
+    background-color: #007bff;
+    color: white;
+    padding: 60px 0;
+}
+
+.vacantes {
+    padding: 60px 0;
+
+    h2 {
+        font-weight: bold;
+        margin-bottom: 40px;
+    }
+
+    .col {
+        margin-bottom: 20px;
+    }
+}
+
+.vacante-title {
+    font-weight: 500;
+}
+
+.vacante-sub {
+    font-size: 0.9rem;
+    color: gray;
+}
+
+.category-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #fff !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-3px);
+    }
+}
+
+.job-card {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        border: 2px solid #0d6efd !important;
+        box-shadow: 0 0 10px rgba(13, 110, 253, 0.2);
+    }
+}
+
+.hover-select,
+.company-card {
+    &:hover {
+        border: 2px solid #0d6efd !important;
+        box-shadow: 0 0 10px rgba(13, 110, 253, 0.2);
+        transition: all 0.3s ease;
+    }
+}
+
+.company-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 40px 0;
+    margin-top: 60px;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .navbar .form-control {
+        width: 100%;
+    }
+}

@@ -4,8 +4,12 @@
 .DS_Store
 .vscode
 
+# Legacy structure (preserved for reference)
+_legacy/
+
 # Build / output
 public/js/
+public/js/config.js
 dist/
 build/
 
