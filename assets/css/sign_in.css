@@ -1,0 +1,58 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    }
+.login-container {
+    min-height: 100vh;
+}
+.login-card {
+    max-width: 420px;
+    width: 100%;
+}
+.btn-primary {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+.btn-primary:hover {
+    background-color: #1e40af;
+    border-color: #1e40af;
+}
+.form-control:focus {
+    box-shadow: none;
+    border-color: #2563eb;
+}
+.divider {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+}
+.divider::before, .divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: #ddd;
+}
+.divider::before {
+    left: 0;
+}
+.divider::after {
+    right: 0;
+}
+.divider span {
+    padding: 0 10px;
+    background: #fff;
+    color: #666;
+    font-size: 14px;
+}
+
+.logo img {
+    max-height: 50px;
+}
+/* Responsive */
+@media (max-width: 768px) {
+    .right-side {
+        display: none !important;
+    }
+}
