@@ -68,7 +68,7 @@ export class LoginPage {
                 if (result.user.user_metadata?.user_type === 'Empresa') {
                     setTimeout(() => {
                         window.location.href = '../enterprise/home.html';
-                    }, 1500);
+                    }, 700);
                     return;
                 }
                 else if (result.user.user_metadata?.user_type === 'Candidato') {
