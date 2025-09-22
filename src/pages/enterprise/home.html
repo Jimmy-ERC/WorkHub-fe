@@ -18,10 +18,10 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container-fluid px-4">
             <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="../../assets/img/logo.png" alt="Workhub" style="height: 30px;" class="me-2">
+                <img src="../../assets/img/logo.png" alt="Workhub" style="height: 30px;" class="mx-2">
             </a>
             <!-- Buscador -->
-            <form class="d-none d-lg-flex mx-4 flex-grow-1">
+            <form class="d-none d-lg-flex mx-2 flex-grow-1 align-items-start" style="max-width: 500px;">
 
                 <input class="form-control me-2" type="search" placeholder="Título, palabra clave o compañía"
                     aria-label="Search">
@@ -29,11 +29,11 @@
             </form>
             <!-- Menú -->
             <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Empleos</a></li>
+                <li class="nav-item"><a class="nav-link" href="/index.html">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Candidatos</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Recursos</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Foros</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="#">Recursos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Foros</a></li> -->
             </ul>
 
             <div class="dropdown ms-3">
@@ -44,7 +44,7 @@
                     <span id="userNameDisplay">username</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Ver perfil</a></li>
+                    <li><a class="dropdown-item" href="/src/pages/enterprise/profile/index.html">Ver perfil</a></li>
                     <li><a class="dropdown-item" href="#">Configuración</a></li>
                     <li>
                         <hr class="dropdown-divider">
@@ -76,7 +76,7 @@
         <!-- Filtros activos -->
         <div class="row row-space">
 
-            <div class="col-5">
+            <div class="col-5 d-flex align-items-center gap-2 justify-content-start">
                 <!-- etiquetas de filtro -->
                 <span class="badge text-bg-secondary">Diseño <i class="bi bi-x"></i></span>
                 <span class="badge text-bg-secondary">Desarrollo <i class="bi bi-x"></i></span>
@@ -85,26 +85,17 @@
             </div>
 
             <!-- seleccion de orden por fecha -->
-            <div class="col-3">
-                <select class="form-select" aria-label="Default select example" id="ordenFecha"
-                    onchange="enterpriseHomeController.filtrarTrabajos()">
+            <div class="col-3 d-flex justify-content-end">
+                <select class="form-select" style="max-width: 200px;" aria-label="Default select example"
+                    id="ordenFecha" onchange="enterpriseHomeController.filtrarTrabajos()">
                     <option selected value="recientes">Más recientes</option>
                     <option value="antiguos">Más antiguos</option>
 
                 </select>
             </div>
-            <!-- seleccion de cantidad por página -->
-            <div class="col-3">
-                <select class="form-select" aria-label="Default select example" id="itemsPorPagina"
-                    onchange="enterpriseHomeController.actualizarItemsPorPagina()">
-                    <option selected value="12">12 por página</option>
-                    <option value="6">6 por pagina</option>
-                    <option value="3">3 por página</option>
 
-                </select>
-            </div>
             <!-- seleccion de vista -->
-            <div class="col-1">
+            <div class="col-2 d-flex justify-content-end">
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
                     <label class="btn btn-outline-primary" for="btnradio1">
@@ -118,229 +109,19 @@
 
                 </div>
             </div>
-        </div>
-        <div class="row d-flex row-space" style="justify-content: right;">
-            <button type="button" class="btn btn-primary col-2">Publicar trabajo</button>
+
+            <div class="col-2 d-flex justify-content-end">
+                <!-- Link to the Post Job page -->
+                <a href="/src/pages/enterprise/post-a-job.html" class="btn btn-primary">Publicar trabajo</a>
+            </div>
 
         </div>
 
-        <!-- lista de vacantes -->
+        <!-- lista de vacantes, esta vacia porque se cargan en el controller -->
         <div id="jobList" class="container">
 
-
-            <div class="row" style="justify-content: center; justify-self: center;">
-                <!-- vacante -->
-                <div class="card col-md-4 col-6 m-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
-                    <div class="card-body">
-                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-
-                            <h5 class="card-title">Full stack developer</h5>
-                            <span class="badge text-bg-secondary "
-                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
-                                <p style="margin: 0;">Remoto</p>
-                            </span>
-                        </div>
-                        <p class="card-text">Tiempo completo - $30k-$50k</p>
-                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
-                    </div>
-                </div>
-
-                <!-- vacante -->
-                <div class="card col-md-4 col-6 m-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
-                    <div class="card-body">
-                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-
-                            <h5 class="card-title">Full stack developer</h5>
-                            <span class="badge text-bg-secondary "
-                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
-                                <p style="margin: 0;">Remoto</p>
-                            </span>
-                        </div>
-                        <p class="card-text">Tiempo completo - $30k-$50k</p>
-                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
-                    </div>
-                </div>
-
-                <!-- vacante -->
-                <div class="card col-md-4 col-6 m-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
-                    <div class="card-body">
-                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-
-                            <h5 class="card-title">Full stack developer</h5>
-                            <span class="badge text-bg-secondary "
-                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
-                                <p style="margin: 0;">Remoto</p>
-                            </span>
-                        </div>
-                        <p class="card-text">Tiempo completo - $30k-$50k</p>
-                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="justify-content: center; justify-self: center;">
-                <!-- vacante -->
-                <div class="card col-md-4 col-6 m-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
-                    <div class="card-body">
-                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-
-                            <h5 class="card-title">Full stack developer</h5>
-                            <span class="badge text-bg-secondary "
-                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
-                                <p style="margin: 0;">Remoto</p>
-                            </span>
-                        </div>
-                        <p class="card-text">Tiempo completo - $30k-$50k</p>
-                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
-                    </div>
-                </div>
-
-                <!-- vacante -->
-                <div class="card col-md-4 col-6 m-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
-                    <div class="card-body">
-                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-
-                            <h5 class="card-title">Full stack developer</h5>
-                            <span class="badge text-bg-secondary "
-                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
-                                <p style="margin: 0;">Remoto</p>
-                            </span>
-                        </div>
-                        <p class="card-text">Tiempo completo - $30k-$50k</p>
-                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
-                    </div>
-                </div>
-
-                <!-- vacante -->
-                <div class="card col-md-4 col-6 m-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
-                    <div class="card-body">
-                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-
-                            <h5 class="card-title">Full stack developer</h5>
-                            <span class="badge text-bg-secondary "
-                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
-                                <p style="margin: 0;">Remoto</p>
-                            </span>
-                        </div>
-                        <p class="card-text">Tiempo completo - $30k-$50k</p>
-                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="justify-content: center; justify-self: center;">
-                <!-- vacante -->
-                <div class="card col-md-4 col-6 m-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
-                    <div class="card-body">
-                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-
-                            <h5 class="card-title">Full stack developer</h5>
-                            <span class="badge text-bg-secondary "
-                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
-                                <p style="margin: 0;">Remoto</p>
-                            </span>
-                        </div>
-                        <p class="card-text">Tiempo completo - $30k-$50k</p>
-                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
-                    </div>
-                </div>
-
-                <!-- vacante -->
-                <div class="card col-md-4 col-6 m-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
-                    <div class="card-body">
-                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-
-                            <h5 class="card-title">Full stack developer</h5>
-                            <span class="badge text-bg-secondary "
-                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
-                                <p style="margin: 0;">Remoto</p>
-                            </span>
-                        </div>
-                        <p class="card-text">Tiempo completo - $30k-$50k</p>
-                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
-                    </div>
-                </div>
-
-                <!-- vacante -->
-                <div class="card col-md-4 col-6 m-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
-                    <div class="card-body">
-                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-
-                            <h5 class="card-title">Full stack developer</h5>
-                            <span class="badge text-bg-secondary "
-                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
-                                <p style="margin: 0;">Remoto</p>
-                            </span>
-                        </div>
-                        <p class="card-text">Tiempo completo - $30k-$50k</p>
-                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="justify-content: center; justify-self: center;">
-                <!-- vacante -->
-                <div class="card col-md-4 col-6 m-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
-                    <div class="card-body">
-                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-
-                            <h5 class="card-title">Full stack developer</h5>
-                            <span class="badge text-bg-secondary "
-                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
-                                <p style="margin: 0;">Remoto</p>
-                            </span>
-                        </div>
-                        <p class="card-text">Tiempo completo - $30k-$50k</p>
-                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
-                    </div>
-                </div>
-
-                <!-- vacante -->
-                <div class="card col-md-4 col-6 m-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
-                    <div class="card-body">
-                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-
-                            <h5 class="card-title">Full stack developer</h5>
-                            <span class="badge text-bg-secondary "
-                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
-                                <p style="margin: 0;">Remoto</p>
-                            </span>
-                        </div>
-                        <p class="card-text">Tiempo completo - $30k-$50k</p>
-                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
-                    </div>
-                </div>
-
-                <!-- vacante -->
-                <div class="card col-md-4 col-6 m-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
-                    <div class="card-body">
-                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-
-                            <h5 class="card-title">Full stack developer</h5>
-                            <span class="badge text-bg-secondary "
-                                style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center;">
-                                <p style="margin: 0;">Remoto</p>
-                            </span>
-                        </div>
-                        <p class="card-text">Tiempo completo - $30k-$50k</p>
-                        <p class="card-text"><i class="bi bi-geo-alt"></i> Nueva York, EE. UU.</p>
-                    </div>
-                </div>
-            </div>
-
-
-
         </div>
-        <div class="pagination text-center mt-4" id="pagination"></div>
+
     </div>
 
     <!-- Route Protection Script (must load before other scripts) -->

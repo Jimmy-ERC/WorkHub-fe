@@ -28,8 +28,6 @@ export class EnterpriseHomeController {
     ];
 
     private filteredJobs: Job[] = [...this.jobs];
-    private jobsPerPage = 9;
-    private currentPage = 1;
 
     constructor() {
         this.init();
@@ -38,8 +36,7 @@ export class EnterpriseHomeController {
     private init(): void {
         document.addEventListener('DOMContentLoaded', () => {
             this.loadUserData();
-            this.renderJobs(this.currentPage);
-            this.renderPagination();
+            this.renderJobs();
         });
     }
 
@@ -75,21 +72,17 @@ export class EnterpriseHomeController {
     /**
      * Renderiza los trabajos para la página actual
      */
-    public renderJobs(page: number): void {
+    public renderJobs(): void {
         const jobList = document.getElementById("jobList");
         if (!jobList) return;
 
         jobList.innerHTML = "";
 
-        const start = (page - 1) * this.jobsPerPage;
-        const end = start + this.jobsPerPage;
-        const paginatedJobs = this.filteredJobs.slice(start, end);
-
         // Creamos row inicial
-        jobList.innerHTML += `<div class="row" style="justify-content: center; justify-self: center;"></div>`;
+        jobList.innerHTML += `<div class="row py-2" style="justify-content: center; justify-self: center;"></div>`;
 
-        for (let i = 0; i < paginatedJobs.length; i++) {
-            const job = paginatedJobs[i];
+        for (let i = 0; i < this.filteredJobs.length; i++) {
+            const job = this.filteredJobs[i];
             if (!job) continue;
 
             let colorBadge = "grey";
@@ -104,7 +97,7 @@ export class EnterpriseHomeController {
 
             const lastRow = jobList.querySelector(".row:last-child");
             if (lastRow) {
-                lastRow.innerHTML += `<div class="card col-md-4 col-6 m-2"
+                lastRow.innerHTML += `<div class="card col-md-4 col-6 mx-2"
                     style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
                     <div class="card-body">
                         <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
@@ -122,34 +115,9 @@ export class EnterpriseHomeController {
             }
 
             if ((i + 1) % 3 === 0) {
-                jobList.innerHTML += `<div class="row" style="justify-content: center; justify-self: center;"></div>`;
+                jobList.innerHTML += `<div class="row p-2" style="justify-content: center; justify-self: center;"></div>`;
             }
         }
-    }
-
-    /**
-     * Renderiza la paginación
-     */
-    public renderPagination(): void {
-        const pagination = document.getElementById("pagination");
-        if (!pagination) return;
-
-        pagination.innerHTML = "";
-        const totalPages = Math.ceil(this.filteredJobs.length / this.jobsPerPage);
-
-        for (let i = 1; i <= totalPages; i++) {
-            pagination.innerHTML += `
-            <button class="${i === this.currentPage ? "active" : ""}" onclick="enterpriseHomeController.goToPage(${i})">${i}</button>`;
-        }
-    }
-
-    /**
-     * Navega a una página específica
-     */
-    public goToPage(page: number): void {
-        this.currentPage = page;
-        this.renderJobs(page);
-        this.renderPagination();
     }
 
     /**
@@ -172,8 +140,7 @@ export class EnterpriseHomeController {
             });
         }
 
-        this.renderJobs(this.currentPage);
-        this.renderPagination();
+        this.renderJobs();
     }
 
     /**
@@ -183,9 +150,7 @@ export class EnterpriseHomeController {
         const itemsPorPaginaElement = document.getElementById("itemsPorPagina") as HTMLSelectElement;
         if (!itemsPorPaginaElement) return;
 
-        this.jobsPerPage = parseInt(itemsPorPaginaElement.value);
-        this.renderJobs(this.currentPage);
-        this.renderPagination();
+        this.renderJobs();
     }
 }
 
