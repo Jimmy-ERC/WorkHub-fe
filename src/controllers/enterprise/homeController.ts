@@ -104,22 +104,21 @@ export class EnterpriseHomeController {
 
             const lastRow = jobList.querySelector(".row:last-child");
             if (lastRow) {
-                lastRow.innerHTML += `
-                <div class="card col-md-4 col-6 m-2"
-                    style="width: 18rem; height: 15rem; display: flex; flex-direction: column; justify-content: space-between;">
+                lastRow.innerHTML += `<div class="card col-md-4 col-6 m-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
                     <div class="card-body">
-                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                            <img src="${job.icon}" alt="icon" width="40">
-                            <span class="badge" style="background-color: ${colorBadge};">${job.modalidad}</span>
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+
+                            <h5 class="card-title">${job.title}</h5>
+                            <span class="badge text-bg-secondary "
+                            style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center; background-color:${colorBadge}!important "> 
+                                <p style="margin: 0;">${job.modalidad}</p>
+                                </span>
+                                </div>
+                        <p class="card-text">${job.badges.concat(",")} - ${job.salary}</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i>${job.location}.</p>
                         </div>
-                        <h5 class="card-title">${job.title}</h5>
-                        <p class="card-text">${job.location}</p>
-                        <p class="card-text">${job.salary}</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-body-secondary">${job.days}</small>
-                    </div>
-                </div>`;
+                        </div>`
             }
 
             if ((i + 1) % 3 === 0) {
