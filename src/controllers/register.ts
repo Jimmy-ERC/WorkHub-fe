@@ -1,3 +1,4 @@
+import type { RegisterResult } from '@/interfaces/registerResult.interface';
 import { AuthService, type SignUpData } from '../lib/auth';
 
 export class RegisterPage {
@@ -49,7 +50,7 @@ export class RegisterPage {
         }
     }
 
-    private async handleSubmit(event: Event): Promise<void> {
+    private async handleSubmit(event: Event): Promise<RegisterResult | void> {
         event.preventDefault();
 
         if (!this.form) return;
@@ -73,7 +74,12 @@ export class RegisterPage {
 
         try {
             // Attempt registration
-            const result = await this.authService.signUp(signUpData);
+            const result = await this.authService.signUp(signUpData) as RegisterResult;
+
+            if (result.user.user_metadata.user_type === 'Empresa'){
+                // Crear un perfil vacio para la empresa con el ID del usuario registrado
+            }
+
 
             if (result.success) {
                 this.showSuccess(result.message || 'Registration successful! Confirm your email to log in.');
