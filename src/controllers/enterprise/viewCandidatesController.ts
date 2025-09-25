@@ -127,10 +127,11 @@ export class EnterpriseViewCandidatesController {
         experiencia = experiencia.toLowerCase();
         if (experiencia) {
             console.log("filtrando por experiencia: " + experiencia);
-
-            candidatesPerJob = candidatesPerJob.filter(c => {
-                return c.experiencia.toLowerCase().includes(experiencia)
-            })
+            if (experiencia !== 'todos') {
+                candidatesPerJob = candidatesPerJob.filter(c => {
+                    return c.experiencia.toLowerCase().includes(experiencia)
+                })
+            }
         }
 
 
@@ -147,7 +148,8 @@ export class EnterpriseViewCandidatesController {
 
                 console.log("valores de educación seleccionados: ", valoresEducacion);
 
-                candidatesPerJob = candidatesPerJob.filter(c => valoresEducacion.includes(c.educacion.toLocaleLowerCase()))
+                candidatesPerJob = candidatesPerJob.filter(c => valoresEducacion.includes(c.educacion.toLowerCase()))
+                console.log("candidatos despues de filtrar por educacion: ", candidatesPerJob);
             }
         }
 
@@ -156,8 +158,12 @@ export class EnterpriseViewCandidatesController {
         //=============================
         let genero = document.querySelector('input[name="genero"]:checked');
         if (genero) {
-            let valorGenero = (genero as HTMLInputElement).value + "";
-            candidatesPerJob = candidatesPerJob.filter(c => c.genero.toLocaleLowerCase() === valorGenero)
+            let valorGenero = ((genero as HTMLInputElement).value).toLowerCase().trim();
+            console.log("filtrando por genero:" + valorGenero, "filtro esperado:otros",);
+            if (valorGenero !== 'todos') {
+                console.log("entra a filtrar por genero");
+                candidatesPerJob = candidatesPerJob.filter(c => c.genero.toLowerCase() === valorGenero)
+            }
         }
 
 
