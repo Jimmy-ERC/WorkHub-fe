@@ -119,11 +119,12 @@ export class EnterpriseViewCandidatesController {
             candidatesPerJob = this.filteredCandidates.filter(c => c.puesto.includes(puesto));
         }
 
+
+        //filatramos por experiencia
+        //==============================
         //obtenemos el valor del filtro de experiencia
         let experiencia = (document.querySelector('input[name="experiencia"]:checked') as HTMLInputElement)?.value + "";
         experiencia = experiencia.toLowerCase();
-
-
         if (experiencia) {
             console.log("filtrando por experiencia: " + experiencia);
 
@@ -131,8 +132,22 @@ export class EnterpriseViewCandidatesController {
                 return c.experiencia.toLowerCase().includes(experiencia)
             })
         }
-        //obtenemos el valor de 
-        console.log(experiencia);
+
+        let filtrosEducacion = Array.from(document.querySelectorAll("input[name='educacion']:checked"));
+        let valoresEducacion: string[] = [];
+        if (filtrosEducacion.length > 0) {
+
+
+            valoresEducacion = filtrosEducacion.map((el) => (el as HTMLInputElement).value.toLowerCase());
+
+            if (!valoresEducacion.includes('todos')) {
+
+                console.log("valores de educación seleccionados: ", valoresEducacion);
+
+                candidatesPerJob = candidatesPerJob.filter(c => valoresEducacion.includes(c.educacion.toLocaleLowerCase()))
+            }
+        }
+
 
 
         document.getElementById('nombreVacante')!.innerText = puesto || 'Puesto no especificado';
