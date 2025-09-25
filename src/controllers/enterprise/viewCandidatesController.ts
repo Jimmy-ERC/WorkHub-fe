@@ -6,7 +6,10 @@ export class EnterpriseViewCandidatesController {
             fotoUrl: "https://randomuser.me/api/portraits/women/44.jpg",
             puesto: "Interaction Designer",
             ubicacion: "Mexico City, Mexico",
-            experiencia: "3 years in web development with React and TypeScript"
+            experiencia: "3 years in web development with React and TypeScript",
+            experienciaFiltro: "2 - 4 Años",
+            educacion: "Diplomado",
+            genero: "Femenino"
         },
         {
             idTrabajo: 3,
@@ -14,7 +17,10 @@ export class EnterpriseViewCandidatesController {
             fotoUrl: "https://randomuser.me/api/portraits/men/23.jpg",
             puesto: "Interaction Designer",
             ubicacion: "Guadalajara, Mexico",
-            experiencia: "2 years with Angular and JavaScript"
+            experiencia: "2 years with Angular and JavaScript",
+            experienciaFiltro: "1 - 2 Años",
+            educacion: "Técnico",
+            genero: "Masculino"
         },
         {
             idTrabajo: 7,
@@ -22,7 +28,10 @@ export class EnterpriseViewCandidatesController {
             fotoUrl: "https://randomuser.me/api/portraits/men/32.jpg",
             puesto: "Software Engineer",
             ubicacion: "Bogotá, Colombia",
-            experiencia: "5 years in data analysis and Big Data"
+            experiencia: "5 years in data analysis and Big Data",
+            experienciaFiltro: "4 - 6 Años",
+            educacion: "Ingeniería",
+            genero: "Masculino"
         },
         {
             idTrabajo: 7,
@@ -30,7 +39,10 @@ export class EnterpriseViewCandidatesController {
             fotoUrl: "https://randomuser.me/api/portraits/women/21.jpg",
             puesto: "Software Engineer",
             ubicacion: "Quito, Ecuador",
-            experiencia: "3 years in ETL and Python"
+            experiencia: "3 years in ETL and Python",
+            experienciaFiltro: "2 - 4 Años",
+            educacion: "Licenciatura",
+            genero: "Femenino"
         },
         {
             idTrabajo: 1,
@@ -38,7 +50,10 @@ export class EnterpriseViewCandidatesController {
             fotoUrl: "https://randomuser.me/api/portraits/women/68.jpg",
             puesto: "Marketing Manager",
             ubicacion: "Madrid, Spain",
-            experiencia: "4 years in interface design and user experience"
+            experiencia: "4 years in interface design and user experience",
+            experienciaFiltro: "4 - 6 Años",
+            educacion: "Diplomado",
+            genero: "Femenino"
         },
         {
             idTrabajo: 1,
@@ -46,7 +61,10 @@ export class EnterpriseViewCandidatesController {
             fotoUrl: "https://randomuser.me/api/portraits/men/45.jpg",
             puesto: "Marketing Manager",
             ubicacion: "Barcelona, Spain",
-            experiencia: "2 years in mobile app design"
+            experiencia: "2 years in mobile app design",
+            experienciaFiltro: "1 - 2 Años",
+            educacion: "Secundaria",
+            genero: "Masculino"
         },
         {
             idTrabajo: 12,
@@ -54,7 +72,10 @@ export class EnterpriseViewCandidatesController {
             fotoUrl: "https://randomuser.me/api/portraits/men/15.jpg",
             puesto: "Senior UX Designer",
             ubicacion: "Lima, Peru",
-            experiencia: "6 years in development with Node.js and SQL databases"
+            experiencia: "6 years in development with Node.js and SQL databases",
+            experienciaFiltro: "6 - 8 Años",
+            educacion: "Ingeniería",
+            genero: "Masculino"
         },
         {
             idTrabajo: 12,
@@ -62,7 +83,10 @@ export class EnterpriseViewCandidatesController {
             fotoUrl: "https://randomuser.me/api/portraits/women/56.jpg",
             puesto: "Senior UX Designer",
             ubicacion: "Santiago, Chile",
-            experiencia: "4 years in Java and Spring Boot"
+            experiencia: "4 years in Java and Spring Boot",
+            experienciaFiltro: "4 - 6 Años",
+            educacion: "Licenciatura",
+            genero: "Femenino"
         },
         {
             idTrabajo: 3,
@@ -70,7 +94,10 @@ export class EnterpriseViewCandidatesController {
             fotoUrl: "https://randomuser.me/api/portraits/men/67.jpg",
             puesto: "Interaction Designer",
             ubicacion: "Monterrey, Mexico",
-            experiencia: "1 year with Vue.js"
+            experiencia: "1 year with Vue.js",
+            experienciaFiltro: "1 - 2 Años",
+            educacion: "Técnico",
+            genero: "Masculino"
         },
         {
             idTrabajo: 7,
@@ -78,7 +105,10 @@ export class EnterpriseViewCandidatesController {
             fotoUrl: "https://randomuser.me/api/portraits/women/77.jpg",
             puesto: "Software Engineer",
             ubicacion: "Medellín, Colombia",
-            experiencia: "2 years in cloud data solutions"
+            experiencia: "2 years in cloud data solutions",
+            experienciaFiltro: "1 - 2 Años",
+            educacion: "Diplomado",
+            genero: "Femenino"
         }
     ]
 
@@ -115,8 +145,11 @@ export class EnterpriseViewCandidatesController {
                                     <h5 class="card-title">${candidate.nombre}</h5>
                                     <p class="card-text">${candidate.puesto}</p>
                                     <div class="d-flex flex-wrap">
-                                        <p class="me-3"><i class="bi bi-geo-alt"></i> Ubicación</p>
-                                        <p><i class="bi bi-briefcase"></i> Experiencia</p>
+                                        <p class="me-3"><i class="bi bi-geo-alt"></i> ${candidate.ubicacion}</p>
+                                        <p class="me-3"><i class="bi bi-briefcase"></i> ${candidate.experiencia}</p>
+                                        <p class="me-3"><i class="bi bi-hourglass"></i> Experiencia: ${candidate.experienciaFiltro}</p>
+                                        <p class="me-3"><i class="bi bi-mortarboard"></i> Educación: ${candidate.educacion}</p>
+                                        <p><i class="bi bi-person"></i> Género: ${candidate.genero}</p>
                                     </div>
                                 </div>
                             </div>
