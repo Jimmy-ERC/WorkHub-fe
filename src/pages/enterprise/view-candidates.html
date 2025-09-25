@@ -118,57 +118,65 @@
                 <!-- sidebar de filtro -->
                 <div class="col-12 col-lg-3 col-md-3 col-sm-12 card mb-md-0"
                     style="padding-left: 2%;margin-right: 2%; ">
-                    <div>
+                    <form id="filtroExperiencia">
                         <h6 class="mt-3 mb-2">Experiencia</h6>
                         <div class="form-check mb-2" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" id="exp1">
+                            <input class="form-check-input" type="radio" name="experiencia" value="Recién graduado"
+                                onchange="enterpriseViewCandidatesController.renderCandidates()" id="exp1" checked>
                             <label class="form-check-label" for="exp1">
                                 Recién graduados
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" id="exp2">
+                            <input class="form-check-input" type="radio" name="experiencia" value="1 - 2 Años"
+                                onchange="enterpriseViewCandidatesController.renderCandidates()">
                             <label class="form-check-label" for="exp2">
                                 1 - 2 Años
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" id="exp3">
+                            <input class="form-check-input" type="radio" name="experiencia" value="2 - 4 Años"
+                                onchange="enterpriseViewCandidatesController.renderCandidates()">
                             <label class="form-check-label" for="exp3">
                                 2 - 4 Años
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" id="exp4" checked>
+                            <input class="form-check-input" type="radio" name="experiencia" value="4 - 6 Años"
+                                onchange="enterpriseViewCandidatesController.renderCandidates()">
                             <label class="form-check-label" for="exp4">
                                 4 - 6 Años
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" id="exp5">
+                            <input class="form-check-input" type="radio" name="experiencia" value="6 - 8 Años"
+                                onchange="enterpriseViewCandidatesController.renderCandidates()">
                             <label class="form-check-label" for="exp5">
                                 6 - 8 Años
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" id="exp6">
+                            <input class="form-check-input" type="radio" name="experiencia" value="8 - 10 Años"
+                                onchange="enterpriseViewCandidatesController.renderCandidates()">
                             <label class="form-check-label" for="exp6">
                                 8 - 10 Años
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" id="exp7">
+                            <input class="form-check-input" type="radio" name="experiencia" value="10 - 15 Años"
+                                onchange="enterpriseViewCandidatesController.renderCandidates()">
                             <label class="form-check-label" for="exp7">
                                 10 - 15 Años
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" id="exp8">
+                            <input class="form-check-input" type="radio" name="experiencia" value="15 + Años"
+                                onchange="enterpriseViewCandidatesController.renderCandidates()">
                             <label class="form-check-label" for="exp8">
                                 15+ Años
                             </label>
                         </div>
-                    </div>
+                    </form>
 
                     <hr>
 
