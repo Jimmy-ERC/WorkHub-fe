@@ -32,7 +32,7 @@ export class EnterpriseHomeController {
     private filteredJobs: Job[] = [...this.jobs];
 
     constructor() {
-        this.init();
+        this.init(); //espera a que el documento esté cargado y carga tanto los datos de usuario como los trabajos
     }
 
     private init(): void {

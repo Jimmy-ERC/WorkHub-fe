@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workhub - Encontrar Trabajo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/src/assets/img/logo_grande.png" />
+
+    <link rel="stylesheet" href="../../assets/css/enterprise-home.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="../../assets/img/logo.png" alt="Workhub" style="height: 30px;" class="mx-2">
+            </a>
+            <!-- Buscador -->
+            <form class="d-none d-lg-flex mx-2 flex-grow-1 align-items-start" style="max-width: 500px;">
+
+                <input class="form-control me-2" type="search" placeholder="Título, palabra clave o compañía"
+                    aria-label="Search">
+                <button class="btn btn-primary" type="submit">Encontrar</button>
+            </form>
+            <!-- Menú -->
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/index.html">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Candidatos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="#">Recursos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Foros</a></li> -->
+            </ul>
+
+            <div class="dropdown ms-3">
+                <a href="#" class="d-flex align-items-center text-dark      text-decoration-none       dropdown-toggle"
+                    data-bs-toggle="dropdown">
+                    <img src="/src/assets/img/avatar.jpg" alt="user" class="rounded-circle    me-2" width="35"
+                        height="35">
+                    <span id="userNameDisplay">username</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="/src/pages/enterprise/profile/index.html">Ver perfil</a></li>
+                    <li><a class="dropdown-item" href="#">Configuración</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item text-danger" href="/src/pages/auth/login.html">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Filtros de búsqueda -->
+    <div class="bg-light py-3 px-4 border-bottom">
+        <div class="row g-2">
+            <h6>Busca vacantes publicadas</h6>
+        </div>
+        <div class="row g-2">
+            <div class="col-md"><input type="text" class="form-control" placeholder="Título de Trabajo..."></div>
+            <div class="col-md"><input type="text" class="form-control" placeholder="Ubicación"></div>
+            <div class="col-md"><input type="text" class="form-control" placeholder="Salario"></div>
+            <div class="col-md"><select class="form-select">
+                    <option>Filtro Avanzado</option>
+                </select></div>
+            <div class="col-md-auto"><button class="btn btn-primary w-100">Encontrar</button></div>
+        </div>
+    </div>
+
+    <!-- Listado de trabajos -->
+    <div class="container">
+        <!-- Filtros activos -->
+        <div class="row row-space flex-wrap">
+            <div class="col-12 col-md-5 d-flex align-items-center gap-2 justify-content-start mb-2 mb-md-0">
+                <!-- etiquetas de filtro -->
+                <span class="badge text-bg-secondary">Diseño <i class="bi bi-x"></i></span>
+                <span class="badge text-bg-secondary">Desarrollo <i class="bi bi-x"></i></span>
+                <span class="badge text-bg-secondary">Marketing <i class="bi bi-x"></i></span>
+                <span class="badge text-bg-secondary">New york <i class="bi bi-x"></i></span>
+            </div>
+            <div class="col-12 col-md-3 d-flex justify-content-end mb-2 mb-md-0">
+                <!-- seleccion de orden por fecha -->
+                <select class="form-select" style="max-width: 200px;" aria-label="Default select example"
+                    id="ordenFecha" onchange="enterpriseHomeController.filtrarTrabajos()">
+                    <option selected value="recientes">Más recientes</option>
+                    <option value="antiguos">Más antiguos</option>
+
+                </select>
+            </div>
+            <div class="col-6 col-md-2 d-flex justify-content-end mb-2 mb-md-0">
+                <!-- seleccion de vista -->
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="btnradio1">
+                        <i class="bi bi-grid"></i>
+                    </label>
+
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio2">
+                        <i class="bi bi-list-ul"></i>
+                    </label>
+
+                </div>
+            </div>
+            <div class="col-6 col-md-2 d-flex justify-content-end mb-2 mb-md-0">
+                <!-- Link to the Post Job page -->
+                <a href="/src/pages/enterprise/post-a-job.html" class="btn btn-primary">Publicar trabajo</a>
+            </div>
+        </div>
+
+        <!-- lista de vacantes, esta vacia porque se cargan en el controller -->
+        <div class="container">
+            <div class="row">
+                <!-- sidebar de filtro -->
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12 card mb-md-0"
+                    style="padding-left: 2%;margin-right: 2%; ">
+                    <div>
+                        <h6 class="mt-3 mb-2">Experiencia</h6>
+                        <div class="form-check mb-2" style="width: 60%;">
+                            <input class="form-check-input" type="radio" name="experiencia" id="exp1">
+                            <label class="form-check-label" for="exp1">
+                                Recién graduados
+                            </label>
+                        </div>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="radio" name="experiencia" id="exp2">
+                            <label class="form-check-label" for="exp2">
+                                1 - 2 Años
+                            </label>
+                        </div>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="radio" name="experiencia" id="exp3">
+                            <label class="form-check-label" for="exp3">
+                                2 - 4 Años
+                            </label>
+                        </div>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="radio" name="experiencia" id="exp4" checked>
+                            <label class="form-check-label" for="exp4">
+                                4 - 6 Años
+                            </label>
+                        </div>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="radio" name="experiencia" id="exp5">
+                            <label class="form-check-label" for="exp5">
+                                6 - 8 Años
+                            </label>
+                        </div>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="radio" name="experiencia" id="exp6">
+                            <label class="form-check-label" for="exp6">
+                                8 - 10 Años
+                            </label>
+                        </div>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="radio" name="experiencia" id="exp7">
+                            <label class="form-check-label" for="exp7">
+                                10 - 15 Años
+                            </label>
+                        </div>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="radio" name="experiencia" id="exp8">
+                            <label class="form-check-label" for="exp8">
+                                15+ Años
+                            </label>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div>
+                        <h6 class="mt-3 mb-2">Educación</h6>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="checkbox" id="edu1">
+                            <label class="form-check-label" for="edu1">
+                                Todos
+                            </label>
+                        </div>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="checkbox" id="edu2">
+                            <label class="form-check-label" for="edu2">
+                                Secundaria
+                            </label>
+                        </div>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="checkbox" id="edu3">
+                            <label class="form-check-label" for="edu3">
+                                Técnico
+                            </label>
+                        </div>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="checkbox" id="edu4" checked>
+                            <label class="form-check-label" for="edu4">
+                                Diplomado
+                            </label>
+                        </div>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="checkbox" id="edu5">
+                            <label class="form-check-label" for="edu5">
+                                Licenciatura
+                            </label>
+                        </div>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="checkbox" id="edu6">
+                            <label class="form-check-label" for="edu6">
+                                Ingeniería
+                            </label>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div>
+                        <h6 class="mt-3 mb-2">Género</h6>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="radio" name="genero" id="gen1" checked>
+                            <label class="form-check-label" for="gen1">
+                                Masculino
+                            </label>
+                        </div>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="radio" name="genero" id="gen2">
+                            <label class="form-check-label" for="gen2">
+                                Femenino
+                            </label>
+                        </div>
+                        <div class="form-check" style="width: 60%;">
+                            <input class="form-check-input" type="radio" name="genero" id="gen3">
+                            <label class="form-check-label" for="gen3">
+                                Otros
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- candidatos -->
+                <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                    <h5>Nombre de la vacante</h5>
+                    <div id="listCandidatos">
+
+                        <!-- candidato -->
+                        <div class="card flex row mb-2"
+                            style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap;">
+                            <!-- contenido  -->
+                            <div class="col-12 col-md-9 d-flex align-items-center" style="padding: 1%;">
+                                <img src="https://octodex.github.com/images/orderedlistocat.png" class="card-img-top"
+                                    style="max-width: 90px; border-radius: 20px; height: auto;" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nombre</h5>
+                                    <p class="card-text">Puesto</p>
+                                    <div class="d-flex flex-wrap">
+                                        <p class="me-3"><i class="bi bi-geo-alt"></i> Ubicación</p>
+                                        <p><i class="bi bi-briefcase"></i> Experiencia</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- acciones -->
+                            <div
+                                class="col-12 col-md-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0">
+                                <button type="button" class="btn btn-primary w-100 w-md-auto">Ver Perfil →</button>
+                            </div>
+                        </div>
+                        <!-- candidato -->
+                        <div class="card flex row mb-2"
+                            style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap;">
+                            <!-- contenido  -->
+                            <div class="col-12 col-md-9 d-flex align-items-center" style="padding: 1%;">
+                                <img src="https://octodex.github.com/images/orderedlistocat.png" class="card-img-top"
+                                    style="max-width: 90px; border-radius: 20px; height: auto;" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nombre</h5>
+                                    <p class="card-text">Puesto</p>
+                                    <div class="d-flex flex-wrap">
+                                        <p class="me-3"><i class="bi bi-geo-alt"></i> Ubicación</p>
+                                        <p><i class="bi bi-briefcase"></i> Experiencia</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- acciones -->
+                            <div
+                                class="col-12 col-md-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0">
+                                <button type="button" class="btn btn-primary w-100 w-md-auto">Ver Perfil →</button>
+                            </div>
+                        </div>
+                        <!-- candidato -->
+                        <div class="card flex row mb-2"
+                            style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap;">
+                            <!-- contenido  -->
+                            <div class="col-12 col-md-9 d-flex align-items-center" style="padding: 1%;">
+                                <img src="https://octodex.github.com/images/orderedlistocat.png" class="card-img-top"
+                                    style="max-width: 90px; border-radius: 20px; height: auto;" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nombre</h5>
+                                    <p class="card-text">Puesto</p>
+                                    <div class="d-flex flex-wrap">
+                                        <p class="me-3"><i class="bi bi-geo-alt"></i> Ubicación</p>
+                                        <p><i class="bi bi-briefcase"></i> Experiencia</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- acciones -->
+                            <div
+                                class="col-12 col-md-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0">
+                                <button type="button" class="btn btn-primary w-100 w-md-auto">Ver Perfil →</button>
+                            </div>
+                        </div>
+
+                        <!-- candidato -->
+                        <div class="card flex row mb-2"
+                            style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap;">
+                            <!-- contenido  -->
+                            <div class="col-12 col-md-9 d-flex align-items-center" style="padding: 1%;">
+                                <img src="https://octodex.github.com/images/orderedlistocat.png" class="card-img-top"
+                                    style="max-width: 90px; border-radius: 20px; height: auto;" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nombre</h5>
+                                    <p class="card-text">Puesto</p>
+                                    <div class="d-flex flex-wrap">
+                                        <p class="me-3"><i class="bi bi-geo-alt"></i> Ubicación</p>
+                                        <p><i class="bi bi-briefcase"></i> Experiencia</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- acciones -->
+                            <div
+                                class="col-12 col-md-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0">
+                                <button type="button" class="btn btn-primary w-100 w-md-auto">Ver Perfil →</button>
+                            </div>
+                        </div>
+                        <!-- candidato -->
+                        <div class="card flex row mb-2"
+                            style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap;">
+                            <!-- contenido  -->
+                            <div class="col-12 col-md-9 d-flex align-items-center" style="padding: 1%;">
+                                <img src="https://octodex.github.com/images/orderedlistocat.png" class="card-img-top"
+                                    style="max-width: 90px; border-radius: 20px; height: auto;" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nombre</h5>
+                                    <p class="card-text">Puesto</p>
+                                    <div class="d-flex flex-wrap">
+                                        <p class="me-3"><i class="bi bi-geo-alt"></i> Ubicación</p>
+                                        <p><i class="bi bi-briefcase"></i> Experiencia</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- acciones -->
+                            <div
+                                class="col-12 col-md-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0">
+                                <button type="button" class="btn btn-primary w-100 w-md-auto">Ver Perfil →</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Route Protection Script (must load before other scripts) -->
+    <script type="module" src="../../controllers/routeProtection.ts"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+
+
+    <script type="module" src="../../controllers/enterprise/viewCandidatesController.ts"></script>
+</body>
+
+<!-- Modal para detalle de trabajo -->
+<div class="modal fade" id="modalDetalleTrabajo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    style="justify-content: center; justify-items: center;">
+    <div class="modal-dialog" style="width: 70%; margin: 0; max-width:100%;">
+        <div class="modal-content" style="width: 100%; padding-left: 5%;">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalTitulo" style="text-align: center; width: 100%;">Titulo</h1>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h8>Descripción:</h8>
+                <p id="modalDescripcion" style="font-weight:100;">Lorem ipsum dolor sit amet consectetur adipisicing
+                    elit. Adipisci
+                    quae illum voluptate delectus
+                    porro nobis asperiores omnis? Sint, dolore accusantium expedita quaerat error pariatur suscipit
+                    consectetur at in aut praesentium.</p>
+                <hr>
+                <h8>Modadalidad:</h8>
+                <p id="modalModalidad" style="font-weight:100;">Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Adipisci
+                    quae illum voluptate delectus
+                    porro nobis asperiores omnis? Sint, dolore accusantium expedita quaerat error pariatur
+                    suscipit
+                    consectetur at in aut praesentium.</p>
+                <hr>
+                <h8>Ubicación:</h8>
+                <p id="modalUbicacion" style="font-weight:100;">Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit.
+                    Adipisci
+                    quae illum voluptate delectus
+                    porro nobis asperiores omnis? Sint, dolore accusantium expedita quaerat error pariatur
+                    suscipit
+                    consectetur at in aut praesentium.</p>
+            </div>
+            <div class="modal-footer">
+                <a href=""></a>
+                <button type="button" class="btn btn-primary">Ver candidatos</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @media (max-width: 768px) {
+        .card.flex.row {
+            flex-direction: column !important;
+            align-items: stretch !important;
+        }
+
+        .card.flex.row .col-md-6,
+        .card.flex.row .col-md-5 {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 0 !important;
+        }
+
+        .card.flex.row .btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .card.justify-content-center {
+            padding-left: 0 !important;
+            margin-bottom: 1rem;
+        }
+
+        #listCandidatos {
+            margin-top: 1rem;
+        }
+    }
+</style>
+
+</html>
