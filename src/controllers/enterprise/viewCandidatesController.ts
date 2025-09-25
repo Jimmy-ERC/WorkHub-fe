@@ -178,6 +178,8 @@ export class EnterpriseViewCandidatesController {
                                     <div class="d-flex flex-wrap">
                                         <p class="me-3"><i class="bi bi-geo-alt"></i> ${candidate.ubicacion}</p>
                                         <p class="me-3"><i class="bi bi-briefcase"></i> ${candidate.experiencia}</p>
+                                                                                <p class="me-3"><i class="bi bi-person"></i> ${candidate.genero}</p>
+                                                                                                                        <p class="me-3"><i class="bi bi-book"></i> ${candidate.educacion}</p>
                                     </div>
                                 </div>
                             </div>
