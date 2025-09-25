@@ -4,33 +4,81 @@ export class EnterpriseViewCandidatesController {
             idTrabajo: 3,
             nombre: "Ana Martínez",
             fotoUrl: "https://randomuser.me/api/portraits/women/44.jpg",
-            puesto: "Frontend Developer",
+            puesto: "Interaction Designer",
             ubicacion: "Mexico City, Mexico",
             experiencia: "3 years in web development with React and TypeScript"
+        },
+        {
+            idTrabajo: 3,
+            nombre: "Pedro Ramírez",
+            fotoUrl: "https://randomuser.me/api/portraits/men/23.jpg",
+            puesto: "Interaction Designer",
+            ubicacion: "Guadalajara, Mexico",
+            experiencia: "2 years with Angular and JavaScript"
         },
         {
             idTrabajo: 7,
             nombre: "Carlos Gómez",
             fotoUrl: "https://randomuser.me/api/portraits/men/32.jpg",
-            puesto: "Data Engineer",
+            puesto: "Software Engineer",
             ubicacion: "Bogotá, Colombia",
             experiencia: "5 years in data analysis and Big Data"
+        },
+        {
+            idTrabajo: 7,
+            nombre: "Sofía Herrera",
+            fotoUrl: "https://randomuser.me/api/portraits/women/21.jpg",
+            puesto: "Software Engineer",
+            ubicacion: "Quito, Ecuador",
+            experiencia: "3 years in ETL and Python"
         },
         {
             idTrabajo: 1,
             nombre: "Lucía Fernández",
             fotoUrl: "https://randomuser.me/api/portraits/women/68.jpg",
-            puesto: "UX/UI Designer",
+            puesto: "Marketing Manager",
             ubicacion: "Madrid, Spain",
             experiencia: "4 years in interface design and user experience"
+        },
+        {
+            idTrabajo: 1,
+            nombre: "Javier Ruiz",
+            fotoUrl: "https://randomuser.me/api/portraits/men/45.jpg",
+            puesto: "Marketing Manager",
+            ubicacion: "Barcelona, Spain",
+            experiencia: "2 years in mobile app design"
         },
         {
             idTrabajo: 12,
             nombre: "Miguel Torres",
             fotoUrl: "https://randomuser.me/api/portraits/men/15.jpg",
-            puesto: "Backend Developer",
+            puesto: "Senior UX Designer",
             ubicacion: "Lima, Peru",
             experiencia: "6 years in development with Node.js and SQL databases"
+        },
+        {
+            idTrabajo: 12,
+            nombre: "Valentina López",
+            fotoUrl: "https://randomuser.me/api/portraits/women/56.jpg",
+            puesto: "Senior UX Designer",
+            ubicacion: "Santiago, Chile",
+            experiencia: "4 years in Java and Spring Boot"
+        },
+        {
+            idTrabajo: 3,
+            nombre: "Luis Castillo",
+            fotoUrl: "https://randomuser.me/api/portraits/men/67.jpg",
+            puesto: "Interaction Designer",
+            ubicacion: "Monterrey, Mexico",
+            experiencia: "1 year with Vue.js"
+        },
+        {
+            idTrabajo: 7,
+            nombre: "Andrea Morales",
+            fotoUrl: "https://randomuser.me/api/portraits/women/77.jpg",
+            puesto: "Software Engineer",
+            ubicacion: "Medellín, Colombia",
+            experiencia: "2 years in cloud data solutions"
         }
     ]
 
@@ -42,15 +90,17 @@ export class EnterpriseViewCandidatesController {
         })
     }
 
-    public renderCandidates(jobId?: number): void {
+    public renderCandidates(): void {
         let candidatesPerJob = this.filteredCandidates;
-        if (jobId) {
 
-            //candidatos del trabajo especifico
-            candidatesPerJob = this.filteredCandidates.filter(c => c.idTrabajo === jobId);
+        //todo: mejorar para que evalue el id del trabajo
+        const puesto = getPuestoFromUrl();
+        if (puesto) {
+            candidatesPerJob = this.filteredCandidates.filter(c => c.puesto.includes(puesto));
         }
 
 
+        document.getElementById('nombreVacante')!.innerText = puesto || 'Puesto no especificado';
         const listCandidatos = document.getElementById('listCandidatos');
         if (!listCandidatos) return;
         listCandidatos.innerHTML = ``;
@@ -82,6 +132,13 @@ export class EnterpriseViewCandidatesController {
 
     }
 }
+//obtiene el puesto de la URL
+//TODO: mejorar para que tome el id del trabajo
+function getPuestoFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('puesto');
+}
+
 
 // Crear instancia global para acceso desde HTML
 declare global {
