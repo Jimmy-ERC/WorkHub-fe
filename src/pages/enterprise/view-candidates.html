@@ -231,19 +231,22 @@
                     <div>
                         <h6 class="mt-3 mb-2">Género</h6>
                         <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="genero" id="gen1" checked>
+                            <input class="form-check-input" type="radio" name="genero" value="masculino"
+                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="ingenieria">
                             <label class="form-check-label" for="gen1">
                                 Masculino
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="genero" id="gen2">
+                            <input class="form-check-input" type="radio" name="genero" value="femenino"
+                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="ingenieria">
                             <label class="form-check-label" for="gen2">
                                 Femenino
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="genero" id="gen3">
+                            <input class="form-check-input" type="radio" name="genero" value="otros"
+                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="ingenieria">
                             <label class="form-check-label" for="gen3">
                                 Otros
                             </label>

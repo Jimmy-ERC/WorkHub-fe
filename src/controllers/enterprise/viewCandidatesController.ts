@@ -122,7 +122,7 @@ export class EnterpriseViewCandidatesController {
 
         //filatramos por experiencia
         //==============================
-        //obtenemos el valor del filtro de experiencia
+
         let experiencia = (document.querySelector('input[name="experiencia"]:checked') as HTMLInputElement)?.value + "";
         experiencia = experiencia.toLowerCase();
         if (experiencia) {
@@ -133,6 +133,9 @@ export class EnterpriseViewCandidatesController {
             })
         }
 
+
+        //filtramos por educacion
+        //=================================
         let filtrosEducacion = Array.from(document.querySelectorAll("input[name='educacion']:checked"));
         let valoresEducacion: string[] = [];
         if (filtrosEducacion.length > 0) {
@@ -148,6 +151,14 @@ export class EnterpriseViewCandidatesController {
             }
         }
 
+
+        //filtramos por genero
+        //=============================
+        let genero = document.querySelector('input[name="genero"]:checked');
+        if (genero) {
+            let valorGenero = (genero as HTMLInputElement).value + "";
+            candidatesPerJob = candidatesPerJob.filter(c => c.genero.toLocaleLowerCase() === valorGenero)
+        }
 
 
         document.getElementById('nombreVacante')!.innerText = puesto || 'Puesto no especificado';
