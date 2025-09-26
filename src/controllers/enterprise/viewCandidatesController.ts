@@ -173,9 +173,9 @@ export class EnterpriseViewCandidatesController {
         listCandidatos.innerHTML = ``;
         for (const candidate of candidatesPerJob) {
             listCandidatos.innerHTML += `  <div class="card flex row mb-2"
-                            style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap;">
+                            style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap; padding-left:3%;">
                             <!-- contenido  -->
-                            <div class="col-12 col-md-9 d-flex align-items-center" style="padding: 1%;">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-10 d-flex align-items-center" style="padding: 1%;">
                                 <img src="${candidate.fotoUrl}" class="card-img-top"
                                     style="max-width: 90px; border-radius: 20px; height: auto;" alt="...">
                                 <div class="card-body">
@@ -191,8 +191,8 @@ export class EnterpriseViewCandidatesController {
                             </div>
                             <!-- acciones -->
                             <div
-                                class="col-12 col-md-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0">
-                                <button type="button" class="btn btn-primary w-100 w-md-auto">Ver Perfil →</button>
+                                class="col-12 col-sm-12 col-md-12 col-lg-2 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0">
+                                <button data-bs-toggle="modal"  data-bs-target="#modalDetalleCandidato" type="button" class="btn btn-primary w-100 w-md-auto" onClick="verDetalleCandidato()">Ver Perfil →</button>
                             </div>
                         </div>
 
