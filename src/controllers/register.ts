@@ -1,4 +1,4 @@
-import type { RegisterResult } from '@/interfaces/registerResult.interface';
+import type { RegisterResult } from '@/interfaces/registerResponse.interface';
 import { AuthService, type SignUpData } from '../lib/auth';
 
 export class RegisterPage {

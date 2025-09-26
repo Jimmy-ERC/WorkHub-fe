@@ -70,7 +70,8 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item text-danger" href="/src/pages/auth/login.html" data-action="logout">Cerrar sesión</a></li>
+                        <li><a class="dropdown-item text-danger" href="/src/pages/auth/login.html"
+                                data-action="logout">Cerrar sesión</a></li>
                     </ul>
                 </div>
             </div>
@@ -124,12 +125,6 @@
                         <label for="about" class="form-label">About Us</label>
                         <textarea id="about" class="form-control" rows="4"
                             placeholder="Escribe sobre tu compañía. Que los candidatos sepan quiénes son…"></textarea>
-                        <!-- (Opcional) barra visual de formato (no funcional) -->
-                        <div class="d-flex align-items-center gap-3 text-muted small mt-2" aria-hidden="true">
-                            <i class="bi bi-type-bold"></i><i class="bi bi-type-italic"></i><i
-                                class="bi bi-type-underline"></i>
-                            <i class="bi bi-link-45deg"></i><i class="bi bi-list-ul"></i>
-                        </div>
                     </div>
 
                     <!-- Fundada en / Teléfono -->
@@ -140,7 +135,6 @@
                             <input type="date" class="form-control" id="foundedAt" aria-describedby="calendarIcon"
                                 data-plugin="datepicker">
                         </div>
-                        <!-- TODO:TS – inicializar datepicker (Flatpickr/Tempus Dominus) si se requiere -->
                     </div>
                     <div class="col-12 col-md-6">
                         <label for="phone" class="form-label">Teléfono</label>
@@ -178,7 +172,6 @@
                     <div class="col-12">
                         <button type="button" class="btn btn-primary px-4" data-action="save-profile">Guardar
                             Cambios</button>
-                        <!-- TODO:TS – validaciones y envío del formulario -->
                     </div>
                 </div>
             </section>
@@ -193,6 +186,8 @@
 
     <!-- Route Protection Script (must load before other scripts) -->
     <script type="module" src="/src/controllers/routeProtection.ts"></script>
+    <!-- Profile Controller Script -->
+    <script type="module" src="/src/controllers/enterprise/perfilController.ts"></script>
 
     <script type="module" src="/src/controllers/logout.ts"></script>
 
@@ -200,9 +195,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-
-
-    <!-- TODO:TS – aquí iría la inicialización del datepicker y lógica de subida -->
 </body>
 
 </html>
