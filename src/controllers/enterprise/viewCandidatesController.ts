@@ -184,18 +184,23 @@ export class EnterpriseViewCandidatesController {
                                     <div class="d-flex flex-wrap">
                                         <p class="me-3"><i class="bi bi-geo-alt"></i> ${candidate.ubicacion}</p>
                                         <p class="me-3"><i class="bi bi-briefcase"></i> ${candidate.experiencia}</p>
-                                                                                <p class="me-3"><i class="bi bi-person"></i> ${candidate.genero}</p>
-                                                                                                                        <p class="me-3"><i class="bi bi-book"></i> ${candidate.educacion}</p>
+                                        <p class="me-3"><i class="bi bi-person"></i> ${candidate.genero}</p>
+                                        <p class="me-3"><i class="bi bi-book"></i> ${candidate.educacion}</p>
                                     </div>
                                 </div>
                             </div>
                             <!-- acciones -->
                             <div
-                                class="col-12 col-sm-12 col-md-12 col-lg-2 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0">
+                                class="col-12 col-sm-12 col-md-12 col-lg-2 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0 flex-column" style="align-self: center; gap: 5px;">
                                 <button data-bs-toggle="modal"  data-bs-target="#modalDetalleCandidato" type="button" class="btn btn-primary w-100 w-md-auto" onClick="verDetalleCandidato()">Ver Perfil →</button>
+                                <button type="button" class="btn btn-danger w-100 w-md-auto" onClick="verDetalleCandidato()">
+                                   Rechazar <i class="bi bi-x"></i>
+                                </button>
+                                <button type="button" class="btn btn-success w-100 w-md-auto" onClick="verDetalleCandidato()">
+                                    Aceptar <i class="bi bi-check"></i>
+                                </button>
                             </div>
                         </div>
-
             `
         }
 
