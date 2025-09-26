@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../assets/css/auth.css">
+    <link rel="icon" type="image/svg+xml" href="/src/assets/img/logo_grande.png" />
+
+</head>
+
+<body>
+    <div class="container-fluid login-container d-flex align-items-center justify-content-center">
+        <div class="row w-100">
+            <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
+                <div class="d-flex align-items-center mb-4">
+                    <img src="../../assets/img/logo.png" alt="Workhub Logo" style="height: 40px;" class="me-2">
+                    <a href="../../../index.html" class="fw-medium" style="margin-top: 4px;">Inicio</a>
+                </div>
+                <div class="card login-card shadow-sm p-4">
+                    <form id="registerForm">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="mb-0">Crea una Cuenta</h3>
+                            <select class="form-select w-auto" id="userType" name="userType">
+                                <option selected>Candidato</option>
+                                <option>Empresa</option>
+                            </select>
+                        </div>
+                        <p class="text-center">Ya tienes una cuenta? <a href="login.html">Inicia Sesión</a></p>
+                        
+                        <div class="row mb-3">
+                            <div class="col">
+                                <input type="text" id="fullName" name="fullName" class="form-control"
+                                    placeholder="Nombre Completo" required>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="username" name="username" class="form-control"
+                                    placeholder="Usuario" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Correo"
+                                required>
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="password" id="password" name="password" class="form-control"
+                                placeholder="Contraseña" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
+                                placeholder="Confirmar Contraseña" required>
+                        </div>
+                        <button type="submit" id="submitButton" class="btn btn-primary w-100">Crear Cuenta →</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-6 right-side d-flex flex-column align-items-center justify-content-center bg-light">
+                <div class="text-center">
+                    <img src="../../assets/img/logo_grande.png" alt="Workhub Logo Grande" style="max-width: 250px;">
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- Route Protection Script (must load before other scripts) -->
+
+    <script type="module" src="../../controllers/routeProtection.ts"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script type="module" src="../../controllers/register.ts"></script>
+
+</body>
+
+</html>

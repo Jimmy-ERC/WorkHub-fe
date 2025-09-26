@@ -1,0 +1,64 @@
+/* ===== Paleta tomada de /src/styles/variables.scss y mapeada a Bootstrap CSS vars ===== */
+:root {
+  --bs-primary: #2A6DFC;
+  --bs-secondary: #1B2BB2;
+  --bs-info: #17a2b8;
+  --bs-success: #28a745;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #343a40;
+
+  --bs-primary-rgb: 42, 109, 252;
+  --bs-secondary-rgb: 27, 43, 178;
+  --bs-info-rgb: 23, 162, 184;
+  --bs-success-rgb: 40, 167, 69;
+  --bs-warning-rgb: 255, 193, 7;
+  --bs-danger-rgb: 220, 53, 69;
+  --bs-light-rgb: 248, 249, 250;
+  --bs-dark-rgb: 52, 58, 64;
+
+  --bs-link-color: var(--bs-primary);
+  --bs-link-hover-color: #1f5ae0;
+
+  /* Auxiliares */
+  --wh-tertiary: #08C5FC;
+  --bs-primary-bg-subtle: rgba(var(--bs-primary-rgb), .10);
+  --bs-secondary-bg-subtle: rgba(var(--bs-secondary-rgb), .10);
+}
+
+/* ===== Upload Dropzone ===== */
+.dropzone {
+  min-height: 260px;
+  border: 2px dashed rgba(0, 0, 0, .15);
+  border-radius: .75rem;
+  background: var(--bs-light);
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+.dropzone:hover {
+  background: #fff;
+  border-color: rgba(var(--bs-primary-rgb), .4);
+  box-shadow: 0 0 0 .25rem rgba(var(--bs-primary-rgb), .10);
+}
+
+.dropzone:focus {
+  outline: none;
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 .25rem rgba(var(--bs-primary-rgb), .25);
+}
+
+/* ===== Ajustes visuales menores ===== */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive: separaciones suaves en móviles */
+@media (max-width: 767.98px) {
+  main .row.g-4>[class*="col-"] {
+    padding-top: .25rem;
+  }
+}
+
+/* TODO:TIPOGRAFÍA — sustituir si tu diseño usa otra fuente */

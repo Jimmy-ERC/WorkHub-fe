@@ -1,116 +1,240 @@
-# WorkHub Frontend - TypeScript Setup
+# 🚀 WorkHub Frontend
 
-## 🎯 Overview
-This project now includes TypeScript support for better development experience, type safety, and maintainability.
+Sistema de gesti- **📄 View (HTML)**: Los archivos `.html` en `src/pages/auth/`n de empleos desarrollado con **TypeScript**, **Vite**, **Bootstrap** y **Supabase**.
 
-## 📁 Project Structure
+## � Arquitectura del Proyecto
+
+## 🗂 Estructura recomendada (actualizada)
+
 ```
-WorkHub-fe/
-├── index.html                    # Main landing page
-├── tsconfig.json                 # TypeScript configuration
-├── package.json                  # Dependencies and scripts
-└── public/
-    ├── assets/                   # Static assets (CSS, images)
-    ├── js/                      # Compiled JavaScript (auto-generated)
-    └── src/                     # TypeScript source files
-        ├── app.ts               # Main application entry
-        ├── lib/                 # Utility libraries
-        │   ├── auth.ts         # Authentication handling
-        │   ├── router.ts       # Client-side routing
-        │   ├── validation.ts   # Form validation utilities
-        │   └── supabaseClient.ts
-        └── pages/              # Page-specific TypeScript
-            └── login.ts        # Login page logic
+src/
+├── controllers/     # 🎮 Controladores de página (uno por página)
+│   ├── login.ts
+│   └── register.ts
+├── pages/           # 📄 Páginas HTML (public / HTML estático)
+│   └── auth/
+├── services/        # 🧭 Lógica de negocio / servicios por dominio
+│   ├── authService.ts      # Lógica concreta de Auth (usa lib)
+│   ├── userService.ts
+│   └── projectService.ts
+├── lib/             # 🔧 Utilidades de bajo nivel y agnósticas al dominio
+│   ├── client.ts    # Cliente HTTP / supabase wrapper
+│   ├── auth.ts      # Helpers de autenticación (token store, refresh)
+│   └── validation.ts# Validadores y utilidades reutilizables
+├── types/           # 📋 Tipos TypeScript (ejemplo)
+│   └── User.ts
+└── styles/          # 🎨 Estilos SCSS
+    ├── main.scss
+    └── variables.scss
 ```
 
-## 🚀 TypeScript Commands
+## 📌 ¿Qué guardar en lib vs services?
 
-### Development
+- lib (utilidades de bajo nivel)
+  - Código agnóstico del dominio.
+  - Wrappers de clientes (axios/supabase), helpers de auth (leer/guardar token), validadores, transformaciones genéricas.
+  - Debe poder reutilizarse en múltiples features sin depender de rutas o endpoints específicos.
+  - Ejemplo: client.ts, validation.ts, small helpers.
+
+- services (lógica por dominio / API)
+  - Llamadas a endpoints concretos y orquestación de utilidades de lib.
+  - Funciones o clases con métodos como login(), fetchUsers(), createProject().
+  - Contiene reglas de negocio ligadas a recursos (users, projects, auth flows).
+
+---
+
+## 🏗️ **Patrón de Arquitectura: MVC Frontend**
+
+El directorio `controllers/` sigue el patrón **Model-View-Controller (MVC)** adaptado al frontend:
+
+- **� View (HTML)**: Los archivos `.html` en `public/auth/`
+- **🎮 Controller (TypeScript)**: Los archivos `.ts` en `src/controllers/`
+- **🛡️ Model/Service (Auth)**: Los servicios en `src/lib/`
+
+### **Ventajas de esta Arquitectura:**
+
+1. **🎯 Separación Clara de Responsabilidades**
+2. **🔄 Reutilización de Código**
+3. **📈 Escalabilidad**
+4. **🧪 Facilidad de Testing**
+5. **🔧 Mantenibilidad**
+
+---
+
+## � **Conexión HTML ↔ TypeScript Controllers**
+
+### **1. Inclusión del Script**
+
+Cada página HTML incluye su controlador específico:
+
+```html
+<!-- login.html -->
+<script type="module" src="../../controllers/login.ts"></script>
+
+<!-- register.html -->
+<script type="module" src="../../controllers/register.ts"></script>
+```
+
+### **2. Inicialización Automática**
+
+Los controladores se auto-inicializan al cargar:
+
+```typescript
+// Al final de cada controlador
+new LoginPage();    // login.ts
+new RegisterPage(); // register.ts
+```
+
+---
+
+## 🔄 **Flujo de Funcionamiento**
+
+### **� Controller Pattern - Flujo Completo**
+
+```
+1. 👤 Usuario visita página HTML
+   ↓
+2. 📜 HTML carga el script del controlador
+   ↓
+3. 🎮 Controller se auto-inicializa
+   ↓
+4. 🎯 Se configuran event listeners
+   ↓
+5. 👤 Usuario interactúa con el formulario
+   ↓
+6. 🎮 Controller captura eventos
+   ↓
+7. ✅ Validación local
+   ↓
+8. 🛡️ Llamada al servicio AuthService
+   ↓
+9. 🌐 Comunicación con Supabase
+   ↓
+10. 📱 Controller actualiza la UI
+   ↓
+11. 🔄 Redirección o nueva acción
+```
+
+---
+
+## 🎯 **Mapeo HTML ↔ Controller**
+
+### **🔗 Convención de IDs y Names**
+
+| **Elemento HTML** | **ID** | **Name** | **Propósito** |
+|------------------|--------|----------|---------------|
+| Formulario | `loginForm` / `registerForm` | - | Selección del contenedor |
+| Input Email | `email` | `email` | ID para validación, name para FormData |
+| Input Password | `password` | `password` | ID para validación, name para FormData |
+| Botón Submit | `submitButton` | - | Control de estados de carga |
+
+### **📋 Extracción de Datos**
+
+```typescript
+// 🎯 Selección por ID (para validación y control)
+const emailInput = document.getElementById('email') as HTMLInputElement;
+
+// 📋 Extracción por name (para datos del formulario)
+const formData = new FormData(this.form);
+const email = formData.get('email') as string;
+```
+
+---
+
+## 🚀 **Cómo Extender el Sistema**
+
+### **Agregar Nuevo Controller:**
+
+1. **📁 Crear archivo**: `src/controllers/dashboard.ts`
+
+```typescript
+export class DashboardPage {
+    constructor() {
+        this.init();
+    }
+
+    private init(): void {
+        // Configuración inicial
+    }
+}
+
+// Auto-inicialización
+new DashboardPage();
+```
+
+2. **📄 Crear HTML**: `public/dashboard.html`
+
+```html
+<script type="module" src="../src/controllers/dashboard.ts"></script>
+```
+
+3. **🔄 Reutilizar servicios**:
+
+```typescript
+import { AuthService } from '../lib/auth';
+import { supabase } from '../lib/client';
+```
+
+---
+
+## 🛠️ **Tecnologías Utilizadas**
+
+- **⚡ Vite**: Build tool y dev server
+- **📘 TypeScript**: Tipado estático
+- **🎨 Bootstrap 5**: Framework CSS
+- **🗄️ Supabase**: Backend as a Service
+- **💾 SCSS**: Preprocesador CSS
+
+---
+
+## 🏃‍♂️ **Comandos de Desarrollo**
+
 ```bash
-# Build TypeScript files once
+# 🚀 Iniciar servidor de desarrollo
+npm run dev
+
+# 🏗️ Build para producción
 npm run build
 
-# Watch for changes and auto-compile
-npm run dev
-# or
-npm run build:watch
+# 👀 Preview del build
+npm run preview
+
+# 🔍 Type checking
+npm run type-check
 ```
 
-### File Paths
-- **TypeScript Source**: `public/src/**/*.ts`
-- **Compiled JavaScript**: `public/js/**/*.js`
-- **Type Declarations**: `public/js/**/*.d.ts`
+---
 
-## 🔧 Configuration Details
+## 📚 **Convenciones del Proyecto**
 
-### tsconfig.json
-- **Target**: ES2020
-- **Module System**: ES2020 modules
-- **Source Root**: `./public/src`
-- **Output Directory**: `./public/js`
-- **Strict Mode**: Enabled for better type safety
+### **📝 Naming Conventions:**
 
-### Features Enabled
-- ✅ Source maps for debugging
-- ✅ Declaration files (.d.ts)
-- ✅ Strict type checking
-- ✅ Exact optional property types
-- ✅ No unchecked indexed access
+- **Controllers**: `PascalCase` (ej: `LoginPage`)
+- **Files**: `kebab-case` (ej: `login.ts`)
+- **IDs**: `camelCase` (ej: `loginForm`)
+- **Classes CSS**: `kebab-case` (ej: `login-card`)
 
-## 📝 Usage Examples
+### **🗂️ File Organization:**
 
-### Authentication
+- Un controller por página
+- Servicios compartidos en `lib/`
+- Tipos en `types/`
+- Estilos en `styles/`
+
+### **🔄 Import Patterns:**
+
 ```typescript
-import { AuthHandler } from '../lib/auth.js';
+// Servicios
+import { AuthService } from '../lib/auth';
 
-const auth = new AuthHandler();
-const result = await auth.login({
-    email: 'user@example.com',
-    password: 'password123',
-    rememberMe: true
-});
+// Tipos
+import type { LoginCredentials } from '../lib/auth';
+
+// Utilidades
+import { FormValidator } from '../lib/validation';
 ```
 
-### Form Validation
-```typescript
-import { FormValidator, ValidationPatterns } from '../lib/validation.js';
-
-const fields = [{
-    name: 'email',
-    value: userInput,
-    rules: [
-        { required: true },
-        { pattern: ValidationPatterns.email }
-    ]
-}];
-
-const validation = FormValidator.validateForm(fields);
-```
-
-### Routing
-```typescript
-import { Router } from '../lib/router.js';
-
-const router = new Router([
-    { path: '/login', component: 'LoginPage', title: 'Login - WorkHub' },
-    { path: '/dashboard', component: 'Dashboard', title: 'Dashboard - WorkHub' }
-]);
-```
-
-## 🔗 HTML Integration
-
-### Including Compiled JavaScript
-```html
-<!-- Use type="module" for ES6 module support -->
-<script type="module" src="../../js/pages/login.js"></script>
-```
-
-### Form Attributes
-Make sure forms have proper `name` attributes for TypeScript integration:
-```html
-<input type="email" name="email" class="form-control" required>
-<input type="password" name="password" class="form-control" required>
-```
+---
 
 ## 🛠 Development Workflow
 
@@ -119,68 +243,55 @@ Make sure forms have proper `name` attributes for TypeScript integration:
 3. **Include in HTML**: Reference the compiled `.js` files from `public/js/`
 4. **Test**: Open your HTML pages in browser
 
-## 📚 Available Modules
-
-### AuthHandler
-- `login(credentials)` - Handle user login
-- `signUp(data)` - Handle user registration
-
-### FormValidator
-- `validateField(field)` - Validate single form field
-- `validateForm(fields)` - Validate entire form
-
-### Router
-- `navigateTo(path)` - Navigate to different routes
-- `addRoute(route)` - Add new route definitions
-
-## 🔍 Debugging
-
-- Source maps are enabled - you can debug TypeScript directly in browser DevTools
-- Compiled JavaScript includes readable names and structure
-- Type declarations help with IDE IntelliSense
-
-## 📦 Dependencies
-
-- **typescript**: ^5.9.2 (DevDependency)
-- **Bootstrap**: 5.3.8 (CDN)
-
 ---
-
-**Note**: Always run `npm run build` after making changes to TypeScript files before testing in the browser.
 
 ## 🖥️ Ver el proyecto en el navegador
 
 Aquí tienes instrucciones rápidas y copiables para compilar y servir la carpeta `public/` localmente.
 
 1) Compilar + servir (rápido)
+
 - Compilar TypeScript una vez:
+
     ```bash
     npm run build
     ```
+
 - Servir la carpeta `public/` (en otra terminal). Opciones:
-    - Con `live-server` (recomendado si lo tienes):
+  - Con `live-server` (recomendado si lo tienes):
+
         ```bash
         npx live-server public --port=3000
         ```
-    - Con `http-server`:
+
+  - Con `http-server`:
+
         ```bash
         npx http-server public -p 3000
         ```
-    - Con Python (si no quieres instalar npm adicionales):
+
+  - Con Python (si no quieres instalar npm adicionales):
+
         ```bash
         python3 -m http.server 3000 --directory public
         ```
+
 - Abrir en el navegador:
+
     ```
     http://localhost:3000
     ```
 
 2) Modo desarrollo (compila en watch + servidor)
+
 - Instalar dependencias de desarrollo (una sola vez):
+
     ```bash
     npm install -D concurrently live-server
     ```
+
 - Actualizar los scripts en `package.json` (ejemplo):
+
     ```json
     {
         "scripts": {
@@ -191,15 +302,20 @@ Aquí tienes instrucciones rápidas y copiables para compilar y servir la carpet
         }
     }
     ```
+
 - Ejecutar modo desarrollo:
+
     ```bash
     npm run dev
     ```
+
 - Abrir en el navegador:
+
     ```
     http://localhost:3000
     ```
 
 3) Notas rápidas
+
 - El servidor sólo sirve archivos estáticos desde `public/`. Asegúrate de que los `.js` compilados estén en `public/js/`.
 - Si prefieres un flujo moderno con recarga más rápida y bundling (Vite), puedo configurarlo por ti.

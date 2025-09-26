@@ -1,0 +1,47 @@
+/* Variables & helpers */
+:root{
+  /* Ajuste sutil al azul del banner para aproximar el diseño */
+  --wh-banner: #4c74ff;
+}
+
+/* Cards de métricas */
+.stat-card .icon-box{
+  width: 48px;
+  height: 48px;
+  background: var(--bs-body-bg);
+}
+
+/* Banner perfil */
+.profile-banner{
+  background: linear-gradient(90deg, var(--wh-banner), #6f8aff);
+}
+
+/* Sidebar */
+[data-component="SidebarNav"] .nav-link{
+  color: var(--bs-body-color);
+}
+[data-component="SidebarNav"] .nav-link.active{
+  font-weight: 600;
+}
+
+/* Lista de aplicados: foco accesible similar al “seleccionado” del mock */
+.list-group-item:focus-within{
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 2px;
+  border-radius: .5rem;
+}
+
+/* Evitar desbordes en móviles */
+img{
+  max-width: 100%;
+  height: auto;
+}
+
+/* Espaciado global del main en pantallas chicas */
+@media (max-width: 767.98px){
+  main .row > [class*="col-"]:not(:first-child){
+    padding-top: 1rem;
+  }
+}
+
+/* TODO:TIPOGRAFÍA – reemplazar por la fuente exacta si aplica */

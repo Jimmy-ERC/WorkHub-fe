@@ -16,9 +16,9 @@ export class WorkHubApp {
 
     private setupEventListeners(): void {
         // Setup DOM event listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM fully loaded');
-        });
+        console.log('Setting up event listeners...');
+
+        // Add any additional event listeners here
     }
 
     private loadInitialData(): void {
@@ -33,6 +33,3 @@ export class WorkHubApp {
         };
     }
 }
-
-// Auto-initialize the app when the script loads
-const app = new WorkHubApp();
