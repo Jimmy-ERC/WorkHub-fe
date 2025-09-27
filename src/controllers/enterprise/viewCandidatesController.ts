@@ -1,6 +1,7 @@
 export class EnterpriseViewCandidatesController {
     private candidates = [
         {
+            id: 1,
             idTrabajo: 3,
             nombre: "Ana Martínez",
             fotoUrl: "https://randomuser.me/api/portraits/women/44.jpg",
@@ -8,9 +9,11 @@ export class EnterpriseViewCandidatesController {
             ubicacion: "Mexico City, Mexico",
             experiencia: "2 - 4 Años",
             educacion: "Diplomado",
-            genero: "Femenino"
+            genero: "Femenino",
+            estado: "pendiente"
         },
         {
+            id: 2,
             idTrabajo: 3,
             nombre: "Pedro Ramírez",
             fotoUrl: "https://randomuser.me/api/portraits/men/23.jpg",
@@ -18,9 +21,11 @@ export class EnterpriseViewCandidatesController {
             ubicacion: "Guadalajara, Mexico",
             experiencia: "1 - 2 Años",
             educacion: "Técnico",
-            genero: "Masculino"
+            genero: "Masculino",
+            estado: "pendiente"
         },
         {
+            id: 3,
             idTrabajo: 7,
             nombre: "Carlos Gómez",
             fotoUrl: "https://randomuser.me/api/portraits/men/32.jpg",
@@ -28,9 +33,11 @@ export class EnterpriseViewCandidatesController {
             ubicacion: "Bogotá, Colombia",
             experiencia: "4 - 6 Años",
             educacion: "Ingeniería",
-            genero: "Masculino"
+            genero: "Masculino",
+            estado: "pendiente"
         },
         {
+            id: 4,
             idTrabajo: 7,
             nombre: "Sofía Herrera",
             fotoUrl: "https://randomuser.me/api/portraits/women/21.jpg",
@@ -38,9 +45,11 @@ export class EnterpriseViewCandidatesController {
             ubicacion: "Quito, Ecuador",
             experiencia: "2 - 4 Años",
             educacion: "Licenciatura",
-            genero: "Femenino"
+            genero: "Femenino",
+            estado: "pendiente"
         },
         {
+            id: 5,
             idTrabajo: 1,
             nombre: "Lucía Fernández",
             fotoUrl: "https://randomuser.me/api/portraits/women/68.jpg",
@@ -48,9 +57,11 @@ export class EnterpriseViewCandidatesController {
             ubicacion: "Madrid, Spain",
             experiencia: "4 - 6 Años",
             educacion: "Diplomado",
-            genero: "Femenino"
+            genero: "Femenino",
+            estado: "pendiente"
         },
         {
+            id: 6,
             idTrabajo: 1,
             nombre: "Javier Ruiz",
             fotoUrl: "https://randomuser.me/api/portraits/men/45.jpg",
@@ -58,9 +69,11 @@ export class EnterpriseViewCandidatesController {
             ubicacion: "Barcelona, Spain",
             experiencia: "1 - 2 Años",
             educacion: "Secundaria",
-            genero: "Masculino"
+            genero: "Masculino",
+            estado: "pendiente"
         },
         {
+            id: 7,
             idTrabajo: 12,
             nombre: "Miguel Torres",
             fotoUrl: "https://randomuser.me/api/portraits/men/15.jpg",
@@ -68,9 +81,11 @@ export class EnterpriseViewCandidatesController {
             ubicacion: "Lima, Peru",
             experiencia: "6 - 8 Años",
             educacion: "Ingeniería",
-            genero: "Masculino"
+            genero: "Masculino",
+            estado: "pendiente"
         },
         {
+            id: 8,
             idTrabajo: 12,
             nombre: "Valentina López",
             fotoUrl: "https://randomuser.me/api/portraits/women/56.jpg",
@@ -78,9 +93,11 @@ export class EnterpriseViewCandidatesController {
             ubicacion: "Santiago, Chile",
             experiencia: "4 - 6 Años",
             educacion: "Licenciatura",
-            genero: "Femenino"
+            genero: "Femenino",
+            estado: "pendiente"
         },
         {
+            id: 9,
             idTrabajo: 3,
             nombre: "Luis Castillo",
             fotoUrl: "https://randomuser.me/api/portraits/men/67.jpg",
@@ -88,9 +105,11 @@ export class EnterpriseViewCandidatesController {
             ubicacion: "Monterrey, Mexico",
             experiencia: "1 - 2 Años",
             educacion: "Técnico",
-            genero: "Masculino"
+            genero: "Masculino",
+            estado: "pendiente"
         },
         {
+            id: 10,
             idTrabajo: 7,
             nombre: "Andrea Morales",
             fotoUrl: "https://randomuser.me/api/portraits/women/77.jpg",
@@ -98,7 +117,8 @@ export class EnterpriseViewCandidatesController {
             ubicacion: "Medellín, Colombia",
             experiencia: "1 - 2 Años",
             educacion: "Diplomado",
-            genero: "Femenino"
+            genero: "Femenino",
+            estado: "pendiente"
         }
     ]
 
@@ -172,6 +192,37 @@ export class EnterpriseViewCandidatesController {
         if (!listCandidatos) return;
         listCandidatos.innerHTML = ``;
         for (const candidate of candidatesPerJob) {
+            let colorBadge;
+            switch (candidate.estado) {
+                case 'aceptado':
+                    colorBadge = 'success';
+                    break;
+                case 'rechazado':
+                    colorBadge = 'danger';
+                    break;
+                default:
+                    colorBadge = 'secondary';
+            }
+
+            let htmlAcciones = ``
+            if (candidate.estado === "pendiente") {
+                htmlAcciones = `<div
+                                class="col-12 col-sm-12 col-md-12 col-lg-2 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0 flex-column" style="align-self: center; gap: 5px;">
+                                <button data-bs-toggle="modal"  data-bs-target="#modalDetalleCandidato" type="button" class="btn btn-primary w-100 w-md-auto" onClick="verDetalleCandidato()">Ver Perfil →</button>
+                                <button type="button" class="btn btn-success w-100 w-md-auto"  onClick="enterpriseViewCandidatesController.aceptarCandidato(${candidate.id})">
+                                    Aceptar <i class="bi bi-check"></i>
+                                </button>
+                                <button type="button" class="btn btn-danger w-100 w-md-auto"  onClick="enterpriseViewCandidatesController.rechazarCandidato(${candidate.id})">
+                                   Rechazar <i class="bi bi-x"></i>
+                                </button>
+                            </div>`
+            }
+            else {
+                htmlAcciones = `<div
+                                class="col-12 col-sm-12 col-md-12 col-lg-2 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0 flex-column" style="align-self: center; gap: 5px;">
+                                <button data-bs-toggle="modal"  data-bs-target="#modalDetalleCandidato" type="button" class="btn btn-primary w-100 w-md-auto" onClick="verDetalleCandidato()">Ver Perfil →</button>
+                            </div>`
+            }
             listCandidatos.innerHTML += `  <div class="card flex row mb-2"
                             style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap; padding-left:3%;">
                             <!-- contenido  -->
@@ -179,7 +230,10 @@ export class EnterpriseViewCandidatesController {
                                 <img src="${candidate.fotoUrl}" class="card-img-top"
                                     style="max-width: 90px; border-radius: 20px; height: auto;" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title">${candidate.nombre}</h5>
+                                    <h5 class="card-title">
+                                        ${candidate.nombre}
+                                        <span class="badge bg-${colorBadge} ms-2">${candidate.estado || 'Pendiente'}</span>
+                                    </h5>
                                     <p class="card-text">${candidate.puesto}</p>
                                     <div class="d-flex flex-wrap">
                                         <p class="me-3"><i class="bi bi-geo-alt"></i> ${candidate.ubicacion}</p>
@@ -190,19 +244,29 @@ export class EnterpriseViewCandidatesController {
                                 </div>
                             </div>
                             <!-- acciones -->
-                            <div
-                                class="col-12 col-sm-12 col-md-12 col-lg-2 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0 flex-column" style="align-self: center; gap: 5px;">
-                                <button data-bs-toggle="modal"  data-bs-target="#modalDetalleCandidato" type="button" class="btn btn-primary w-100 w-md-auto" onClick="verDetalleCandidato()">Ver Perfil →</button>
-                                <button type="button" class="btn btn-danger w-100 w-md-auto" onClick="verDetalleCandidato()">
-                                   Rechazar <i class="bi bi-x"></i>
-                                </button>
-                                <button type="button" class="btn btn-success w-100 w-md-auto" onClick="verDetalleCandidato()">
-                                    Aceptar <i class="bi bi-check"></i>
-                                </button>
-                            </div>
+                           ${htmlAcciones}
                         </div>
             `
         }
+
+    }
+
+    public aceptarCandidato(idCandidato: number) {
+        const candidato = this.filteredCandidates.find(c => c.id === idCandidato);
+        if (!candidato) return;
+        candidato.estado = "aceptado";
+        this.renderCandidates();
+    }
+    public rechazarCandidato(idCandidato: number) {
+        const candidato = this.filteredCandidates.find(c => c.id === idCandidato);
+        if (!candidato) return;
+        candidato.estado = "rechazado";
+        this.renderCandidates();
+    }
+
+    private llenarModalDetalleCandidato(idCandidato: number) {
+        const candidato = this.filteredCandidates.find(c => c.id === idCandidato);
+        if (!candidato) return;
 
     }
 }
