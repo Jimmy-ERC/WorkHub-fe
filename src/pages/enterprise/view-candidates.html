@@ -417,10 +417,11 @@
             </div>
             <div class="modal-body">
                 <div style="display: flex; align-items: center; margin-bottom: 5%;" class="row ">
-                    <img style="max-width: 100px; border-radius: 120px;"
+                    <img id="fotoCandidato" style="max-width: 100px; border-radius: 120px;"
                         src="https://octodex.github.com/images/orderedlistocat.png" class="img-thumbnail col-md-2 "
                         alt="...">
-                    <h1 class="modal-title fs-5 col-md-8 mb-3" style="padding-left: 5%;" id="modalTitulo">Nombre</h1>
+                    <h1 class="modal-title fs-5 col-md-8 mb-3" style="padding-left: 5%;" id="nombreCandidato">Nombre
+                    </h1>
                     <button type="button" class="btn btn-primary col-md-2 "
                         style="display: flex; justify-content: center;"> <i style="margin-right: 4%;"
                             class="bi bi-envelope"></i><span>Enviar correo</span></button>
@@ -434,7 +435,7 @@
                         <!-- texto principal -->
                         <div class="col-12 col-sm-5 col-md-7" style="margin-bottom: 2%;">
                             <h8>Biografía:</h8>
-                            <p id="modalDescripcion" style="font-weight:100;">Lorem ipsum dolor sit amet consectetur
+                            <p id="biografiaCandidato" style="font-weight:100;">Lorem ipsum dolor sit amet consectetur
                                 adipisicing
                                 elit. Adipisci
                                 quae illum voluptate delectus
@@ -443,7 +444,8 @@
                                 consectetur at in aut praesentium.</p>
                             <hr>
                             <h8>Carta de presentación:</h8>
-                            <p id="modalModalidad" style="font-weight:100;">Lorem ipsum dolor sit amet consectetur
+                            <p id="cartaPresentacionCandidato" style="font-weight:100;">Lorem ipsum dolor sit amet
+                                consectetur
                                 adipisicing elit. Adipisci
                                 quae illum voluptate delectus
                                 porro nobis asperiores omnis? Sint, dolore accusantium expedita quaerat error pariatur
@@ -469,12 +471,12 @@
                                     <div style="width: 40%;">
                                         <i style="font-size: x-large; color: #1682FD;" class="bi bi-cake"></i>
                                         <h6 class="m-0">Fecha de nacimiento</h6>
-                                        <p class="m-0">yyyy-mm-dddd</p>
+                                        <p id="nacimientoCandidato" class="m-0">yyyy-mm-dddd</p>
                                     </div>
                                     <div style="width: 40%;">
                                         <i style="font-size: x-large; color: #1682FD;" class="bi bi-map"></i>
                                         <h6>Nacionalidad</h6>
-                                        <p class="m-0">American</p>
+                                        <p id="nacionalidadCandidato" class="m-0">American</p>
                                     </div>
                                 </div>
                                 <div class="d-flex"
@@ -483,12 +485,12 @@
                                         <i style="font-size: x-large; color: #1682FD;"
                                             class="bi bi-gender-ambiguous"></i>
                                         <h6 class="m-0">Género</h6>
-                                        <p class="m-0">Masculino</p>
+                                        <p id="generoCandidato" class="m-0">Masculino</p>
                                     </div>
                                     <div style="width: 40%;">
                                         <i style="font-size: x-large; color: #1682FD;" class="bi bi-person-hearts"></i>
                                         <h6 class="m-0">Estado civil</h6>
-                                        <p class="m-0">Soltero/a</p>
+                                        <p id="estadoCivilCandidato" class="m-0">Soltero/a</p>
                                     </div>
                                 </div>
 
@@ -496,12 +498,12 @@
                                     <div style="width: 40%; ">
                                         <i style="font-size: x-large; color: #1682FD;" class="bi bi-briefcase"></i>
                                         <h6 class="m-0">Experiencia</h6>
-                                        <p class="m-0">1-2 años</p>
+                                        <p id="experienciaCandidato" class="m-0">1-2 años</p>
                                     </div>
                                     <div style="width: 40%;">
                                         <i style="font-size: x-large; color: #1682FD;" class="bi bi-mortarboard"></i>
                                         <h6 class="m-0">Educacion</h6>
-                                        <p class="m-0">Ingenieria</p>
+                                        <p id="EducacionCandidato" class="m-0">Ingenieria</p>
                                     </div>
                                 </div>
                             </div>
@@ -514,13 +516,16 @@
                                     <i style="font-size:xxx-large; width: 30%; color: #dedede;"
                                         class="bi bi-file-earmark-pdf"></i>
                                     <div style="width: 50%; color: #767F8C;">
-                                        <p class="m-0">Howard Griffin</p>
+                                        <p id="nombreCandidatoPDF" class="m-0">Howard Griffin</p>
                                         <p class="fw-bold m-0">PDF</p>
                                     </div>
-                                    <button type="button" class="btn "
-                                        style="background-color: #E7F0FA; color: #0d6efd; width: 20%;">
-                                        <i class="bi bi-download"></i>
-                                    </button>
+                                    <a id="descargaCVCandidato" href="url" download="nombre_cv">
+
+                                        <button type="button" class="btn "
+                                            style="background-color: #E7F0FA; color: #0d6efd; width: 100%;">
+                                            <i class="bi bi-download"></i>
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                             <!-- datos de contacto -->

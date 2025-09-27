@@ -10,7 +10,14 @@ export class EnterpriseViewCandidatesController {
             experiencia: "2 - 4 Años",
             educacion: "Diplomado",
             genero: "Femenino",
-            estado: "pendiente"
+            estado: "pendiente",
+            estadoCivil: "Soltera",
+            fechaNacimiento: "1994-05-12",
+            nacionalidad: "Mexicana",
+            cvUrl: "https://workhub-cv.com/cv/ana-martinez.pdf",
+            email: "ana.martinez@email.com",
+            sitioWeb: "https://ana-martinez.com",
+            telefono: "+52 55 1234 5678"
         },
         {
             id: 2,
@@ -22,7 +29,14 @@ export class EnterpriseViewCandidatesController {
             experiencia: "1 - 2 Años",
             educacion: "Técnico",
             genero: "Masculino",
-            estado: "pendiente"
+            estado: "pendiente",
+            estadoCivil: "Casado",
+            fechaNacimiento: "1992-11-03",
+            nacionalidad: "Mexicana",
+            cvUrl: "https://workhub-cv.com/cv/pedro-ramirez.pdf",
+            email: "pedro.ramirez@email.com",
+            sitioWeb: "https://pedro-ramirez.com",
+            telefono: "+52 33 2345 6789"
         },
         {
             id: 3,
@@ -34,7 +48,14 @@ export class EnterpriseViewCandidatesController {
             experiencia: "4 - 6 Años",
             educacion: "Ingeniería",
             genero: "Masculino",
-            estado: "pendiente"
+            estado: "pendiente",
+            estadoCivil: "Soltero",
+            fechaNacimiento: "1990-08-21",
+            nacionalidad: "Colombiana",
+            cvUrl: "https://workhub-cv.com/cv/carlos-gomez.pdf",
+            email: "carlos.gomez@email.com",
+            sitioWeb: "https://carlos-gomez.com",
+            telefono: "+57 1 345 6789"
         },
         {
             id: 4,
@@ -46,7 +67,14 @@ export class EnterpriseViewCandidatesController {
             experiencia: "2 - 4 Años",
             educacion: "Licenciatura",
             genero: "Femenino",
-            estado: "pendiente"
+            estado: "pendiente",
+            estadoCivil: "Soltera",
+            fechaNacimiento: "1995-02-14",
+            nacionalidad: "Ecuatoriana",
+            cvUrl: "https://workhub-cv.com/cv/sofia-herrera.pdf",
+            email: "sofia.herrera@email.com",
+            sitioWeb: "https://sofia-herrera.com",
+            telefono: "+593 2 456 7890"
         },
         {
             id: 5,
@@ -58,7 +86,14 @@ export class EnterpriseViewCandidatesController {
             experiencia: "4 - 6 Años",
             educacion: "Diplomado",
             genero: "Femenino",
-            estado: "pendiente"
+            estado: "pendiente",
+            estadoCivil: "Casada",
+            fechaNacimiento: "1988-09-30",
+            nacionalidad: "Española",
+            cvUrl: "https://workhub-cv.com/cv/lucia-fernandez.pdf",
+            email: "lucia.fernandez@email.com",
+            sitioWeb: "https://lucia-fernandez.com",
+            telefono: "+34 91 123 4567"
         },
         {
             id: 6,
@@ -70,7 +105,14 @@ export class EnterpriseViewCandidatesController {
             experiencia: "1 - 2 Años",
             educacion: "Secundaria",
             genero: "Masculino",
-            estado: "pendiente"
+            estado: "pendiente",
+            estadoCivil: "Soltero",
+            fechaNacimiento: "1993-04-18",
+            nacionalidad: "Española",
+            cvUrl: "https://workhub-cv.com/cv/javier-ruiz.pdf",
+            email: "javier.ruiz@email.com",
+            sitioWeb: "https://javier-ruiz.com",
+            telefono: "+34 93 234 5678"
         },
         {
             id: 7,
@@ -82,7 +124,14 @@ export class EnterpriseViewCandidatesController {
             experiencia: "6 - 8 Años",
             educacion: "Ingeniería",
             genero: "Masculino",
-            estado: "pendiente"
+            estado: "pendiente",
+            estadoCivil: "Casado",
+            fechaNacimiento: "1985-12-07",
+            nacionalidad: "Peruana",
+            cvUrl: "https://workhub-cv.com/cv/miguel-torres.pdf",
+            email: "miguel.torres@email.com",
+            sitioWeb: "https://miguel-torres.com",
+            telefono: "+51 1 567 8901"
         },
         {
             id: 8,
@@ -94,7 +143,14 @@ export class EnterpriseViewCandidatesController {
             experiencia: "4 - 6 Años",
             educacion: "Licenciatura",
             genero: "Femenino",
-            estado: "pendiente"
+            estado: "pendiente",
+            estadoCivil: "Soltera",
+            fechaNacimiento: "1991-07-25",
+            nacionalidad: "Chilena",
+            cvUrl: "https://workhub-cv.com/cv/valentina-lopez.pdf",
+            email: "valentina.lopez@email.com",
+            sitioWeb: "https://valentina-lopez.com",
+            telefono: "+56 2 678 9012"
         },
         {
             id: 9,
@@ -106,7 +162,14 @@ export class EnterpriseViewCandidatesController {
             experiencia: "1 - 2 Años",
             educacion: "Técnico",
             genero: "Masculino",
-            estado: "pendiente"
+            estado: "pendiente",
+            estadoCivil: "Soltero",
+            fechaNacimiento: "1996-03-10",
+            nacionalidad: "Mexicana",
+            cvUrl: "https://workhub-cv.com/cv/luis-castillo.pdf",
+            email: "luis.castillo@email.com",
+            sitioWeb: "https://luis-castillo.com",
+            telefono: "+52 81 3456 7890"
         },
         {
             id: 10,
@@ -118,7 +181,14 @@ export class EnterpriseViewCandidatesController {
             experiencia: "1 - 2 Años",
             educacion: "Diplomado",
             genero: "Femenino",
-            estado: "pendiente"
+            estado: "pendiente",
+            estadoCivil: "Soltera",
+            fechaNacimiento: "1997-10-05",
+            nacionalidad: "Colombiana",
+            cvUrl: "https://workhub-cv.com/cv/andrea-morales.pdf",
+            email: "andrea.morales@email.com",
+            sitioWeb: "https://andrea-morales.com",
+            telefono: "+57 4 234 5678"
         }
     ]
 
@@ -208,7 +278,7 @@ export class EnterpriseViewCandidatesController {
             if (candidate.estado === "pendiente") {
                 htmlAcciones = `<div
                                 class="col-12 col-sm-12 col-md-12 col-lg-2 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0 flex-column" style="align-self: center; gap: 5px;">
-                                <button data-bs-toggle="modal"  data-bs-target="#modalDetalleCandidato" type="button" class="btn btn-primary w-100 w-md-auto" onClick="verDetalleCandidato()">Ver Perfil →</button>
+                                <button data-bs-toggle="modal"  data-bs-target="#modalDetalleCandidato" type="button" class="btn btn-primary w-100 w-md-auto" onClick="enterpriseViewCandidatesController.llenarModalDetalleCandidato(${candidate.id})">Ver Perfil →</button>
                                 <button type="button" class="btn btn-success w-100 w-md-auto"  onClick="enterpriseViewCandidatesController.aceptarCandidato(${candidate.id})">
                                     Aceptar <i class="bi bi-check"></i>
                                 </button>
@@ -220,7 +290,7 @@ export class EnterpriseViewCandidatesController {
             else {
                 htmlAcciones = `<div
                                 class="col-12 col-sm-12 col-md-12 col-lg-2 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0 flex-column" style="align-self: center; gap: 5px;">
-                                <button data-bs-toggle="modal"  data-bs-target="#modalDetalleCandidato" type="button" class="btn btn-primary w-100 w-md-auto" onClick="verDetalleCandidato()">Ver Perfil →</button>
+                                <button data-bs-toggle="modal"  data-bs-target="#modalDetalleCandidato" type="button" class="btn btn-primary w-100 w-md-auto" onClick="enterpriseViewCandidatesController.llenarModalDetalleCandidato(${candidate.id})">Ver Perfil →</button>
                             </div>`
             }
             listCandidatos.innerHTML += `  <div class="card flex row mb-2"
@@ -264,10 +334,79 @@ export class EnterpriseViewCandidatesController {
         this.renderCandidates();
     }
 
-    private llenarModalDetalleCandidato(idCandidato: number) {
+    public llenarModalDetalleCandidato(idCandidato: number) {
         const candidato = this.filteredCandidates.find(c => c.id === idCandidato);
         if (!candidato) return;
 
+        // Foto y nombre
+        const foto = document.getElementById('fotoCandidato') as HTMLImageElement;
+        if (foto) foto.src = candidato.fotoUrl;
+
+        const nombre = document.getElementById('nombreCandidato');
+        if (nombre) nombre.textContent = candidato.nombre;
+
+        // Género
+        const genero = document.getElementById('generoCandidato');
+        if (genero) genero.textContent = candidato.genero;
+
+        // Experiencia
+        const experiencia = document.getElementById('experienciaCandidato');
+        if (experiencia) experiencia.textContent = candidato.experiencia;
+
+        // Educación
+        const educacion = document.getElementById('EducacionCandidato');
+        if (educacion) educacion.textContent = candidato.educacion;
+
+        // Fecha de nacimiento
+        const nacimiento = document.getElementById('nacimientoCandidato');
+        if (nacimiento) nacimiento.textContent = candidato.fechaNacimiento;
+
+        // Nacionalidad
+        const nacionalidad = document.getElementById('nacionalidadCandidato');
+        if (nacionalidad) nacionalidad.textContent = candidato.nacionalidad;
+
+        // Estado civil
+        const estadoCivil = document.getElementById('estadoCivilCandidato');
+        if (estadoCivil) estadoCivil.textContent = candidato.estadoCivil;
+
+        // Nombre del PDF y enlace de descarga
+        const nombreCandidatoPDF = document.getElementById('nombreCandidatoPDF');
+        if (nombreCandidatoPDF) nombreCandidatoPDF.textContent = candidato.nombre;
+
+        const descargaCVCandidato = document.getElementById('descargaCVCandidato') as HTMLAnchorElement;
+        if (descargaCVCandidato) {
+
+            descargaCVCandidato.href = candidato.cvUrl;
+            descargaCVCandidato.download = `${candidato.nombre.replace(/\s+/g, '_').toLowerCase()}_cv.pdf`;
+        }
+
+        const nombreCandidatoPdf = document.getElementById('nombreCandidatoPDF');
+        if (nombreCandidatoPDF) {
+            nombreCandidatoPDF.textContent = candidato.nombre;
+        }
+
+        // Sitio web
+        const sitioWeb = document.querySelector('#modalDetalleCandidato .bi-globe')?.parentElement?.querySelector('p.fw-bold');
+        if (sitioWeb) sitioWeb.textContent = candidato.sitioWeb;
+
+        // Ubicación (en la sección de contacto)
+        const ubicacionContacto = document.querySelector('#modalDetalleCandidato .bi-geo-alt')?.parentElement?.querySelector('p.fw-bold');
+        if (ubicacionContacto) ubicacionContacto.textContent = candidato.ubicacion;
+
+        // Teléfono
+        const telefono = document.querySelector('#modalDetalleCandidato .bi-telephone')?.parentElement?.querySelector('p.fw-bold');
+        if (telefono) telefono.textContent = candidato.telefono;
+
+        // Correo electrónico
+        const correo = document.querySelector('#modalDetalleCandidato .bi-envelope')?.parentElement?.querySelector('p.fw-bold');
+        if (correo) correo.textContent = candidato.email;
+
+        // Biografía y carta de presentación (si existieran en el objeto candidato)
+        const biografia = document.getElementById('biografiaCandidato');
+        if (biografia) biografia.textContent = (candidato as any).biografia || "No disponible.";
+
+        const cartaPresentacion = document.getElementById('cartaPresentacionCandidato');
+        if (cartaPresentacion) cartaPresentacion.textContent = (candidato as any).cartaPresentacion || "No disponible.";
     }
 }
 //obtiene el puesto de la URL
