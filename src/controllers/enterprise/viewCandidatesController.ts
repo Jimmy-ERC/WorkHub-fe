@@ -1,3 +1,5 @@
+import { loadUserData } from '../../lib/userDataLoader.js';
+
 export class EnterpriseViewCandidatesController {
     private candidates = [
         {
@@ -224,11 +226,13 @@ export class EnterpriseViewCandidatesController {
 
     private filteredCandidates = [...this.candidates]
     constructor() {
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             console.log("cargando datos de candidatos")
+            await loadUserData();
             this.renderCandidates();
         })
     }
+
 
     public renderCandidates(): void {
         let candidatesPerJob = this.filteredCandidates;

@@ -233,6 +233,8 @@ export class ProfileEnterpriseService {
                             console.log(`Avatar found with extension: ${ext}`);
                             return publicUrl.publicUrl;
                         }
+
+                        
                     }
                 } catch (extError) {
                     // Continuar con la siguiente extensión
@@ -275,6 +277,19 @@ export class ProfileEnterpriseService {
                 };
             }
 
+            // actualizar el local storage con la nueva URL del avatar
+            const STORAGE_KEY = 'workhub_session_v1'
+
+            const storedUser = sessionManager.getStoredUser();
+            if (storedUser) {
+                storedUser.link_foto_perfil = avatarUrl;
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(storedUser));
+                } catch (e) {
+                    console.warn('Could not update stored user with new avatar URL', e);
+                }
+            }
+
             return {
                 success: true,
                 avatarUrl
@@ -282,7 +297,7 @@ export class ProfileEnterpriseService {
 
         } catch (error) {
             console.error('Error uploading enterprise avatar:', error);
-            
+
             let errorMessage = 'Error desconocido';
             if (error instanceof Error) {
                 if (error.message.includes('Bucket not found')) {

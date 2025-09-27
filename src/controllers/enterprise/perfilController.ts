@@ -2,6 +2,7 @@ import { ProfileEnterpriseService } from '@/services/profileService';
 import type { ProfileResponse, ProfileResponseError } from '../../interfaces/profileResponse.interface';
 import { sessionManager } from '../../lib/session';
 import { diagnoseStorageSetup } from '../../lib/avatarUpload';
+import { loadUserData } from '../../lib/userDataLoader.js';
 
 // Variable to track if profile exists (for create vs update logic)
 let profileExists = false;
@@ -29,6 +30,10 @@ function populateProfileForm(profileData: ProfileResponse['data']) {
         setInputValue('foundedAt', new Date(profileData.fecha_nacimiento_fundacion).toISOString().split('T')[0]); // "2025-09-25T06:00:00.000Z"
     }
 
+    // Cargar avatar si está disponible en el perfil
+    if (profileData.link_foto_perfil) {
+        updateAvatarPreview(profileData.link_foto_perfil);
+    }
 }
 
 
@@ -92,6 +97,15 @@ function showSuccess(message: string) {
     }, 5000);
 }
 
+// Function to get current avatar URL from the preview
+function getCurrentAvatarUrl(): string | undefined {
+    const dropArea = document.getElementById('dropArea');
+    if (!dropArea) return undefined;
+
+    const img = dropArea.querySelector('img');
+    return img?.src || undefined;
+}
+
 // Function to collect form data
 function collectFormData(): ProfileResponse['data'] {
     const getValue = (id: string): string => {
@@ -113,7 +127,8 @@ function collectFormData(): ProfileResponse['data'] {
         fecha_nacimiento_fundacion: getValue('foundedAt'),
         pagina_web: getValue('website'),
         red_social: getValue('social'),
-        email: getValue('email')
+        email: getValue('email'),
+        link_foto_perfil: getCurrentAvatarUrl() || '' // Include current avatar URL or empty string
     };
 }
 
@@ -221,11 +236,10 @@ async function handleSaveProfile() {
         // Update form with returned data (in case backend modified anything)
         populateProfileForm(successResult.data);
 
-        // Update user display name in navbar
-        const userNameDisplay = document.getElementById('userNameDisplay');
-        if (userNameDisplay && successResult.data.nombre) {
-            userNameDisplay.textContent = successResult.data.nombre;
-        }
+        // Update user display and profile pic name in navbar
+
+        loadUserData();
+
 
         // Show success message
         const action = wasCreating ? 'creado' : 'actualizado';
@@ -286,8 +300,8 @@ async function loadEnterpriseProfile() {
             // Profile doesn't exist, user can create a new one
             profileExists = false;
 
-        // Still try to load existing avatar even if profile doesn't exist
-        await loadExistingAvatarUI();            showError(errorResult.message);
+            // Still try to load existing avatar even if profile doesn't exist
+            await loadExistingAvatarUI(); showError(errorResult.message);
             return;
         }
 
@@ -307,6 +321,8 @@ async function loadEnterpriseProfile() {
         if (userNameDisplay && profileResult.data.nombre) {
             userNameDisplay.textContent = profileResult.data.nombre;
         }
+
+        loadUserData();
 
         // Hide loading state
         setLoadingState(false);
@@ -349,12 +365,6 @@ function updateAvatarPreview(imageUrl: string) {
             <small class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Imagen cargada</small>
         </div>
     `;
-
-    // Update navbar avatar if exists
-    const navbarAvatar = document.querySelector('.navbar img[alt="Avatar de usuario"]') as HTMLImageElement;
-    if (navbarAvatar) {
-        navbarAvatar.src = imageUrl;
-    }
 }
 
 function resetAvatarDropzone() {
@@ -385,7 +395,7 @@ async function handleAvatarUpload(file: File) {
             `;
         }
 
-        // Use service to upload avatar
+        // Use service to upload avatar 
         const result = await ProfileEnterpriseService.uploadEnterpriseAvatar(file);
 
         if (!result.success) {

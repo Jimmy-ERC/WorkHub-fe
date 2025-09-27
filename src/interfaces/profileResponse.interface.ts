@@ -16,6 +16,7 @@ export interface Data {
     biografia:  string;
     telefono:   string;
     ubicacion:  string;
+    link_foto_perfil?: string;
     fecha_nacimiento_fundacion: string;
     pagina_web: string;
     red_social: string;

@@ -6,6 +6,7 @@ export type StoredUser = {
     email?: string | null | undefined;
     nombre?: string | null | undefined;
     usuario?: string | null | undefined;
+    link_foto_perfil?: string | null | undefined;
     userType?: string | null | undefined;
 }
 
@@ -22,6 +23,7 @@ export const sessionManager = {
                     email: session.user.email,
                     nombre: session.user.user_metadata?.full_name,
                     usuario: session.user.user_metadata?.username,
+                    link_foto_perfil: session.user.user_metadata?.avatar_url,
                     userType: session.user.user_metadata?.user_type,
                 }
                 try {

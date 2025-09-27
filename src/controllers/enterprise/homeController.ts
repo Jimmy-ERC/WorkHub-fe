@@ -1,4 +1,4 @@
-import { sessionManager } from '../../lib/session.js';
+import { loadUserData } from '../../lib/userDataLoader.js';
 
 type Job = {
     id: number;
@@ -36,40 +36,13 @@ export class EnterpriseHomeController {
     }
 
     private init(): void {
-        document.addEventListener('DOMContentLoaded', () => {
-            this.loadUserData();
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadUserData();
             this.renderJobs();
         });
     }
 
-    /**
-     * Carga y muestra los datos del usuario desde localStorage
-     */
-    public loadUserData(): void {
-        try {
-            const storedUser = sessionManager.getStoredUser();
-            const userNameDisplay = document.getElementById('userNameDisplay');
 
-            if (storedUser && userNameDisplay) {
-                // Mostrar username si existe, sino mostrar email o id como fallback
-                if (storedUser.usuario) {
-                    userNameDisplay.textContent = storedUser.usuario;
-                } else if (storedUser.nombre) {
-                    userNameDisplay.textContent = storedUser.nombre;
-                } else if (storedUser.email) {
-                    userNameDisplay.textContent = storedUser.email;
-                } else {
-                    userNameDisplay.textContent = 'Usuario';
-                }
-            }
-        } catch (error) {
-            console.error('Error loading user data:', error);
-            const userNameDisplay = document.getElementById('userNameDisplay');
-            if (userNameDisplay) {
-                userNameDisplay.textContent = 'Usuario';
-            }
-        }
-    }
 
     /**
      * Renderiza los trabajos para la página actual
