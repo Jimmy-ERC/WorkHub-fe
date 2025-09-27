@@ -425,6 +425,11 @@ export class EnterpriseViewCandidatesController {
 
         const cartaPresentacion = document.getElementById('cartaPresentacionCandidato');
         if (cartaPresentacion) cartaPresentacion.textContent = (candidato as any).cartaPresentacion || "No disponible.";
+
+
+        //boton para enviar correo;
+        const enviarCorreoCandidato = document.getElementById('enviarCorreoCandidato') as HTMLAnchorElement;
+        if (enviarCorreoCandidato) enviarCorreoCandidato.href = `mailto:${candidato.email}`;
     }
 }
 //obtiene el puesto de la URL
