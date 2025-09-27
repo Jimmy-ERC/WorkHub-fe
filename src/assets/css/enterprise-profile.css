@@ -48,6 +48,21 @@
   box-shadow: 0 0 0 .25rem rgba(var(--bs-primary-rgb), .25);
 }
 
+.dropzone.dragover {
+  background: rgba(var(--bs-primary-rgb), .05);
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 .25rem rgba(var(--bs-primary-rgb), .15);
+}
+
+/* Avatar preview hover overlay */
+.hover-overlay {
+  transition: opacity .2s ease;
+}
+
+.dropzone:hover .hover-overlay {
+  opacity: 1 !important;
+}
+
 /* ===== Ajustes visuales menores ===== */
 img {
   max-width: 100%;
