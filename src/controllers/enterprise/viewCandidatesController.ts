@@ -19,7 +19,8 @@ export class EnterpriseViewCandidatesController {
             sitioWeb: "https://ana-martinez.com",
             telefono: "+52 55 1234 5678",
             biografia: "Diseñadora de interacción apasionada por crear experiencias digitales intuitivas y accesibles. Con experiencia en proyectos de diseño centrado en el usuario y prototipado rápido.",
-            cartaPresentacion: "Me encantaría formar parte de su equipo para aportar mi creatividad y habilidades en diseño de interacción, ayudando a mejorar la experiencia de sus usuarios."
+            cartaPresentacion: "Me encantaría formar parte de su equipo para aportar mi creatividad y habilidades en diseño de interacción, ayudando a mejorar la experiencia de sus usuarios.",
+            redSocial: "https://twitter.com/ana_martinez"
         },
         {
             id: 2,
@@ -40,7 +41,8 @@ export class EnterpriseViewCandidatesController {
             sitioWeb: "https://pedro-ramirez.com",
             telefono: "+52 33 2345 6789",
             biografia: "Diseñador técnico con enfoque en la interacción digital y la usabilidad. Experiencia en diseño de interfaces y pruebas de usuario.",
-            cartaPresentacion: "Estoy motivado para contribuir con mi conocimiento técnico y mi pasión por el diseño a su empresa, asegurando productos funcionales y atractivos."
+            cartaPresentacion: "Estoy motivado para contribuir con mi conocimiento técnico y mi pasión por el diseño a su empresa, asegurando productos funcionales y atractivos.",
+            redSocial: "https://linkedin.com/in/pedro-ramirez"
         },
         {
             id: 3,
@@ -61,7 +63,8 @@ export class EnterpriseViewCandidatesController {
             sitioWeb: "https://carlos-gomez.com",
             telefono: "+57 1 345 6789",
             biografia: "Ingeniero de software con sólida experiencia en desarrollo backend y frontend. Apasionado por la resolución de problemas y la mejora continua.",
-            cartaPresentacion: "Me gustaría aportar mi experiencia en desarrollo de software y mi capacidad de trabajo en equipo para impulsar los proyectos tecnológicos de su empresa."
+            cartaPresentacion: "Me gustaría aportar mi experiencia en desarrollo de software y mi capacidad de trabajo en equipo para impulsar los proyectos tecnológicos de su empresa.",
+            redSocial: "https://github.com/carlosgomez"
         },
         {
             id: 4,
@@ -82,7 +85,8 @@ export class EnterpriseViewCandidatesController {
             sitioWeb: "https://sofia-herrera.com",
             telefono: "+593 2 456 7890",
             biografia: "Desarrolladora de software enfocada en aplicaciones web y móviles. Interesada en la innovación tecnológica y el aprendizaje constante.",
-            cartaPresentacion: "Estoy interesada en unirme a su equipo para aportar mis conocimientos en desarrollo y mi entusiasmo por los nuevos retos tecnológicos."
+            cartaPresentacion: "Estoy interesada en unirme a su equipo para aportar mis conocimientos en desarrollo y mi entusiasmo por los nuevos retos tecnológicos.",
+            redSocial: "https://twitter.com/sofia_herrera"
         },
         {
             id: 5,
@@ -103,7 +107,8 @@ export class EnterpriseViewCandidatesController {
             sitioWeb: "https://lucia-fernandez.com",
             telefono: "+34 91 123 4567",
             biografia: "Especialista en marketing con experiencia en campañas digitales y gestión de equipos. Orientada a resultados y a la innovación en estrategias de mercado.",
-            cartaPresentacion: "Me gustaría aportar mi experiencia en marketing y liderazgo para contribuir al crecimiento y posicionamiento de su empresa."
+            cartaPresentacion: "Me gustaría aportar mi experiencia en marketing y liderazgo para contribuir al crecimiento y posicionamiento de su empresa.",
+            redSocial: "https://linkedin.com/in/lucia-fernandez"
         },
         {
             id: 6,
@@ -124,7 +129,8 @@ export class EnterpriseViewCandidatesController {
             sitioWeb: "https://javier-ruiz.com",
             telefono: "+34 93 234 5678",
             biografia: "Joven profesional del marketing con habilidades en redes sociales y análisis de mercado. Proactivo y con gran capacidad de aprendizaje.",
-            cartaPresentacion: "Deseo aportar mi energía y mis conocimientos en marketing digital para ayudar a su empresa a alcanzar nuevos públicos."
+            cartaPresentacion: "Deseo aportar mi energía y mis conocimientos en marketing digital para ayudar a su empresa a alcanzar nuevos públicos.",
+            redSocial: "https://twitter.com/javierruiz"
         },
         {
             id: 7,
@@ -145,7 +151,8 @@ export class EnterpriseViewCandidatesController {
             sitioWeb: "https://miguel-torres.com",
             telefono: "+51 1 567 8901",
             biografia: "Diseñador UX senior con amplia experiencia en investigación de usuarios y diseño de productos digitales de alto impacto.",
-            cartaPresentacion: "Estoy interesado en liderar proyectos de experiencia de usuario en su empresa, aportando mi visión estratégica y mi experiencia en el sector."
+            cartaPresentacion: "Estoy interesado en liderar proyectos de experiencia de usuario en su empresa, aportando mi visión estratégica y mi experiencia en el sector.",
+            redSocial: "https://linkedin.com/in/migueltorres"
         },
         {
             id: 8,
@@ -166,7 +173,8 @@ export class EnterpriseViewCandidatesController {
             sitioWeb: "https://valentina-lopez.com",
             telefono: "+56 2 678 9012",
             biografia: "Profesional en diseño UX con experiencia en metodologías ágiles y diseño centrado en el usuario. Creativa y orientada a resultados.",
-            cartaPresentacion: "Me gustaría contribuir con mi experiencia en UX y mi creatividad para mejorar la experiencia digital de sus clientes."
+            cartaPresentacion: "Me gustaría contribuir con mi experiencia en UX y mi creatividad para mejorar la experiencia digital de sus clientes.",
+            redSocial: "https://twitter.com/valenlopez"
         },
         {
             id: 9,
@@ -187,7 +195,8 @@ export class EnterpriseViewCandidatesController {
             sitioWeb: "https://luis-castillo.com",
             telefono: "+52 81 3456 7890",
             biografia: "Diseñador de interacción con experiencia en prototipado y pruebas de usabilidad. Apasionado por la tecnología y el diseño funcional.",
-            cartaPresentacion: "Quiero aportar mi entusiasmo y mis conocimientos en diseño de interacción para crear productos digitales efectivos en su empresa."
+            cartaPresentacion: "Quiero aportar mi entusiasmo y mis conocimientos en diseño de interacción para crear productos digitales efectivos en su empresa.",
+            redSocial: "https://linkedin.com/in/luiscastillo"
         },
         {
             id: 10,
@@ -208,7 +217,8 @@ export class EnterpriseViewCandidatesController {
             sitioWeb: "https://andrea-morales.com",
             telefono: "+57 4 234 5678",
             biografia: "Ingeniera de software junior con interés en el desarrollo web y la mejora de procesos. Dispuesta a aprender y crecer profesionalmente.",
-            cartaPresentacion: "Me gustaría unirme a su equipo para desarrollar mis habilidades y contribuir al éxito de sus proyectos tecnológicos."
+            cartaPresentacion: "Me gustaría unirme a su equipo para desarrollar mis habilidades y contribuir al éxito de sus proyectos tecnológicos.",
+            redSocial: "https://twitter.com/andreamorales"
         }
     ]
 
@@ -430,6 +440,33 @@ export class EnterpriseViewCandidatesController {
         //boton para enviar correo;
         const enviarCorreoCandidato = document.getElementById('enviarCorreoCandidato') as HTMLAnchorElement;
         if (enviarCorreoCandidato) enviarCorreoCandidato.href = `mailto:${candidato.email}`;
+
+        //icono red social
+        const redSocialIconoCandidato = document.getElementById('redSocialIconoCandidato') as HTMLAnchorElement;
+        //limpiamos las clases anteriores
+        redSocialIconoCandidato.classList.remove(...redSocialIconoCandidato.classList);
+
+        //añadimos el icono segun la red social
+        if (candidato.redSocial.includes("twitter")) {
+            redSocialIconoCandidato.classList.add('bi', 'bi-twitter');
+        }
+        else if (candidato.redSocial.includes("linkedin")) {
+
+            redSocialIconoCandidato.classList.add('bi', 'bi-linkedin');
+        }
+        else if (candidato.redSocial.includes("facebook")) {
+            redSocialIconoCandidato.classList.add('bi', 'bi-facebook');
+        }
+        else if (candidato.redSocial.includes("github")) {
+            redSocialIconoCandidato.classList.add('bi', 'bi-github');
+        }
+        else {
+            redSocialIconoCandidato.classList.add('bi', 'bi-globe');
+        }
+
+        //añadimos el enlace a la red social
+        const redSocialCandidato = document.getElementById('redSocialCandidato') as HTMLAnchorElement;
+        if (redSocialCandidato) redSocialCandidato.href = candidato.redSocial;
     }
 }
 //obtiene el puesto de la URL
