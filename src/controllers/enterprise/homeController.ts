@@ -32,7 +32,7 @@ export class EnterpriseHomeController {
     private filteredJobs: Job[] = [...this.jobs];
 
     constructor() {
-        this.init();
+        this.init(); //espera a que el documento esté cargado y carga tanto los datos de usuario como los trabajos
     }
 
     private init(): void {
@@ -156,6 +156,8 @@ export class EnterpriseHomeController {
     }
 
 
+
+
     public llenarModalDetalleTrabajo(idTrabajo: number) {
         const trabajo = this.jobs.find(t => t.id === idTrabajo);
         console.log(trabajo);
@@ -164,8 +166,17 @@ export class EnterpriseHomeController {
         document.getElementById("modalTitulo")!.textContent = trabajo!.title
         document.getElementById("modalDescripcion")!.textContent = trabajo!.descripcion;
         document.getElementById("modalModalidad")!.textContent = trabajo!.modalidad;
-        document.getElementById("modalUbicacion")!.textContent = trabajo!.location
+        document.getElementById("modalUbicacion")!.textContent = trabajo!.location;
+
+        //enviar el id del trabajo al botón ver candidatos
+        document.getElementById('btnVerCandidatos')!.addEventListener('click', () => verCandidatos(trabajo?.title));
     }
+}
+
+
+function verCandidatos(puesto: any) {
+    // Redirigir a la página de ver candidatos con el puesto seleccionado
+    window.location.href = `/src/pages/enterprise/view-candidates.html?puesto=${encodeURIComponent(puesto)}`;
 }
 
 // Crear instancia global para acceso desde HTML
