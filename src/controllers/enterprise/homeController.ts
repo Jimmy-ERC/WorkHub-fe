@@ -220,7 +220,7 @@ export class EnterpriseHomeController {
         document.getElementById("modalUbicacion")!.textContent = trabajo!.ubicacion;
 
         //enviar el nombre del trabajo al botón ver candidatos
-        document.getElementById('btnVerCandidatos')!.addEventListener('click', () => verCandidatos(trabajo?.nombre_trabajo));
+        document.getElementById('btnVerCandidatos')!.addEventListener('click', () => verCandidatos(trabajo?.id_trabajo));
     }
 }
 

@@ -1,4 +1,4 @@
-import type { Job } from "@/interfaces/job.interface";
+
 import type { JobsResponse } from "@/interfaces/jobsResponse";
 import type { ProfileResponse, ProfileResponseError } from "@/interfaces/profileResponse.interface";
 import { api } from "@/lib/api";
@@ -10,13 +10,13 @@ const apiUrl = api.baseUrl
 // tomamos el usuario actual de la sesión activa
 const { user } = await sessionManager.getUserFromSupabase()
 
-export class JobsService {
+export class JobApplicationsService {
 
     constructor() { }
 
-    public static async getJobsByProfileId(profileId: number): Promise<JobsResponse> {
+    public static async getApplicationsByJobId(jobId: number): Promise<any> {
         try {
-            const response = await fetch(`${apiUrl}/trabajos/${profileId}`, {
+            const response = await fetch(`${apiUrl}/enterprise/aplicaciones/${jobId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -39,5 +39,6 @@ export class JobsService {
             }
         }
     }
+
 
 }
