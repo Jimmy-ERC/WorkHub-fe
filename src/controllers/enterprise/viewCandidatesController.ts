@@ -5,6 +5,7 @@ export class EnterpriseViewCandidatesController {
     private candidates = [
         {
             id_perfil: 11,
+            id_aplicacion: 5,
             id_trabajo: 10,
             nombre: "Instagram",
             id_usuario: "3cbac7ba-1995-42ce-ac79-0b30ba522831",
@@ -124,10 +125,10 @@ export class EnterpriseViewCandidatesController {
                 htmlAcciones = `<div
                                 class="col-12 col-sm-12 col-md-12 col-lg-2 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0 flex-column" style="align-self: center; gap: 5px;">
                                 <button data-bs-toggle="modal"  data-bs-target="#modalDetalleCandidato" type="button" class="btn btn-primary w-100 w-md-auto" onClick="enterpriseViewCandidatesController.llenarModalDetalleCandidato(${candidate.id_perfil})">Ver Perfil →</button>
-                                <button type="button" class="btn btn-success w-100 w-md-auto"  onClick="enterpriseViewCandidatesController.aceptarCandidato(${candidate.id_perfil})">
+                                <button type="button" class="btn btn-success w-100 w-md-auto"  onClick="enterpriseViewCandidatesController.actualizarEstadoAplicacion(${candidate.id_aplicacion}, 'aceptado')">
                                     Aceptar <i class="bi bi-check"></i>
                                 </button>
-                                <button type="button" class="btn btn-danger w-100 w-md-auto"  onClick="enterpriseViewCandidatesController.rechazarCandidato(${candidate.id_perfil})">
+                                <button type="button" class="btn btn-danger w-100 w-md-auto"  onClick="enterpriseViewCandidatesController.actualizarEstadoAplicacion(${candidate.id_aplicacion}, 'rechazado')">
                                    Rechazar <i class="bi bi-x"></i>
                                 </button>
                             </div>`
@@ -166,18 +167,17 @@ export class EnterpriseViewCandidatesController {
 
     }
 
-    public aceptarCandidato(idCandidato: number) {
-        const candidato = this.filteredCandidates.find(c => c.id_perfil === idCandidato);
-        if (!candidato) return;
-        candidato.estado = "aceptado";
-        this.renderCandidates();
+    public async actualizarEstadoAplicacion(idAplicacion: number, status: string) {
+        const response = await JobApplicationsService.updateApplicationStatus(idAplicacion, status);
+        if (response.success) {
+            await this.loadCandidates()
+            this.renderCandidates();
+        }
+        else {
+            alert(response.message || "Error al actualizar estado de la aplicación");
+        }
     }
-    public rechazarCandidato(idCandidato: number) {
-        const candidato = this.filteredCandidates.find(c => c.id_perfil === idCandidato);
-        if (!candidato) return;
-        candidato.estado = "rechazado";
-        this.renderCandidates();
-    }
+
 
     public llenarModalDetalleCandidato(idCandidato: number) {
         const candidato = this.filteredCandidates.find(c => c.id_perfil === idCandidato);
