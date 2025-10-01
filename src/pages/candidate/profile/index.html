@@ -100,7 +100,8 @@
                         <span><i class="bi bi-bell me-2"></i> Alertas de trabajo</span>
                         <span class="badge text-bg-primary-subtle border border-primary-subtle">09</span>
                     </a>
-                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2" href="settings.html" data-route="settings">
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/settings.html" data-route="settings">
                         <i class="bi bi-gear me-2"></i> Ajustes
                     </a>
 
@@ -347,20 +348,21 @@
     <!-- Route Protection Script (must load before other scripts) -->
     <script type="module" src="/src/controllers/routeProtection.ts"></script>
 
-    <!-- Load user data for navbar - aun no implementado, ver funcionalidad en perfil de empresa -->
-    <!-- <script type="module">
-        import { loadUserData } from '/src/lib/userDataLoader.js';
+    <script type="module" src="/src/controllers/candidate/perfilController.ts"></script>
+
+    <!-- Load user data for navbar -->
+    <script type="module">
+        import { loadUserData } from '/src/lib/userDataLoader.ts';
         document.addEventListener('DOMContentLoaded', async () => {
             await loadUserData();
         });
-    </script> -->
+    </script>
 
     <!-- Bootstrap JS (bundle) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 
-    <!-- TODO:TS – Inicializar año dinámico, control de rutas protegidas, acciones de lista, etc. -->
 </body>
 
 </html>
