@@ -87,7 +87,7 @@ export class CandidateHomeController {
                 </div>
                 <div class="d-flex align-items-center gap-3">
                     <i class="bi bi-bookmark save-icon"></i>
-                    <a href="#" class="btn apply-btn btn-sm">Apply Now →</a>
+                    <a href="/src/pages/candidate/view-job.html" class="btn apply-btn btn-sm">Apply Now →</a>
                 </div>
             </div>`;
         });
