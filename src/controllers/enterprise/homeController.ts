@@ -141,7 +141,7 @@ export class EnterpriseHomeController {
                 );
             });
         }
-
+        this.renderJobs();
     }
 
     public llenarModalDetalleTrabajo(idTrabajo: number) {
