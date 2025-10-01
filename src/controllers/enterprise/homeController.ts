@@ -5,54 +5,55 @@ import type { ProfileResponse } from "@/interfaces/profileResponse.interface.js"
 import { JobsService } from "@/services/jobsService.js";
 
 export class EnterpriseHomeController {
-  private jobs: Job[] = [];
+    private jobs: Job[] = [];
 
-  private filteredJobs: Job[] = [...this.jobs];
+    private filteredJobs: Job[] = [...this.jobs];
 
-  constructor() {
-    this.init(); //Espera a que el documento esté cargado y carga tanto los datos de usuario como los trabajos
-  }
-
-  private init(): void {
-    //Soluciona error desconocida de carga
-    const runAll = async () => {
-      await loadUserData();
-      await this.loadJobs();
-      this.renderJobs();
-    };
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", runAll);
-    } else {
-      runAll();
-    }
-  }
-
-  //Carga los trabajos desde el servicio
-  private async loadJobs(): Promise<void> {
-    let profileResponse =
-      (await ProfileEnterpriseService.fetchEnterpriseProfile()) as ProfileResponse;
-
-    if (!profileResponse.success) {
-      alert(profileResponse.message);
-      return;
+    constructor() {
+        this.init(); //Espera a que el documento esté cargado y carga tanto los datos de usuario como los trabajos
     }
 
-    const profileId = profileResponse.data.id_perfil;
-    console.log("ID de perfil obtenido:", profileId);
+    private init(): void {
+        //Soluciona error desconocida de carga
+        const runAll = async () => {
+            await loadUserData();
+            await this.loadJobs();
+            this.renderJobs();
+        };
 
-    try {
-      let jobsResponse = await JobsService.getJobsByProfileId(profileId);
-      if (!jobsResponse.success) {
-        alert(jobsResponse.message);
-        return;
-      }
-      this.jobs = jobsResponse.data;
-      this.filteredJobs = [...this.jobs];
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", runAll);
+        } else {
+            runAll();
+        }
+    }
 
-      this.renderJobs();
-    } catch (error) {
-      console.error("Error al obtener los trabajos:", error);
+    //Carga los trabajos desde el servicio
+    private async loadJobs(): Promise<void> {
+        let profileResponse =
+            (await ProfileEnterpriseService.fetchEnterpriseProfile()) as ProfileResponse;
+
+        if (!profileResponse.success) {
+            alert(profileResponse.message);
+            return;
+        }
+
+        const profileId = profileResponse.data.id_perfil;
+        console.log("ID de perfil obtenido:", profileId);
+
+        try {
+            let jobsResponse = await JobsService.getJobsByProfileId(profileId);
+            if (!jobsResponse.success) {
+                alert(jobsResponse.message);
+                return;
+            }
+            this.jobs = jobsResponse.data;
+            this.filteredJobs = [...this.jobs];
+
+            this.renderJobs();
+        } catch (error) {
+            console.error("Error al obtener los trabajos:", error);
+        }
     }
 
 
@@ -105,40 +106,42 @@ export class EnterpriseHomeController {
                         <p class="card-text"><i class="bi bi-geo-alt"></i>${job.ubicacion}.</p>
                     </div>
                 </button>`;
-      }
+            }
 
-      if ((i + 1) % 3 === 0) {
-        jobList.innerHTML += `<div class="row p-2" style="justify-content: center; justify-self: center;"></div>`;
-      }
+            if ((i + 1) % 3 === 0) {
+                jobList.innerHTML += `<div class="row p-2" style="justify-content: center; justify-self: center;"></div>`;
+            }
+        }
     }
-  }
 
-  /**
-   * Filtra trabajos por fecha y actualiza la vista
-   */
-  public filtrarTrabajos(): void {
-    const ordenFechaElement = document.getElementById(
-      "ordenFecha"
-    ) as HTMLSelectElement;
-    if (!ordenFechaElement) return;
+    /**
+     * Filtra trabajos por fecha y actualiza la vista
+     */
+    public filtrarTrabajos(): void {
+        const ordenFechaElement = document.getElementById(
+            "ordenFecha"
+        ) as HTMLSelectElement;
+        if (!ordenFechaElement) return;
 
-    const ordenFecha = ordenFechaElement.value;
+        const ordenFecha = ordenFechaElement.value;
 
-    // Filtramos por fecha de expiración
-    if (ordenFecha === "recientes") {
-      this.filteredJobs = this.filteredJobs.slice().sort((a, b) => {
-        return (
-          new Date(b.fecha_expiracion).getTime() -
-          new Date(a.fecha_expiracion).getTime()
-        );
-      });
-    } else {
-      this.filteredJobs = this.filteredJobs.slice().sort((a, b) => {
-        return (
-          new Date(a.fecha_expiracion).getTime() -
-          new Date(b.fecha_expiracion).getTime()
-        );
-      });
+        // Filtramos por fecha de expiración
+        if (ordenFecha === "recientes") {
+            this.filteredJobs = this.filteredJobs.slice().sort((a, b) => {
+                return (
+                    new Date(b.fecha_expiracion).getTime() -
+                    new Date(a.fecha_expiracion).getTime()
+                );
+            });
+        } else {
+            this.filteredJobs = this.filteredJobs.slice().sort((a, b) => {
+                return (
+                    new Date(a.fecha_expiracion).getTime() -
+                    new Date(b.fecha_expiracion).getTime()
+                );
+            });
+        }
+
     }
 
     public llenarModalDetalleTrabajo(idTrabajo: number) {
@@ -172,21 +175,20 @@ export class EnterpriseHomeController {
         this.loadJobs();
 
     }
-
 }
 
 function verCandidatos(puesto: any) {
-  // Redirigir a la página de ver candidatos con el puesto seleccionado
-  window.location.href = `/src/pages/enterprise/view-candidates.html?puesto=${encodeURIComponent(
-    puesto
-  )}`;
+    // Redirigir a la página de ver candidatos con el puesto seleccionado
+    window.location.href = `/src/pages/enterprise/view-candidates.html?puesto=${encodeURIComponent(
+        puesto
+    )}`;
 }
 
 // Crear instancia global para acceso desde HTML
 declare global {
-  interface Window {
-    enterpriseHomeController: EnterpriseHomeController;
-  }
+    interface Window {
+        enterpriseHomeController: EnterpriseHomeController;
+    }
 }
 
 window.enterpriseHomeController = new EnterpriseHomeController();
