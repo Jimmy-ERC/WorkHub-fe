@@ -43,24 +43,28 @@
                 <!-- Menú de navegación -->
                 <ul class="navbar-nav mb-2 mb-lg-0 me-auto me-lg-0">
                     <li class="nav-item"><a class="nav-link px-3" href="/src/pages/enterprise/home.html">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="/src/pages/enterprise/candidates/index.html">Candidatos</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="/src/pages/enterprise/companies/index.html">Empresas</a></li>
+                    <li class="nav-item"><a class="nav-link px-3"
+                            href="/src/pages/enterprise/candidates/index.html">Candidatos</a></li>
+                    <li class="nav-item"><a class="nav-link px-3"
+                            href="/src/pages/enterprise/companies/index.html">Empresas</a></li>
                 </ul>
 
                 <!-- Usuario -->
                 <div class="dropdown ms-auto ms-lg-3 mt-3 mt-lg-0">
                     <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="/src/assets/img/avatar.jpg" alt="Avatar de usuario" class="rounded-circle me-2"
-                            width="35" height="35">
+                        <img src="/src/assets/img/avatar.jpg" id="profilePic" alt="Avatar de usuario"
+                            class="rounded-circle me-2" width="35" height="35">
                         <span id="userNameDisplay" class="d-none d-sm-inline">username</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="/src/pages/enterprise/profile/index.html" data-route="profile">Ver perfil</a></li>
+                        <li><a class="dropdown-item" href="/src/pages/enterprise/profile/index.html"
+                                data-route="profile">Ver perfil</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item text-danger" href="/src/pages/auth/login.html" data-action="logout">Cerrar sesión</a></li>
+                        <li><a class="dropdown-item text-danger" href="/src/pages/auth/login.html"
+                                data-action="logout">Cerrar sesión</a></li>
                     </ul>
                 </div>
             </div>
@@ -184,7 +188,10 @@
                     consectetur at in aut praesentium.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Ver candidatos</button>
+                <!-- llamamos a la función verCandidatos con el puesto correspondiente -->
+                <button id="btnVerCandidatos" onclick="verCandidatos('Frontend Developer')" type="button"
+                    class="btn btn-primary">Ver
+                    candidatos</button>
             </div>
         </div>
     </div>

@@ -37,8 +37,8 @@
             <div class="dropdown ms-3">
                 <a href="#" class="d-flex align-items-center text-dark      text-decoration-none       dropdown-toggle"
                     data-bs-toggle="dropdown">
-                    <img src="/src/assets/img/avatar.jpg" alt="user" class="rounded-circle    me-2" width="35"
-                        height="35">
+                    <img src="/src/assets/img/avatar.jpg" id="profilePic" alt="user" class="rounded-circle    me-2"
+                        width="35" height="35">
                     <span id="userNameDisplay">username</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -59,13 +59,13 @@
             <div class="col-md"><input type="text" class="form-control" placeholder="Título de Trabajo..."></div>
             <div class="col-md"><input type="text" class="form-control" placeholder="Ubicación"></div>
             <div class="col-md"><input type="text" class="form-control" placeholder="Salario"></div>
-            
+
             <div class="col-md-auto">
                 <button id="openFilterBtn" class="btn btn-light border rounded px-3">
                     <i class="bi bi-funnel me-1"></i> Filtro Avanzado
                 </button>
             </div>
-            
+
             <div class="col-md-auto"><button class="btn btn-primary w-100">Encontrar</button></div>
         </div>
     </div>
@@ -75,7 +75,7 @@
         <div class="modal-content">
             <span id="closeModal" class="close">&times;</span>
             <h2>Encontrar Trabajo</h2>
-    
+
             <div class="filter-grid">
                 <div class="filter-section">
                     <h3>Experiencia</h3>
@@ -144,7 +144,7 @@
         const openBtn = document.getElementById("openFilterBtn");
         const closeBtn = document.getElementById("closeModal");
         const btnApply = document.getElementById("btn-apply");
-        
+
         openBtn.onclick = () => modal.style.display = "block";
         closeBtn.onclick = () => modal.style.display = "none";
         btnApply.onclick = () => modal.style.display = "none";
