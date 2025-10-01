@@ -3,29 +3,7 @@ import { loadUserData } from '../../lib/userDataLoader.js';
 
 export class EnterpriseViewCandidatesController {
     private candidates = [
-        {
-            id_perfil: 11,
-            id_aplicacion: 5,
-            id_trabajo: 10,
-            nombre: "Instagram",
-            id_usuario: "3cbac7ba-1995-42ce-ac79-0b30ba522831",
-            nombre_trabajo: "Desarrollador Backend",
-            ubicacion: "San Francisco, CA",
-            experiencia: "1 - 2 años",
-            educacion: "Ingeniería",
-            genero: "masculino",
-            estado: "Pendiente",
-            estado_civil: "soltero",
-            fecha_nacimiento_fundacion: "2025-09-17T06:00:00.000Z",
-            url_curriculum: "https://pzplniihhetjlxdkhljz.supabase.co/storage/v1/object/public/Archivos_WorkHub/3cbac7ba-1995-42ce-ac79-0b30ba522831/cv.pdf",
-            email: "instagram@gmail.com",
-            pagina_web: "https://www.instagram.com/",
-            telefono: "7061-2813",
-            biografia: "Instagram es una red social y aplicación móvil gratuita de Meta que permite a los usuarios compartir fotos y vídeos, personalizarlos con efectos y filtros, y publicarlos en sus perfiles para que los sigan otras personas o grupos",
-            red_social: "https://www.instagram.com/instagram/",
-            fotoUrl: "https://pzplniihhetjlxdkhljz.supabase.co/storage/v1/object/public/Archivos_WorkHub/3cbac7ba-1995-42ce-ac79-0b30ba522831/avatar.png"
-        }
-    ]
+    ] as any[];
 
     private filteredCandidates = [...this.candidates]
     constructor() {
@@ -103,7 +81,7 @@ export class EnterpriseViewCandidatesController {
         }
 
 
-        document.getElementById('nombreVacante')!.innerText = this.filteredCandidates[0]?.nombre_trabajo || 'Puesto no especificado';
+        document.getElementById('nombreVacante')!.innerText = this.filteredCandidates[0]?.nombre_trabajo || 'Sin candidatos para esta vacante';
         const listCandidatos = document.getElementById('listCandidatos');
         if (!listCandidatos) return;
         listCandidatos.innerHTML = ``;

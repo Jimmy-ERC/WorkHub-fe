@@ -126,63 +126,64 @@
                         <h6 class="mt-3 mb-2">Experiencia</h6>
                         <div class="form-check mb-2" style="width: 60%;">
                             <input class="form-check-input" type="radio" name="experiencia" value="todos"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" id="exp1" checked>
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()" id="exp1"
+                                checked>
                             <label class="form-check-label" for="exp1">
                                 Todos
                             </label>
                         </div>
                         <div class="form-check mb-2" style="width: 60%;">
                             <input class="form-check-input" type="radio" name="experiencia" value="Recién graduado"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" id="exp1">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()" id="exp1">
                             <label class="form-check-label" for="exp1">
                                 Recién graduados
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="radio" name="experiencia" value="1 - 2 Años"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()" id="exp2">
                             <label class="form-check-label" for="exp2">
                                 1 - 2 Años
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="radio" name="experiencia" value="2 - 4 Años"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()" id="exp3">
                             <label class="form-check-label" for="exp3">
                                 2 - 4 Años
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="radio" name="experiencia" value="4 - 6 Años"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()" id="exp4">
                             <label class="form-check-label" for="exp4">
                                 4 - 6 Años
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="radio" name="experiencia" value="6 - 8 Años"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()" id="exp5">
                             <label class="form-check-label" for="exp5">
                                 6 - 8 Años
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="radio" name="experiencia" value="8 - 10 Años"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()" id="exp6">
                             <label class="form-check-label" for="exp6">
                                 8 - 10 Años
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="radio" name="experiencia" value="10 - 15 Años"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()" id="exp7">
                             <label class="form-check-label" for="exp7">
                                 10 - 15 Años
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="radio" name="experiencia" value="15 + Años"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()" id="exp8">
                             <label class="form-check-label" for="exp8">
                                 15+ Años
                             </label>
@@ -195,42 +196,47 @@
                         <h6 class="mt-3 mb-2">Educación</h6>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="checkbox" name="educacion"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="todos" checked>
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()" value="todos"
+                                checked>
                             <label class="form-check-label" for="edu1">
                                 Todos
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="checkbox" name="educacion"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="secundaria">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()"
+                                value="secundaria">
                             <label class="form-check-label" for="edu2">
                                 Secundaria
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="checkbox" name="educacion"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="tecnico">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()" value="tecnico">
                             <label class="form-check-label" for="edu3">
                                 Técnico
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="checkbox" name="educacion"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="diplomado">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()"
+                                value="diplomado">
                             <label class="form-check-label" for="edu4">
                                 Diplomado
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="checkbox" id="edu5" name="educacion"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="licenciatura">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()"
+                                value="licenciatura">
                             <label class="form-check-label" for="edu5">
                                 Licenciatura
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="checkbox" name="educacion"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="ingeniería">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()"
+                                value="ingeniería">
                             <label class="form-check-label" for="edu6">
                                 Ingeniería
                             </label>
@@ -243,22 +249,24 @@
                         <h6 class="mt-3 mb-2">Género</h6>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="radio" name="genero" value="todos"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="ingenieria"
-                                checked>
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()"
+                                value="ingenieria" checked>
                             <label class="form-check-label" for="gen3">
                                 Todos
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="radio" name="genero" value="masculino"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="ingenieria">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()"
+                                value="ingenieria">
                             <label class="form-check-label" for="gen1">
                                 Masculino
                             </label>
                         </div>
                         <div class="form-check" style="width: 60%;">
                             <input class="form-check-input" type="radio" name="genero" value="femenino"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="ingenieria">
+                                onchange="enterpriseViewCandidatesGeneralController.renderCandidates()"
+                                value="ingenieria">
                             <label class="form-check-label" for="gen2">
                                 Femenino
                             </label>
@@ -272,10 +280,10 @@
                     <div id="listCandidatos">
 
                         <!-- candidato -->
-                        <div class="card flex row mb-2"
-                            style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap;">
-                            <!-- contenido  -->
-                            <div class="col-12 col-md-9 d-flex align-items-center" style="padding: 1%;">
+                        <!-- <div class="card flex row mb-2"
+                            style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap;"> -->
+                        <!-- contenido  -->
+                        <!-- <div class="col-12 col-md-9 d-flex align-items-center" style="padding: 1%;">
                                 <img src="https://octodex.github.com/images/orderedlistocat.png" class="card-img-top"
                                     style="max-width: 90px; border-radius: 20px; height: auto;" alt="...">
                                 <div class="card-body">
@@ -286,107 +294,19 @@
                                         <p><i class="bi bi-briefcase"></i> Experiencia</p>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- acciones -->
-                            <div
+                            </div> -->
+                        <!-- acciones -->
+                        <!-- <div
                                 class="col-12 col-md-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0">
                                 <button type="button" class="btn btn-primary w-100 w-md-auto">Ver Perfil →</button>
-                            </div>
-                        </div>
-                        <!-- candidato -->
-                        <div class="card flex row mb-2"
-                            style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap;">
-                            <!-- contenido  -->
-                            <div class="col-12 col-md-9 d-flex align-items-center" style="padding: 1%;">
-                                <img src="https://octodex.github.com/images/orderedlistocat.png" class="card-img-top"
-                                    style="max-width: 90px; border-radius: 20px; height: auto;" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Nombre</h5>
-                                    <p class="card-text">Puesto</p>
-                                    <div class="d-flex flex-wrap">
-                                        <p class="me-3"><i class="bi bi-geo-alt"></i> Ubicación</p>
-                                        <p><i class="bi bi-briefcase"></i> Experiencia</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- acciones -->
-                            <div
-                                class="col-12 col-md-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0">
-                                <button type="button" class="btn btn-primary w-100 w-md-auto">Ver Perfil →</button>
-                            </div>
-                        </div>
-                        <!-- candidato -->
-                        <div class="card flex row mb-2"
-                            style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap;">
-                            <!-- contenido  -->
-                            <div class="col-12 col-md-9 d-flex align-items-center" style="padding: 1%;">
-                                <img src="https://octodex.github.com/images/orderedlistocat.png" class="card-img-top"
-                                    style="max-width: 90px; border-radius: 20px; height: auto;" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Nombre</h5>
-                                    <p class="card-text">Puesto</p>
-                                    <div class="d-flex flex-wrap">
-                                        <p class="me-3"><i class="bi bi-geo-alt"></i> Ubicación</p>
-                                        <p><i class="bi bi-briefcase"></i> Experiencia</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- acciones -->
-                            <div
-                                class="col-12 col-md-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0">
-                                <button type="button" class="btn btn-primary w-100 w-md-auto">Ver Perfil →</button>
-                            </div>
-                        </div>
-
-                        <!-- candidato -->
-                        <div class="card flex row mb-2"
-                            style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap;">
-                            <!-- contenido  -->
-                            <div class="col-12 col-md-9 d-flex align-items-center" style="padding: 1%;">
-                                <img src="https://octodex.github.com/images/orderedlistocat.png" class="card-img-top"
-                                    style="max-width: 90px; border-radius: 20px; height: auto;" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Nombre</h5>
-                                    <p class="card-text">Puesto</p>
-                                    <div class="d-flex flex-wrap">
-                                        <p class="me-3"><i class="bi bi-geo-alt"></i> Ubicación</p>
-                                        <p><i class="bi bi-briefcase"></i> Experiencia</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- acciones -->
-                            <div
-                                class="col-12 col-md-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0">
-                                <button type="button" class="btn btn-primary w-100 w-md-auto">Ver Perfil →</button>
-                            </div>
-                        </div>
-                        <!-- candidato -->
-                        <div class="card flex row mb-2"
-                            style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap;">
-                            <!-- contenido  -->
-                            <div class="col-12 col-md-9 d-flex align-items-center" style="padding: 1%;">
-                                <img src="https://octodex.github.com/images/orderedlistocat.png" class="card-img-top"
-                                    style="max-width: 90px; border-radius: 20px; height: auto;" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Nombre</h5>
-                                    <p class="card-text">Puesto</p>
-                                    <div class="d-flex flex-wrap">
-                                        <p class="me-3"><i class="bi bi-geo-alt"></i> Ubicación</p>
-                                        <p><i class="bi bi-briefcase"></i> Experiencia</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- acciones -->
-                            <div
-                                class="col-12 col-md-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0">
-                                <button type="button" class="btn btn-primary w-100 w-md-auto">Ver Perfil →</button>
-                            </div>
-                        </div>
+                            </div> -->
                     </div>
 
                 </div>
+
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Route Protection Script (must load before other scripts) -->
