@@ -152,13 +152,20 @@ export class EnterpriseHomeController {
                 colorBadge = "green";
             }
 
+            // Cambios para trabajos cerrados
+            const isClosed = job.estado === false;
+            const lockIcon = isClosed ? `<i class="bi bi-lock-fill" style="margin-right: 6px;"></i>` : "";
+            const cardOpacity = isClosed ? "0.5" : "1";
+            const titleStyle = isClosed ? "text-decoration: line-through;" : "";
+            const pointerEvents = isClosed ? "pointer-events: none;" : "";
+
             const lastRow = jobList.querySelector(".row:last-child");
             if (lastRow) {
                 lastRow.innerHTML += `<button onclick="enterpriseHomeController.llenarModalDetalleTrabajo(${job.id_trabajo})" data-bs-toggle="modal" data-bs-target="#modalDetalleTrabajo" class="card col-md-4 col-6 mx-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; opacity: ${cardOpacity}; ${pointerEvents}">
                     <div class="card-body">
                         <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-                            <h5 class="card-title">${job.nombre_trabajo}</h5>
+                            <h5 class="card-title" style="${titleStyle}">${lockIcon}${job.nombre_trabajo}</h5>
                             <span class="badge text-bg-secondary"
                             style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center; background-color:${colorBadge}!important "> 
                                 <p style="margin: 0;">${job.modalidad}</p>
@@ -221,6 +228,24 @@ export class EnterpriseHomeController {
 
         //enviar el nombre del trabajo al botón ver candidatos
         document.getElementById('btnVerCandidatos')!.addEventListener('click', () => verCandidatos(trabajo?.id_trabajo));
+
+        document.getElementById("btnCerrarVacante")!.setAttribute('data-job-id', trabajo!.id_trabajo.toString());
+
+        //asignamos el evento al botón confirmar cerrar vacante
+        document.getElementById("btnConfirmarCerrarVacante")?.addEventListener('click', () => this.cerrarVacante(trabajo!.id_trabajo));
+
+    }
+
+    public async cerrarVacante(idTrabajo: number) {
+        console.log("Cerrando vacante con ID:", idTrabajo);
+
+        const response = await JobsService.deleteJobById(idTrabajo);
+        if (!response.success) {
+            alert(response.message);
+            return;
+        }
+        this.loadJobs();
+
     }
 }
 
