@@ -1,5 +1,6 @@
 import { sessionManager } from '../../lib/session.js';
 
+
 export class CandidateHomeController {
     private jobs = [
         { title: "Marketing Manager", location: "New Mexico, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Remote"], icon: "https://img.icons8.com/color/48/000000/briefcase.png" },

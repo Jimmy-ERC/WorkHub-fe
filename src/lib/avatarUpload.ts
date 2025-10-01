@@ -1,4 +1,4 @@
-import { ProfileEnterpriseService } from "@/services/profileService";
+import { ProfileEnterpriseService } from "@/services/profileEnterprise.service";
 import { supabase } from "./client";
 import type { ProfileResponse } from "@/interfaces/profileResponse.interface";
 

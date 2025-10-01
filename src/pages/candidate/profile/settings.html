@@ -58,8 +58,8 @@
                 <div class="dropdown ms-3">
                     <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="/src/assets/img/avatar.jpg" alt="Avatar de usuario" class="rounded-circle me-2"
-                            width="35" height="35">
+                        <img src="/src/assets/img/avatar.jpg" id="profilePic" alt="Avatar de usuario"
+                            class="rounded-circle me-2" width="35" height="35">
                         <span id="userNameDisplay">username</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
@@ -85,8 +85,8 @@
                 </div>
 
                 <nav class="nav flex-column gap-1 px-2">
-                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2 active bg-body-tertiary" href="#"
-                        data-route="dashboard" aria-current="page">
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2 active bg-body-tertiary"
+                        href="/src/pages/candidate/profile/index.html" data-route="dashboard" aria-current="page">
                         <i class="bi bi-grid-1x2 me-2"></i> General
                     </a>
                     <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2" href="#" data-route="applied">
@@ -117,108 +117,136 @@
             <section class="col-12 col-md-9 col-lg-10 p-4">
                 <h4 class="mb-4">Ajustes</h4>
 
-        <form id="settingsForm" class="row g-4" novalidate>
-            <!-- Columna izquierda: Foto -->
-            <aside class="col-12 col-lg-4">
-                <h6 class="mb-3">Información básica</h6>
+                <form id="settingsForm" class="row g-4" novalidate>
+                    <!-- Columna izquierda: Foto -->
+                    <aside class="col-12 col-lg-4">
+                        <h6 class="mb-3">Información básica</h6>
 
-                <div class="mb-2"><small class="text-muted">Foto de perfil</small></div>
+                        <div class="mb-2"><small class="text-muted">Foto de perfil</small></div>
 
-                <!-- Dropzone -->
-                <input class="visually-hidden" id="profilePhoto" type="file" accept="image/*" data-action="upload-file"
-                    data-dropzone="#dropArea">
-                <label for="profilePhoto" id="dropArea"
-                    class="dropzone w-100 d-flex flex-column align-items-center justify-content-center text-center p-4"
-                    role="button" tabindex="0" aria-describedby="photoHelp" data-component="UploadZone">
-                    <i class="bi bi-cloud-arrow-up fs-1 mb-2 text-primary" aria-hidden="true"></i>
-                    <div class="fw-medium">Explorar foto</div>
-                    <small class="text-muted">o suéltala aquí</small>
-                    <div class="text-muted small mt-2" id="photoHelp">
-                        Una imagen mayor a 400px funciona mejor. Tamaño máx. 5&nbsp;MB.
-                    </div>
-                    <!-- TODO:TS – soporte dragover/drop, vista previa y validaciones -->
-                </label>
-            </aside>
+                        <!-- Dropzone -->
+                        <input class="visually-hidden" id="profilePhoto" type="file" accept="image/*"
+                            data-action="upload-file" data-dropzone="#dropArea">
+                        <label for="profilePhoto" id="dropArea"
+                            class="dropzone w-100 d-flex flex-column align-items-center justify-content-center text-center p-4"
+                            role="button" tabindex="0" aria-describedby="photoHelp" data-component="UploadZone">
+                            <i class="bi bi-cloud-arrow-up fs-1 mb-2 text-primary" aria-hidden="true"></i>
+                            <div class="fw-medium">Explorar foto</div>
+                            <small class="text-muted">o suéltala aquí</small>
+                            <div class="text-muted small mt-2" id="photoHelp">
+                                Una imagen mayor a 400px funciona mejor. Tamaño máx. 5&nbsp;MB.
+                            </div>
+                            <!-- TODO:TS – soporte dragover/drop, vista previa y validaciones -->
+                        </label>
+                    </aside>
 
-            <!-- Columna derecha: Form -->
-            <section class="col-12 col-lg-8">
-                <div class="row g-3">
-                    <!-- Nombre / Ubicación -->
-                    <div class="col-12 col-md-6">
-                        <label for="companyName" class="form-label">Nombre de la Compañía</label>
-                        <input type="text" class="form-control" id="companyName" data-field="companyName"
-                            placeholder="Acme Inc.">
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label for="location" class="form-label">Ubicación</label>
-                        <input type="text" class="form-control" id="location" data-field="location"
-                            placeholder="San Salvador, SV">
-                    </div>
+                    <!-- Columna derecha: Form -->
+                    <section class="col-12 col-lg-8">
+                        <div class="row g-3">
+                            <!-- Nombre completo -->
+                            <div class="col-12">
+                                <label for="fullName" class="form-label">Nombre completo</label>
+                                <input type="text" class="form-control" id="fullName" data-field="fullName"
+                                    placeholder="Juan Pérez">
+                            </div>
 
-                    <!-- About -->
-                    <div class="col-12">
-                        <label for="about" class="form-label">About Us</label>
-                        <textarea id="about" class="form-control" rows="4"
-                            placeholder="Escribe sobre tu compañía. Que los candidatos sepan quiénes son…"></textarea>
-                        <!-- (Opcional) barra visual de formato (no funcional) -->
-                        <div class="d-flex align-items-center gap-3 text-muted small mt-2" aria-hidden="true">
-                            <i class="bi bi-type-bold"></i><i class="bi bi-type-italic"></i><i
-                                class="bi bi-type-underline"></i>
-                            <i class="bi bi-link-45deg"></i><i class="bi bi-list-ul"></i>
+                            <!-- Genero y estado civil -->
+                            <div class="col-12 col-md-6">
+                                <label for="gender" class="form-label">Género</label>
+                                <select id="gender" class="form-select" data-field="gender">
+                                    <option value="">Selecciona...</option>
+                                    <option value="masculino">Masculino</option>
+                                    <option value="femenino">Femenino</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="maritalStatus" class="form-label">Estado Civil</label>
+                                <select id="maritalStatus" class="form-select" data-field="maritalStatus">
+                                    <option value="">Selecciona...</option>
+                                    <option value="soltero">Soltero/a</option>
+                                    <option value="casado">Casado/a</option>
+                                    <option value="divorciado">Divorciado/a</option>
+                                </select>
+                            </div>
+
+                            <!-- experiencia y educacion -->
+                            <div class="col-12 col-md-6">
+                                <label for="experience" class="form-label">Experiencia Laboral</label>
+                                <textarea id="experience" class="form-control" rows="4"
+                                    placeholder="Describe tu experiencia laboral..."></textarea>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="education" class="form-label">Educación</label>
+                                <textarea id="education" class="form-control" rows="4"
+                                    placeholder="Describe tu educación..."></textarea>
+                            </div>
+
+                            <!-- Biografía -->
+                            <div class="col-12">
+                                <label for="about" class="form-label">Biografía</label>
+                                <textarea id="about" class="form-control" rows="4"
+                                    placeholder="Escribe sobre tu compañía. Que los candidatos sepan quiénes son…"></textarea>
+                            </div>
+
+                            <!-- Fecha de nacimiento / Teléfono -->
+                            <div class="col-12 col-md-6">
+                                <label for="foundedAt" class="form-label">Fecha de nacimiento</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="calendarIcon"><i
+                                            class="bi bi-calendar-event"></i></span>
+                                    <input type="date" class="form-control" id="foundedAt"
+                                        aria-describedby="calendarIcon" data-plugin="datepicker">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="phone" class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" id="phone" placeholder="+503 1234-5678">
+                            </div>
+
+                            <!-- Ubicación -->
+                            <div class="col-12">
+                                <label for="location" class="form-label">Ubicación</label>
+                                <input type="text" class="form-control" id="location" data-field="location"
+                                    placeholder="San Salvador, El Salvador">
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-12">
+                                <label for="email" class="form-label">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="emailIcon"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" class="form-control" id="email" aria-describedby="emailIcon"
+                                        placeholder="correo@empresa.com">
+                                </div>
+                            </div>
+
+                            <!-- Página web -->
+                            <div class="col-12">
+                                <label for="website" class="form-label">Likedin / Portafolio</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="linkIcon"><i class="bi bi-link-45deg"></i></span>
+                                    <input type="url" class="form-control" id="website" data-field="website"
+                                        aria-describedby="linkIcon" placeholder="https://empresa.com">
+                                </div>
+                            </div>
+
+                            <!-- Social -->
+                            <div class="col-12">
+                                <label for="social" class="form-label">Social Link</label>
+                                <input type="url" class="form-control" id="social" data-field="social"
+                                    placeholder="https://linkedin.com/company/tu-empresa">
+                            </div>
+
+                            <!-- Acción -->
+                            <div class="col-12">
+                                <button type="button" class="btn btn-primary px-4" data-action="save-profile">Guardar
+                                    Cambios</button>
+                                <!-- TODO:TS – validaciones y envío del formulario -->
+                            </div>
                         </div>
-                    </div>
-
-                    <!-- Fundada en / Teléfono -->
-                    <div class="col-12 col-md-6">
-                        <label for="foundedAt" class="form-label">Fundada en</label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="calendarIcon"><i class="bi bi-calendar-event"></i></span>
-                            <input type="date" class="form-control" id="foundedAt" aria-describedby="calendarIcon"
-                                data-plugin="datepicker">
-                        </div>
-                        <!-- TODO:TS – inicializar datepicker (Flatpickr/Tempus Dominus) si se requiere -->
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label for="phone" class="form-label">Teléfono</label>
-                        <input type="tel" class="form-control" id="phone" placeholder="+503 1234-5678">
-                    </div>
-
-                    <!-- Email -->
-                    <div class="col-12">
-                        <label for="email" class="form-label">Email</label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="emailIcon"><i class="bi bi-envelope"></i></span>
-                            <input type="email" class="form-control" id="email" aria-describedby="emailIcon"
-                                placeholder="correo@empresa.com">
-                        </div>
-                    </div>
-
-                    <!-- Página web -->
-                    <div class="col-12">
-                        <label for="website" class="form-label">Página web</label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="linkIcon"><i class="bi bi-link-45deg"></i></span>
-                            <input type="url" class="form-control" id="website" data-field="website"
-                                aria-describedby="linkIcon" placeholder="https://empresa.com">
-                        </div>
-                    </div>
-
-                    <!-- Social -->
-                    <div class="col-12">
-                        <label for="social" class="form-label">Social Link</label>
-                        <input type="url" class="form-control" id="social" data-field="social"
-                            placeholder="https://linkedin.com/company/tu-empresa">
-                    </div>
-
-                    <!-- Acción -->
-                    <div class="col-12">
-                        <button type="button" class="btn btn-primary px-4" data-action="save-profile">Guardar
-                            Cambios</button>
-                        <!-- TODO:TS – validaciones y envío del formulario -->
-                    </div>
-                </div>
-            </section>
-        </form>
+                    </section>
+                </form>
             </section>
         </div>
     </main>
@@ -235,7 +263,12 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 
-    <!-- TODO:TS – Inicializar año dinámico, control de rutas protegidas, acciones de lista, etc. -->
+    <!-- Route Protection Script (must load before other scripts) -->
+    <script type="module" src="/src/controllers/routeProtection.ts"></script>
+    <!-- Candidate Profile Controller Script -->
+    <script type="module" src="/src/controllers/candidate/perfilController.ts"></script>
+    <!-- Logout Controller Script -->
+    <script type="module" src="/src/controllers/logout.ts"></script>
 </body>
 
 </html>

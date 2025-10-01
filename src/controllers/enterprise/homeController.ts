@@ -1,6 +1,6 @@
 import type { Job } from "@/interfaces/job.interface.js";
 import { loadUserData } from "../../lib/userDataLoader.js";
-import { ProfileEnterpriseService } from "@/services/profileService";
+import { ProfileEnterpriseService } from '@/services/profileEnterprise.service.js';
 import type { ProfileResponse } from "@/interfaces/profileResponse.interface.js";
 import { JobsService } from "@/services/jobsService.js";
 

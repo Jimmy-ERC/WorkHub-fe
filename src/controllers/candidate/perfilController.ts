@@ -1,33 +1,39 @@
-import { ProfileEnterpriseService } from '@/services/profileEnterprise.service.js';
-import type { ProfileResponse, ProfileResponseError } from '../../interfaces/profileResponse.interface';
-import { sessionManager } from '../../lib/session';
-import { diagnoseStorageSetup } from '../../lib/avatarUpload';
-import { loadUserData } from '../../lib/userDataLoader.js';
+import type { ProfileResponse } from "@/interfaces/profileResponse.interface";
+import sessionManager from "@/lib/session";
+import { diagnoseStorageSetup } from "@/lib/avatarUpload";
+import { ProfileCandidateService } from "@/services/profileCandidate.service";
+import { loadUserData } from "@/lib/userDataLoader";
 
 // Variable to track if profile exists (for create vs update logic)
 let profileExists = false;
 
-// populacion de los campos del formulario con los datos del perfil
+// Populación de los campos del formulario con los datos del perfil
 function populateProfileForm(profileData: ProfileResponse['data']) {
 
-    // funcion que asigna valor a un input o textarea si el valor no es null o undefined
+    // Función que asigna valor a un input, textarea o select si el valor no es null o undefined
     const setInputValue = (id: string, value: string | null | undefined) => {
-        const element = document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement;
+        const element = document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
         if (element && value !== null && value !== undefined) {
             element.value = value;
         }
     };
 
     // Populate form fields with profile data
-    setInputValue('companyName', profileData.nombre);
-    setInputValue('location', profileData.ubicacion);
+    setInputValue('fullName', profileData.nombre);
+    setInputValue('gender', profileData.genero);
+    setInputValue('maritalStatus', profileData.estado_civil);
+    setInputValue('experience', profileData.experiencia);
+    setInputValue('education', profileData.educacion);
     setInputValue('about', profileData.biografia);
     setInputValue('phone', profileData.telefono);
+    setInputValue('location', profileData.ubicacion);
     setInputValue('email', profileData.email);
     setInputValue('website', profileData.pagina_web);
     setInputValue('social', profileData.red_social);
+
+    // Para la fecha de nacimiento, convertir al formato requerido por input type="date"
     if (profileData.fecha_nacimiento_fundacion) {
-        setInputValue('foundedAt', new Date(profileData.fecha_nacimiento_fundacion).toISOString().split('T')[0]); // "2025-09-25T06:00:00.000Z"
+        setInputValue('foundedAt', new Date(profileData.fecha_nacimiento_fundacion).toISOString().split('T')[0]);
     }
 
     // Cargar avatar si está disponible en el perfil
@@ -36,7 +42,7 @@ function populateProfileForm(profileData: ProfileResponse['data']) {
     }
 }
 
-
+// Function to show error message
 function showError(message: string) {
     // Create or update error alert
     let errorAlert = document.getElementById('profileErrorAlert');
@@ -52,7 +58,7 @@ function showError(message: string) {
         `;
 
         // Insert at the top of the main container
-        const main = document.querySelector('main.container');
+        const main = document.querySelector('main.container-fluid');
         if (main && main.firstChild) {
             main.insertBefore(errorAlert, main.firstChild);
         }
@@ -84,7 +90,7 @@ function showSuccess(message: string) {
     `;
 
     // Insert at the top of the main container
-    const main = document.querySelector('main.container');
+    const main = document.querySelector('main.container-fluid');
     if (main && main.firstChild) {
         main.insertBefore(successAlert, main.firstChild);
     }
@@ -92,7 +98,7 @@ function showSuccess(message: string) {
     // Auto-hide after 5 seconds
     setTimeout(() => {
         if (successAlert && successAlert.parentNode) {
-            successAlert.remove();
+            successAlert.parentNode.removeChild(successAlert);
         }
     }, 5000);
 }
@@ -109,7 +115,7 @@ function getCurrentAvatarUrl(): string | undefined {
 // Function to collect form data
 function collectFormData(): ProfileResponse['data'] {
     const getValue = (id: string): string => {
-        const element = document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement;
+        const element = document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
         return element ? element.value.trim() : '';
     };
 
@@ -120,7 +126,7 @@ function collectFormData(): ProfileResponse['data'] {
     return {
         id_perfil: 0, // Will be set by backend for new profiles
         id_usuario: userId,
-        nombre: getValue('companyName'),
+        nombre: getValue('fullName'),
         biografia: getValue('about'),
         telefono: getValue('phone'),
         ubicacion: getValue('location'),
@@ -128,7 +134,11 @@ function collectFormData(): ProfileResponse['data'] {
         pagina_web: getValue('website'),
         red_social: getValue('social'),
         email: getValue('email'),
-        link_foto_perfil: getCurrentAvatarUrl() || '' // Include current avatar URL or empty string
+        link_foto_perfil: getCurrentAvatarUrl() || '', // Include current avatar URL or empty string
+        genero: getValue('gender'),
+        estado_civil: getValue('maritalStatus'),
+        experiencia: getValue('experience'),
+        educacion: getValue('education')
     };
 }
 
@@ -159,8 +169,8 @@ function validateFormData(data: ProfileResponse['data']): { isValid: boolean; er
     clearValidationStates();
 
     if (!data.nombre) {
-        errors.push('El nombre de la compañía es requerido');
-        setValidationError('companyName');
+        errors.push('El nombre completo es requerido');
+        setValidationError('fullName');
     }
 
     if (!data.email) {
@@ -208,59 +218,43 @@ async function handleSaveProfile() {
             return;
         }
 
-        // Determine if we should create or update
-        let result: ProfileResponse | ProfileResponseError;
-
+        let result;
         if (profileExists) {
             // Update existing profile
-            result = await ProfileEnterpriseService.updateEnterpriseProfile(formData);
+            result = await ProfileCandidateService.updateCandidateProfile(formData);
         } else {
             // Create new profile
-            result = await ProfileEnterpriseService.createEnterpriseProfile(formData);
+            result = await ProfileCandidateService.createCandidateProfile(formData);
         }
 
-        if (!result.success) {
-            const errorResult = result as ProfileResponseError;
-            showError(errorResult.message);
-            return;
+        if (result.success) {
+            profileExists = true; // Profile now exists after creation/update
+            showSuccess(profileExists ? 'Perfil actualizado exitosamente' : 'Perfil creado exitosamente');
+
+            // Update form with returned data if available
+            if ('data' in result && result.data) {
+                populateProfileForm(result.data);
+            }
+        } else {
+            showError(result.message);
         }
-
-        // Success case
-        const successResult = result as ProfileResponse;
-        const wasCreating = !profileExists;
-        profileExists = true; // Now we know the profile exists
-
-        // Clear validation states on success
-        clearValidationStates();
-
-        // Update form with returned data (in case backend modified anything)
-        populateProfileForm(successResult.data);
-
-        // Update user display and profile pic name in navbar
-
-        loadUserData();
-
-
-        // Show success message
-        const action = wasCreating ? 'creado' : 'actualizado';
-        showSuccess(`Perfil ${action} exitosamente`);
 
     } catch (error) {
-        console.error('Error saving enterprise profile:', error);
-        showError('Error inesperado al guardar el perfil. Por favor, intenta nuevamente.');
+        console.error('Error saving candidate profile:', error);
+        showError(error instanceof Error ? error.message : 'Error desconocido al guardar el perfil');
     } finally {
         setLoadingState(false);
     }
 }
 
-
+// Function to set loading state
 function setLoadingState(isLoading: boolean) {
     const form = document.getElementById('settingsForm') as HTMLFormElement;
-    const inputs = form?.querySelectorAll('input, textarea, button');
+    const inputs = form?.querySelectorAll('input, textarea, button, select');
 
     if (inputs) {
         inputs.forEach(input => {
-            (input as HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement).disabled = isLoading;
+            (input as HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement | HTMLSelectElement).disabled = isLoading;
         });
     }
 
@@ -275,62 +269,45 @@ function setLoadingState(isLoading: boolean) {
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Cargando...</span>
             </div>
-            <p class="mt-2 text-muted">Cargando datos del perfil...</p>
+            <div class="mt-2">Guardando perfil...</div>
         `;
 
-        const main = document.querySelector('main.container');
-        if (main && main.firstChild) {
-            main.insertBefore(loadingIndicator, main.firstChild);
+        const form = document.getElementById('settingsForm');
+        if (form) {
+            form.appendChild(loadingIndicator);
         }
     } else if (!isLoading && loadingIndicator) {
         loadingIndicator.remove();
     }
 }
 
-async function loadEnterpriseProfile() {
+// Function to load candidate profile
+async function loadCandidateProfile() {
     try {
-        // Show loading state
         setLoadingState(true);
 
-        // Fetch profile data
-        const result = await ProfileEnterpriseService.fetchEnterpriseProfile();
+        const result = await ProfileCandidateService.fetchCandidateProfile();
 
-        if (!result.success) {
-            const errorResult = result as ProfileResponseError;
-            // Profile doesn't exist, user can create a new one
+        if (result.success && 'data' in result) {
+            // Profile exists, populate form
+            profileExists = true;
+            populateProfileForm(result.data);
+        } else {
+            // Profile doesn't exist or error occurred
             profileExists = false;
-
-            // Still try to load existing avatar even if profile doesn't exist
-            await loadExistingAvatarUI(); showError(errorResult.message);
-            return;
+            if (result.message && !result.message.includes('404') && !result.message.includes('no encontrado')) {
+                // Only show error if it's not a "profile not found" error
+                console.warn('Profile not found or error loading:', result.message);
+            }
         }
 
-        const profileResult = result as ProfileResponse;
-
-        // Profile exists, future saves will be updates
-        profileExists = true;
-
-        // Populate form with profile data
-        populateProfileForm(profileResult.data);
-
-        // Load existing avatar
+        // Load existing avatar UI
         await loadExistingAvatarUI();
 
-        // Update user display name in navbar if available
-        const userNameDisplay = document.getElementById('userNameDisplay');
-        if (userNameDisplay && profileResult.data.nombre) {
-            userNameDisplay.textContent = profileResult.data.nombre;
-        }
-
-        loadUserData();
-
-        // Hide loading state
-        setLoadingState(false);
-
     } catch (error) {
-        console.error('Error loading enterprise profile:', error);
+        console.error('Error loading candidate profile:', error);
         profileExists = false;
-        showError('Error inesperado al cargar el perfil. Por favor, intenta nuevamente.');
+        showError(error instanceof Error ? error.message : 'Error desconocido al cargar el perfil');
     } finally {
         setLoadingState(false);
     }
@@ -340,7 +317,7 @@ async function loadEnterpriseProfile() {
 
 async function loadExistingAvatarUI() {
     try {
-        const avatarUrl = await ProfileEnterpriseService.loadExistingAvatar();
+        const avatarUrl = await ProfileCandidateService.loadExistingAvatar();
         if (avatarUrl) {
             updateAvatarPreview(avatarUrl);
         }
@@ -383,43 +360,33 @@ function resetAvatarDropzone() {
 
 async function handleAvatarUpload(file: File) {
     try {
-        // Show loading state on dropzone
+        // Show loading state for avatar upload
         const dropArea = document.getElementById('dropArea');
         if (dropArea) {
             dropArea.innerHTML = `
-                <div class="spinner-border text-primary mb-2" role="status">
-                    <span class="visually-hidden">Subiendo...</span>
+                <div class="text-center">
+                    <div class="spinner-border text-primary mb-2" role="status">
+                        <span class="visually-hidden">Subiendo...</span>
+                    </div>
+                    <div class="small text-muted">Subiendo imagen...</div>
                 </div>
-                <div class="fw-medium">Subiendo imagen...</div>
-                <small class="text-muted">Por favor espera</small>
             `;
         }
 
-        // Use service to upload avatar 
-        const result = await ProfileEnterpriseService.uploadEnterpriseAvatar(file);
+        const result = await ProfileCandidateService.uploadCandidateAvatar(file);
 
-        if (!result.success) {
-            throw new Error(result.error || 'Error desconocido al subir avatar');
+        if (result.success && result.avatarUrl) {
+            updateAvatarPreview(result.avatarUrl);
+            showSuccess('Avatar subido exitosamente');
+        } else {
+            resetAvatarDropzone();
+            showError(result.error || 'Error al subir el avatar');
         }
-
-        if (!result.avatarUrl) {
-            throw new Error('No se pudo obtener la URL del avatar');
-        }
-
-        // Update preview
-        updateAvatarPreview(result.avatarUrl);
-
-        // Show success message
-        showSuccess('Avatar subido exitosamente');
 
     } catch (error) {
-        console.error('Error uploading avatar:', error);
-
-        const errorMessage = error instanceof Error ? error.message : 'Error desconocido';
-        showError(`Error al subir el avatar: ${errorMessage}`);
-
-        // Reset dropzone on error
+        console.error('Error handling avatar upload:', error);
         resetAvatarDropzone();
+        showError(error instanceof Error ? error.message : 'Error desconocido al subir el avatar');
     }
 }
 
@@ -430,43 +397,37 @@ function initAvatarUpload() {
     if (!fileInput || !dropArea) return;
 
     // Debug: Log available buckets (useful for troubleshooting)
-    ProfileEnterpriseService.debugBuckets().catch(console.error);
+    ProfileCandidateService.debugBuckets().catch(console.error);
 
     // Debug: Diagnosticar configuración de storage
     diagnoseStorageSetup();
 
     // Handle file input change
     fileInput.addEventListener('change', (event) => {
-        const file = (event.target as HTMLInputElement).files?.[0];
-        if (file) {
-            handleAvatarUpload(file);
+        const target = event.target as HTMLInputElement;
+        if (target.files && target.files[0]) {
+            handleAvatarUpload(target.files[0]);
         }
     });
 
     // Handle drag and drop
     dropArea.addEventListener('dragover', (event) => {
         event.preventDefault();
-        event.stopPropagation();
         dropArea.classList.add('dragover');
     });
 
     dropArea.addEventListener('dragleave', (event) => {
         event.preventDefault();
-        event.stopPropagation();
         dropArea.classList.remove('dragover');
     });
 
     dropArea.addEventListener('drop', (event) => {
         event.preventDefault();
-        event.stopPropagation();
         dropArea.classList.remove('dragover');
 
         const files = event.dataTransfer?.files;
-        if (files && files.length > 0) {
-            const file = files[0];
-            if (file) {
-                handleAvatarUpload(file);
-            }
+        if (files && files[0]) {
+            handleAvatarUpload(files[0]);
         }
     });
 
@@ -479,16 +440,16 @@ function initAvatarUpload() {
     });
 }
 
-
+// Main initialization function
 function initProfileController() {
-    const initializeController = () => {
-        // Load profile data
-        loadEnterpriseProfile();
+    const initializeController = async () => {
+        // Load user data for navbar
+        await loadUserData();
 
         // Initialize avatar upload functionality
         initAvatarUpload();
 
-        // Add event listener for save button
+        // Add event listener for save profile button
         const saveButton = document.querySelector('[data-action="save-profile"]') as HTMLButtonElement;
         if (saveButton) {
             saveButton.addEventListener('click', handleSaveProfile);
@@ -501,12 +462,15 @@ function initProfileController() {
     } else {
         initializeController();
     }
+
+    // Load candidate profile data
+    loadCandidateProfile();
 }
 
 // Export functions for potential external use
 export {
     populateProfileForm,
-    loadEnterpriseProfile,
+    loadCandidateProfile,
     handleSaveProfile,
     initProfileController,
     handleAvatarUpload,
