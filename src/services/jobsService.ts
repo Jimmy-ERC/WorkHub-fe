@@ -40,4 +40,30 @@ export class JobsService {
         }
     }
 
+    public static async deleteJobById(jobId: number): Promise<JobsResponse> {
+        try {
+            const response = await fetch(`${apiUrl}/enterprise/trabajos/${jobId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            return {
+                success: data.success || false,
+                data: data.data || [],
+                message: data.message || `Error ${response.status}: ${response.statusText}`
+            }
+        } catch (error) {
+            console.error('Error al eliminar trabajo', error)
+            return {
+                success: false,
+                data: [],
+                message: error instanceof Error ? error.message : 'Error desconocido al eliminar trabajo'
+            }
+        }
+    }
+
 }

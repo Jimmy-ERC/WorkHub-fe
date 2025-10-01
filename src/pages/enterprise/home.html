@@ -188,6 +188,9 @@
                     consectetur at in aut praesentium.</p>
             </div>
             <div class="modal-footer">
+                <button id="btnCerrarVacante" type="button" class="btn btn-danger "
+                    data-bs-target="#modalConfirmarCerrarVacante" data-bs-toggle="modal" data-bs-job-id="10">Cerrar
+                    Vacante</button>
                 <!-- llamamos a la función verCandidatos con el puesto correspondiente -->
                 <button id="btnVerCandidatos" onclick="verCandidatos('Frontend Developer')" type="button"
                     class="btn btn-primary">Ver
@@ -197,6 +200,27 @@
     </div>
 </div>
 
+
+<!-- Modal de Confirmación para Cerrar Vacante -->
+<div class="modal fade" id="modalConfirmarCerrarVacante" tabindex="-1"
+    aria-labelledby="modalConfirmarCerrarVacanteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalConfirmarCerrarVacanteLabel">Confirmar acción</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro que deseas cerrar esta vacante?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmarCerrarVacante"
+                    data-bs-dismiss="modal">Sí</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </html>

@@ -14,4 +14,5 @@ export interface Job {
     fecha_expiracion: string;
     nivel: string;
     ubicacion: string;
+    estado: boolean;
 }

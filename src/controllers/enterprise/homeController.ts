@@ -54,40 +54,48 @@ export class EnterpriseHomeController {
     } catch (error) {
       console.error("Error al obtener los trabajos:", error);
     }
-  }
 
-  /**
-   * Renderiza los trabajos para la página actual
-   */
-  public renderJobs(): void {
-    const jobList = document.getElementById("jobList");
-    if (!jobList) return;
 
-    jobList.innerHTML = "";
+    /**
+     * Renderiza los trabajos para la página actual
+     */
+    public renderJobs(): void {
+        const jobList = document.getElementById("jobList");
+        if (!jobList) return;
 
-    // Creamos row inicial
-    jobList.innerHTML += `<div class="row py-2" style="justify-content: center; justify-self: center;"></div>`;
+        jobList.innerHTML = "";
 
-    for (let i = 0; i < this.filteredJobs.length; i++) {
-      const job = this.filteredJobs[i];
-      if (!job) continue;
+        // Creamos row inicial
+        jobList.innerHTML += `<div class="row py-2" style="justify-content: center; justify-self: center;"></div>`;
 
-      let colorBadge = "grey";
-      if (job.modalidad === "Remota") {
-        colorBadge = "blue";
-      } else if (job.modalidad === "Híbrido" || job.modalidad === "Híbrida") {
-        colorBadge = "red";
-      } else {
-        colorBadge = "green";
-      }
+        for (let i = 0; i < this.filteredJobs.length; i++) {
+            const job = this.filteredJobs[i];
+            if (!job) continue;
 
-      const lastRow = jobList.querySelector(".row:last-child");
-      if (lastRow) {
-        lastRow.innerHTML += `<button onclick="enterpriseHomeController.llenarModalDetalleTrabajo(${job.id_trabajo})" data-bs-toggle="modal" data-bs-target="#modalDetalleTrabajo" class="card col-md-4 col-6 mx-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; ">
+            let colorBadge = "grey";
+            if (job.modalidad === "Remota") {
+                colorBadge = "blue";
+            } else if (job.modalidad === "Híbrido" || job.modalidad === "Híbrida") {
+                colorBadge = "red";
+            } else {
+                colorBadge = "green";
+            }
+
+            // Cambios para trabajos cerrados
+            const isClosed = job.estado === false;
+            const lockIcon = isClosed ? `<i class="bi bi-lock-fill" style="margin-right: 6px;"></i>` : "";
+            const cardOpacity = isClosed ? "0.5" : "1";
+            const titleStyle = isClosed ? "text-decoration: line-through;" : "";
+            const pointerEvents = isClosed ? "pointer-events: none;" : "";
+
+            const lastRow = jobList.querySelector(".row:last-child");
+            if (lastRow) {
+                lastRow.innerHTML += `<button onclick="enterpriseHomeController.llenarModalDetalleTrabajo(${job.id_trabajo})" data-bs-toggle="modal" data-bs-target="#modalDetalleTrabajo" class="card col-md-4 col-6 mx-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; opacity: ${cardOpacity}; ${pointerEvents}">
+
                     <div class="card-body">
                         <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-                            <h5 class="card-title">${job.nombre_trabajo}</h5>
+                            <h5 class="card-title" style="${titleStyle}">${lockIcon}${job.nombre_trabajo}</h5>
                             <span class="badge text-bg-secondary"
                             style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center; background-color:${colorBadge}!important "> 
                                 <p style="margin: 0;">${job.modalidad}</p>
@@ -133,38 +141,38 @@ export class EnterpriseHomeController {
       });
     }
 
-    this.renderJobs();
-  }
+    public llenarModalDetalleTrabajo(idTrabajo: number) {
+        const trabajo = this.jobs.find(t => t.id_trabajo === idTrabajo);
+        console.log(trabajo);
 
-  /**
-   * Actualiza la cantidad de items por página
-   */
-  public actualizarItemsPorPagina(): void {
-    const itemsPorPaginaElement = document.getElementById(
-      "itemsPorPagina"
-    ) as HTMLSelectElement;
-    if (!itemsPorPaginaElement) return;
+        // Llenar los elementos del modal con los datos del trabajo
+        document.getElementById("modalTitulo")!.textContent = trabajo!.nombre_trabajo;
+        document.getElementById("modalDescripcion")!.textContent = trabajo!.descripcion;
+        document.getElementById("modalModalidad")!.textContent = trabajo!.modalidad;
+        document.getElementById("modalUbicacion")!.textContent = trabajo!.ubicacion;
 
-    this.renderJobs();
-  }
+        //enviar el nombre del trabajo al botón ver candidatos
+        document.getElementById('btnVerCandidatos')!.addEventListener('click', () => verCandidatos(trabajo?.id_trabajo));
 
-  public llenarModalDetalleTrabajo(idTrabajo: number) {
-    const trabajo = this.jobs.find((t) => t.id_trabajo === idTrabajo);
-    console.log(trabajo);
+        document.getElementById("btnCerrarVacante")!.setAttribute('data-job-id', trabajo!.id_trabajo.toString());
 
-    // Llenar los elementos del modal con los datos del trabajo
-    document.getElementById("modalTitulo")!.textContent =
-      trabajo!.nombre_trabajo;
-    document.getElementById("modalDescripcion")!.textContent =
-      trabajo!.descripcion;
-    document.getElementById("modalModalidad")!.textContent = trabajo!.modalidad;
-    document.getElementById("modalUbicacion")!.textContent = trabajo!.ubicacion;
+        //asignamos el evento al botón confirmar cerrar vacante
+        document.getElementById("btnConfirmarCerrarVacante")?.addEventListener('click', () => this.cerrarVacante(trabajo!.id_trabajo));
 
-    //enviar el nombre del trabajo al botón ver candidatos
-    document
-      .getElementById("btnVerCandidatos")!
-      .addEventListener("click", () => verCandidatos(trabajo?.id_trabajo));
-  }
+    }
+
+    public async cerrarVacante(idTrabajo: number) {
+        console.log("Cerrando vacante con ID:", idTrabajo);
+
+        const response = await JobsService.deleteJobById(idTrabajo);
+        if (!response.success) {
+            alert(response.message);
+            return;
+        }
+        this.loadJobs();
+
+    }
+
 }
 
 function verCandidatos(puesto: any) {
