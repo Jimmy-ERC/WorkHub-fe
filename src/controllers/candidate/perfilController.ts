@@ -3,9 +3,12 @@ import sessionManager from "@/lib/session";
 import { diagnoseStorageSetup } from "@/lib/avatarUpload";
 import { ProfileCandidateService } from "@/services/profileCandidate.service";
 import { loadUserData } from "@/lib/userDataLoader";
+import { initCVUpload } from "@/lib/cvUpload";
+import { CurriculumService } from "@/services/curriculumService";
 
 // Variable to track if profile exists (for create vs update logic)
 let profileExists = false;
+let currentProfileId: number | null = null;
 
 // Populación de los campos del formulario con los datos del perfil
 function populateProfileForm(profileData: ProfileResponse['data']) {
@@ -291,10 +294,15 @@ async function loadCandidateProfile() {
         if (result.success && 'data' in result) {
             // Profile exists, populate form
             profileExists = true;
+            currentProfileId = result.data.id_perfil;
             populateProfileForm(result.data);
+
+            // Load CVs after profile is loaded
+            await loadCandidateCVs(result.data.id_perfil);
         } else {
             // Profile doesn't exist or error occurred
             profileExists = false;
+            currentProfileId = null;
             if (result.message && !result.message.includes('404') && !result.message.includes('no encontrado')) {
                 // Only show error if it's not a "profile not found" error
                 console.warn('Profile not found or error loading:', result.message);
@@ -307,9 +315,33 @@ async function loadCandidateProfile() {
     } catch (error) {
         console.error('Error loading candidate profile:', error);
         profileExists = false;
+        currentProfileId = null;
         showError(error instanceof Error ? error.message : 'Error desconocido al cargar el perfil');
     } finally {
         setLoadingState(false);
+    }
+}
+
+// ==================== CV Management Functions ====================
+
+/**
+ * Load candidate CVs
+ */
+async function loadCandidateCVs(idPerfil: number) {
+    try {
+        const result = await CurriculumService.fetchCurriculums(idPerfil);
+
+        if (result.success && 'data' in result) {
+            const { renderCVList } = await import('@/lib/cvUpload');
+            renderCVList(result.data);
+        } else {
+            const { renderCVList } = await import('@/lib/cvUpload');
+            renderCVList([]);
+        }
+    } catch (error) {
+        console.error('Error loading CVs:', error);
+        const { renderCVList } = await import('@/lib/cvUpload');
+        renderCVList([]);
     }
 }
 
@@ -449,6 +481,9 @@ function initProfileController() {
         // Initialize avatar upload functionality
         initAvatarUpload();
 
+        // Initialize CV upload functionality after profile loads
+        // This will be triggered in loadCandidateProfile after we have the profile ID
+
         // Add event listener for save profile button
         const saveButton = document.querySelector('[data-action="save-profile"]') as HTMLButtonElement;
         if (saveButton) {
@@ -463,8 +498,13 @@ function initProfileController() {
         initializeController();
     }
 
-    // Load candidate profile data
-    loadCandidateProfile();
+    // Load candidate profile data (this will also load CVs)
+    loadCandidateProfile().then(() => {
+        // Initialize CV upload after profile is loaded
+        if (currentProfileId) {
+            initCVUpload(currentProfileId);
+        }
+    });
 }
 
 // Export functions for potential external use
