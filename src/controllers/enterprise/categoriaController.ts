@@ -1,5 +1,5 @@
-import type { Categoria } from "@/interfaces/categoria.interface.ts";
-import { CategoriasService } from "@/services/categoriasService.ts";
+import type { Categoria } from "@/interfaces/categoria.interface";
+import { CategoriasService } from "@/services/categorias.service";
 
 export class CategoriaController {
   private categorias: Categoria[] = [];
@@ -25,19 +25,21 @@ export class CategoriaController {
     try {
       const categoriasResponse = await CategoriasService.getCategorias();
 
-      if (!categoriasResponse) {
-        console.error("Error en la respuesta:", "Error desconocido");
-        return;
-      }
-
-      // Validar que la respuesta sea un array
-      if (!Array.isArray(categoriasResponse.data)) {
-        console.error("La respuesta no es un array:", categoriasResponse.data);
+      if (!categoriasResponse.success) {
+        console.error("Error en la respuesta:", categoriasResponse.message);
         this.categorias = [];
         return;
       }
 
-      this.categorias = categoriasResponse.data;
+      const data = categoriasResponse.data;
+
+      if (!Array.isArray(data)) {
+        console.error("La respuesta no es un array:", data);
+        this.categorias = [];
+        return;
+      }
+
+      this.categorias = data;
     } catch (error) {
       console.error("Error al obtener las categorias:", error);
       this.categorias = [];
@@ -45,36 +47,40 @@ export class CategoriaController {
   }
 
   public renderCategorias(): void {
-    const categoriasContainer = document.getElementById("etiquetas-empleo");
+    const categoriasContainer = document.getElementById(
+      "etiquetas-empleo"
+    ) as HTMLSelectElement | null;
 
     if (!categoriasContainer) {
       console.error("No se encontró el contenedor de categorías");
-      return;
-    }
 
-    // Validar que categorias sea un array antes de iterar
-    if (!Array.isArray(this.categorias)) {
-      console.error("this.categorias no es un array:", this.categorias);
       return;
     }
 
     if (this.categorias.length === 0) {
       console.warn("No hay categorías para mostrar");
+
       return;
     }
 
-    // Limpiar el contenedor antes de agregar nuevas opciones
-    // Mantener la primera opción por defecto
+    // Guardamos la primera opción por defecto
     const defaultOption = categoriasContainer.querySelector('option[value=""]');
+
+    // Limpiamos y reintegramos la opción por defecto
     categoriasContainer.innerHTML = "";
     if (defaultOption) {
       categoriasContainer.appendChild(defaultOption);
+    } else {
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = "Selecciona una etiqueta";
+      categoriasContainer.appendChild(placeholder);
     }
 
     this.categorias.forEach((categoria) => {
       try {
         const categoriaElement = document.createElement("option");
-        categoriaElement.value = categoria.id_categoria.toString();
+        categoriaElement.value = String(categoria.id_categoria);
         categoriaElement.textContent = categoria.nombre_categoria;
         categoriasContainer.appendChild(categoriaElement);
       } catch (error) {
@@ -85,12 +91,9 @@ export class CategoriaController {
         );
       }
     });
-
-    console.log(`Se agregaron ${this.categorias.length} categorías al select`);
   }
 }
 
-// Crear instancia global para acceso desde HTML
 declare global {
   interface Window {
     categoriaController: CategoriaController;

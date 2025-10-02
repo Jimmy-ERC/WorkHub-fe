@@ -145,7 +145,7 @@
     >
       <div class="col-12">
         <!-- form para publicar trabajo -->
-        <form action="">
+        <form id="form-publicar-trabajo">
           <h1 style="margin-bottom: 7%">Publicar un trabajo</h1>
           <div class="mb-3">
             <label for="nombre-empleo" class="form-label custom-form-label"
@@ -403,7 +403,6 @@
       </div>
     </div>
 
-    <!-- Route Protection Script (must load before other scripts) -->
     <script type="module" src="../../controllers/routeProtection.ts"></script>
 
     <script
@@ -412,10 +411,8 @@
       crossorigin="anonymous"
     ></script>
 
-    <!-- Logout Controller Script -->
     <script type="module" src="../../controllers/logout.ts"></script>
 
-    <!-- Candidate Home Controller -->
     <script
       type="module"
       src="../../controllers/candidate/homeController.ts"
@@ -423,7 +420,7 @@
 
     <script
       type="module"
-      src="../../controllers/enterprise/jobControllerEnterprise.ts"
+      src="../../controllers/enterprise/jobEnterpriseController.ts"
     ></script>
 
     <script
