@@ -87,13 +87,7 @@
                 <span class="badge text-bg-secondary">New york <i class="bi bi-x"></i></span>
             </div>
             <div class="col-12 col-md-3 d-flex justify-content-end mb-2 mb-md-0">
-                <!-- seleccion de orden por fecha -->
-                <select class="form-select" style="max-width: 200px;" aria-label="Default select example"
-                    id="ordenFecha" onchange="enterpriseHomeController.filtrarTrabajos()">
-                    <option selected value="recientes">Más recientes</option>
-                    <option value="antiguos">Más antiguos</option>
 
-                </select>
             </div>
             <div class="col-6 col-md-2 d-flex justify-content-end mb-2 mb-md-0">
                 <!-- seleccion de vista -->
@@ -123,147 +117,27 @@
                 <div class="col-12 col-lg-3 col-md-3 col-sm-12 card mb-md-0"
                     style="padding-left: 2%;margin-right: 2%; ">
                     <form id="filtroExperiencia">
-                        <h6 class="mt-3 mb-2">Experiencia</h6>
-                        <div class="form-check mb-2" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" value="todos"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" id="exp1" checked>
-                            <label class="form-check-label" for="exp1">
-                                Todos
-                            </label>
+                        <h6 class="mt-3 mb-2">Buscar por nombre</h6>
+                        <div class="mb-3" style="width: 90%;">
+                            <input type="text" class="form-control" id="filtroNombre" placeholder="Ejemplo: Juan Pérez"
+                                onkeydown="if(event.key==='Enter')
+                                { enterpriseViewEnterprisesController.buscarPorNombre(); }">
                         </div>
-                        <div class="form-check mb-2" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" value="Recién graduado"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" id="exp1">
-                            <label class="form-check-label" for="exp1">
-                                Recién graduados
-                            </label>
+                        <h6 class="mt-3 mb-2">Buscar por ubicación</h6>
+                        <div class="mb-3" style="width: 90%;">
+                            <input type="text" class="form-control" id="filtroUbicacion" onkeydown="if(event.key==='Enter')
+                                { enterpriseViewEnterprisesController.buscarPorUbicacion(); }"
+                                placeholder="Ejemplo: Ciudad, Estado o País">
                         </div>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" value="1 - 2 Años"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()">
-                            <label class="form-check-label" for="exp2">
-                                1 - 2 Años
-                            </label>
-                        </div>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" value="2 - 4 Años"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()">
-                            <label class="form-check-label" for="exp3">
-                                2 - 4 Años
-                            </label>
-                        </div>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" value="4 - 6 Años"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()">
-                            <label class="form-check-label" for="exp4">
-                                4 - 6 Años
-                            </label>
-                        </div>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" value="6 - 8 Años"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()">
-                            <label class="form-check-label" for="exp5">
-                                6 - 8 Años
-                            </label>
-                        </div>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" value="8 - 10 Años"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()">
-                            <label class="form-check-label" for="exp6">
-                                8 - 10 Años
-                            </label>
-                        </div>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" value="10 - 15 Años"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()">
-                            <label class="form-check-label" for="exp7">
-                                10 - 15 Años
-                            </label>
-                        </div>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="experiencia" value="15 + Años"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()">
-                            <label class="form-check-label" for="exp8">
-                                15+ Años
-                            </label>
+
+                        <div>
+                            <button type="button" class="btn btn-primary w-100"
+                                onclick="enterpriseViewEnterprisesController.limpiarFiltros()">Limpiar</button>
                         </div>
                     </form>
 
                     <hr>
 
-                    <div>
-                        <h6 class="mt-3 mb-2">Educación</h6>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="checkbox" name="educacion"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="todos" checked>
-                            <label class="form-check-label" for="edu1">
-                                Todos
-                            </label>
-                        </div>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="checkbox" name="educacion"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="secundaria">
-                            <label class="form-check-label" for="edu2">
-                                Secundaria
-                            </label>
-                        </div>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="checkbox" name="educacion"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="tecnico">
-                            <label class="form-check-label" for="edu3">
-                                Técnico
-                            </label>
-                        </div>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="checkbox" name="educacion"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="diplomado">
-                            <label class="form-check-label" for="edu4">
-                                Diplomado
-                            </label>
-                        </div>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="checkbox" id="edu5" name="educacion"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="licenciatura">
-                            <label class="form-check-label" for="edu5">
-                                Licenciatura
-                            </label>
-                        </div>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="checkbox" name="educacion"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="ingeniería">
-                            <label class="form-check-label" for="edu6">
-                                Ingeniería
-                            </label>
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    <div>
-                        <h6 class="mt-3 mb-2">Género</h6>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="genero" value="todos"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="ingenieria"
-                                checked>
-                            <label class="form-check-label" for="gen3">
-                                Todos
-                            </label>
-                        </div>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="genero" value="masculino"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="ingenieria">
-                            <label class="form-check-label" for="gen1">
-                                Masculino
-                            </label>
-                        </div>
-                        <div class="form-check" style="width: 60%;">
-                            <input class="form-check-input" type="radio" name="genero" value="femenino"
-                                onchange="enterpriseViewCandidatesController.renderCandidates()" value="ingenieria">
-                            <label class="form-check-label" for="gen2">
-                                Femenino
-                            </label>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- candidatos -->
