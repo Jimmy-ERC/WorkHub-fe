@@ -25,42 +25,47 @@
                 <img src="../../assets/img/logo.png" alt="Workhub" style="height: 30px;" class="mx-2">
             </a>
             <!-- Buscador -->
-            <form class="d-none d-lg-flex mx-2 flex-grow-1 align-items-start" style="max-width: 500px;">
-
-                <input class="form-control me-2" type="search" placeholder="Título, palabra clave o compañía"
-                    aria-label="Search">
-                <button class="btn btn-primary" type="submit">Encontrar</button>
+            <form id="globalSearchForm" class="d-flex mx-2 flex-grow-1 align-items-start my-3 my-lg-0"
+                style="max-width:520px" role="search" aria-label="Buscar trabajos" data-action="search">
+                <label for="q" class="visually-hidden">Título, palabra clave o nombre de vacante</label>
+                <input id="vacanteGeneralBuscar" class="form-control me-2" type="search"
+                    placeholder="Título, palabra clave o vacante">
+                <button class="btn btn-primary" type="button"
+                    onclick="enterpriseHomeController.verCandidatos(vacanteGeneralBuscar.value)">Encontrar</button>
             </form>
             <!-- Menú -->
-            <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link" href="/index.html">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Candidatos</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
-                <!-- <li class="nav-item"><a class="nav-link" href="#">Recursos</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Foros</a></li> -->
+            <!-- Menú de navegación -->
+            <ul class="navbar-nav mb-2 mb-lg-0 me-auto me-lg-0">
+                <li class="nav-item"><a class="nav-link px-3" href="/src/pages/enterprise/home.html">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link px-3"
+                        href="/src/pages/enterprise/view-candidates-general.html">Candidatos</a></li>
+                <li class="nav-item"><a class="nav-link px-3"
+                        href="/src/pages/enterprise/view-enterprises.html">Empresas</a></li>
             </ul>
 
-            <div class="dropdown ms-3">
-                <a href="#" class="d-flex align-items-center text-dark      text-decoration-none       dropdown-toggle"
-                    data-bs-toggle="dropdown">
-                    <img src="/src/assets/img/avatar.jpg" id="profilePic" alt="user" class="rounded-circle    me-2"
-                        width="35" height="35">
-                    <span id="userNameDisplay">username</span>
+            <!-- Usuario -->
+            <div class="dropdown ms-auto ms-lg-3 mt-3 mt-lg-0">
+                <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="/src/assets/img/avatar.jpg" id="profilePic" alt="Avatar de usuario"
+                        class="rounded-circle me-2" width="35" height="35">
+                    <span id="userNameDisplay" class="d-none d-sm-inline">username</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="/src/pages/enterprise/profile/index.html">Ver perfil</a></li>
-                    <li><a class="dropdown-item" href="#">Configuración</a></li>
+                    <li><a class="dropdown-item" href="/src/pages/enterprise/profile/index.html"
+                            data-route="profile">Ver perfil</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item text-danger" href="/src/pages/auth/login.html">Cerrar Sesión</a></li>
+                    <li><a class="dropdown-item text-danger" href="/src/pages/auth/login.html"
+                            data-action="logout">Cerrar sesión</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <!-- Filtros de búsqueda -->
-    <div class="bg-light py-3 px-4 border-bottom">
+    <!-- <div class="bg-light py-3 px-4 border-bottom">
         <div class="row g-2">
             <h6>Busca vacantes publicadas</h6>
         </div>
@@ -73,7 +78,7 @@
                 </select></div>
             <div class="col-md-auto"><button class="btn btn-primary w-100">Encontrar</button></div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Listado de trabajos -->
     <div class="container">
@@ -320,6 +325,10 @@
 
 
     <script type="module" src="../../controllers/enterprise/viewCandidatesGeneralController.ts"></script>
+
+
+    <!-- !!util para búsqueda global -->
+    <script type="module" src="../../controllers/enterprise/homeController.ts"></script>
 </body>
 
 <!-- Modal para detalle de candidato -->

@@ -161,8 +161,13 @@ export class EnterpriseViewEnterprisesController {
         let seguimientoResponse;
         if (es_seguida) {
             seguimientoResponse = await EnterprisesEnterpriseService.dejarDeSeguirEmpresa(id_seguidor, enterpriseId);
+
         } else {
             seguimientoResponse = await EnterprisesEnterpriseService.seguirEmpresa(id_seguidor, enterpriseId);
+
+        }
+        if (!seguimientoResponse.success) {
+            alert(seguimientoResponse.message);
 
         }
 
@@ -173,7 +178,41 @@ export class EnterpriseViewEnterprisesController {
 
 
     }
+
+    public buscarPorNombre(): void {
+        const filtroNombreInput = document.getElementById('filtroNombre') as HTMLInputElement;
+        if (!filtroNombreInput) return;
+        const nombreBuscar = filtroNombreInput.value.toLowerCase().trim();
+
+        if (!nombreBuscar || nombreBuscar.length === 0) {
+            this.limpiarFiltros();
+            return;
+        }
+
+        this.filteredEnterprises = this.filteredEnterprises.filter(enterprise => enterprise.nombre_seguido.toLowerCase().includes(nombreBuscar));
+        this.renderEnterprises();
+    }
+
+
+    public buscarPorUbicacion(): void {
+        const filtroUbicacion = (document.getElementById('filtroUbicacion') as HTMLInputElement).value.toLocaleLowerCase();
+        if (!filtroUbicacion || filtroUbicacion.length === 0) {
+            this.limpiarFiltros();
+            return;
+        }
+
+        this.filteredEnterprises = this.filteredEnterprises.filter(e => e.ubicacion_seguido.toLocaleLowerCase().includes(filtroUbicacion));
+        this.renderEnterprises();
+    }
+    public limpiarFiltros(): void {
+        this.filteredEnterprises = [...this.enterprises];
+        this.renderEnterprises();
+    }
+
+
 }
+
+
 
 
 // Crear instancia global para acceso desde HTML

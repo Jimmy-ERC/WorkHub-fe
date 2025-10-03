@@ -40,10 +40,10 @@ export class JobsService {
         }
     }
 
-    public static async deleteJobById(jobId: number): Promise<JobsResponse> {
+    public static async closeJob(jobId: number): Promise<JobsResponse> {
         try {
-            const response = await fetch(`${apiUrl}/enterprise/trabajos/${jobId}`, {
-                method: 'DELETE',
+            const response = await fetch(`${apiUrl}/enterprise/trabajos/cerrar/${jobId}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -57,11 +57,36 @@ export class JobsService {
                 message: data.message || `Error ${response.status}: ${response.statusText}`
             }
         } catch (error) {
-            console.error('Error al eliminar trabajo', error)
+            console.error('Error al cerrar trabajo', error)
             return {
                 success: false,
                 data: [],
-                message: error instanceof Error ? error.message : 'Error desconocido al eliminar trabajo'
+                message: error instanceof Error ? error.message : 'Error desconocido al cerrar trabajo'
+            }
+        }
+    }
+    public static async openJob(jobId: number): Promise<JobsResponse> {
+        try {
+            const response = await fetch(`${apiUrl}/enterprise/trabajos/abrir/${jobId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            return {
+                success: data.success || false,
+                data: data.data || [],
+                message: data.message || `Error ${response.status}: ${response.statusText}`
+            }
+        } catch (error) {
+            console.error('Error al abrir trabajo', error)
+            return {
+                success: false,
+                data: [],
+                message: error instanceof Error ? error.message : 'Error desconocido al abrir trabajo'
             }
         }
     }
