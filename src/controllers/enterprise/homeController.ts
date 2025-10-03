@@ -186,7 +186,7 @@ export class EnterpriseHomeController {
         document.getElementById("modalUbicacion")!.textContent = trabajo!.ubicacion;
 
         //enviar el nombre del trabajo al botón ver candidatos
-        document.getElementById('btnVerCandidatos')!.addEventListener('click', () => verCandidatos(trabajo?.id_trabajo));
+        document.getElementById('btnVerCandidatos')!.addEventListener('click', () => this.verCandidatos(trabajo?.id_trabajo + ""));
 
         // document.getElementById("btnCerrarVacante")!.setAttribute('data-job-id', trabajo!.id_trabajo.toString());
 
@@ -259,14 +259,29 @@ export class EnterpriseHomeController {
         });
         this.renderJobs();
     }
+
+
+    // Redirige a la página de ver candidatos con el puesto seleccionado en la url
+    public verCandidatos(puesto: number | string) {
+        // Redirigir a la página de ver candidatos con el puesto seleccionado
+
+
+        //!! util para ver vacantes por nombre para barra de búsqueda
+        if (isNaN(parseInt(puesto as string))) {
+            console.log("el puesto fue enviado como:", puesto);
+            puesto = this.jobs.find(job => (job.nombre_trabajo).toLowerCase().includes(puesto as string))?.id_trabajo || "-1";
+            if (puesto === "-1") {
+                alert("No se encontró la vacante especificada.");
+                return;
+            }
+            console.log("el puesto fue convertido a id:", puesto);
+        }
+        window.location.href = `/src/pages/enterprise/view-candidates.html?puesto=${encodeURIComponent(
+            puesto
+        )}`;
+    }
 }
 
-function verCandidatos(puesto: any) {
-    // Redirigir a la página de ver candidatos con el puesto seleccionado
-    window.location.href = `/src/pages/enterprise/view-candidates.html?puesto=${encodeURIComponent(
-        puesto
-    )}`;
-}
 
 // Crear instancia global para acceso desde HTML
 declare global {

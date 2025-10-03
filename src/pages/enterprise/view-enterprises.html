@@ -25,11 +25,13 @@
                 <img src="../../assets/img/logo.png" alt="Workhub" style="height: 30px;" class="mx-2">
             </a>
             <!-- Buscador -->
-            <form class="d-none d-lg-flex mx-2 flex-grow-1 align-items-start" style="max-width: 500px;">
-
-                <input class="form-control me-2" type="search" placeholder="Título, palabra clave o compañía"
-                    aria-label="Search">
-                <button class="btn btn-primary" type="submit">Encontrar</button>
+            <form id="globalSearchForm" class="d-flex mx-2 flex-grow-1 align-items-start my-3 my-lg-0"
+                style="max-width:520px" role="search" aria-label="Buscar trabajos" data-action="search">
+                <label for="q" class="visually-hidden">Título, palabra clave o nombre de vacante</label>
+                <input id="vacanteGeneralBuscar" class="form-control me-2" type="search"
+                    placeholder="Título, palabra clave o vacante">
+                <button class="btn btn-primary" type="button"
+                    onclick="enterpriseHomeController.verCandidatos(vacanteGeneralBuscar.value)">Encontrar</button>
             </form>
             <!-- Menú de navegación -->
             <ul class="navbar-nav mb-2 mb-lg-0 me-auto me-lg-0">
@@ -182,6 +184,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+
+
+    <!-- !!util para búsqueda global -->
+    <script type="module" src="../../controllers/enterprise/homeController.ts"></script>
 
 
 
