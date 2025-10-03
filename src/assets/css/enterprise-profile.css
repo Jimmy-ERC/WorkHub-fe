@@ -165,6 +165,32 @@ img {
   height: auto;
 }
 
+/* Avatar / profile images: keep a perfect circle and avoid stretching.
+   Use object-fit to crop the image while preserving aspect ratio.
+   Provide a reusable .avatar class and a specific rule for #profilePic
+   (the HTML already sets width/height attributes; this ensures CSS-enforced
+   square sizing so object-fit works consistently). */
+.avatar,
+img#profilePic {
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  /* ensures replaced element respects object-fit sizing */
+  object-fit: cover;
+  /* crop to fill the box without stretching */
+  object-position: center;
+  border-radius: 50%;
+}
+
+/* Larger avatar variants (use .avatar-lg) */
+.avatar-lg {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
 /* Responsive: separaciones suaves en móviles */
 @media (max-width: 767.98px) {
   main .row.g-4>[class*="col-"] {

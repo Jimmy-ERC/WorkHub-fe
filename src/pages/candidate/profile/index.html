@@ -118,7 +118,7 @@
             <section class="col-12 col-md-9 col-lg-10 p-4">
                 <!-- Encabezado -->
                 <header class="mb-3">
-                    <h5 class="mb-1">Hola, John Doe</h5>
+                    <h5 class="mb-1" id="userGreeting">Hola, John Doe</h5>
                     <p class="text-muted mb-0">Tus actividades diarias y alertas de trabajo</p>
                 </header>
 
@@ -173,7 +173,7 @@
                 </div>
 
                 <!-- Banner perfil incompleto -->
-                <section
+                <!-- <section
                     class="profile-banner rounded-3 p-3 p-md-4 mb-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
                     <div class="d-flex align-items-center gap-3">
                         <img src="../../../assets//img/avatar.jpg" alt="Avatar de John Doe"
@@ -187,7 +187,7 @@
                         <button class="btn btn-light" type="button" data-action="open-profile">Editar perfil <i
                                 class="bi bi-arrow-right-short"></i></button>
                     </div>
-                </section>
+                </section> -->
 
                 <!-- Lista de aplicados recientemente -->
                 <section aria-labelledby="aplicados-title">
@@ -208,130 +208,7 @@
                     </div>
 
                     <div class="list-group list-group-flush">
-                        <!-- Row 1 -->
-                        <article class="list-group-item px-2 py-3">
-                            <div class="row g-2 align-items-center">
-                                <div class="col-lg-6 d-flex align-items-center gap-3">
-                                    <img src="./assets/img/logo-up.png" class="rounded-3 border img-fluid"
-                                        alt="Logo empresa Up" width="42" height="42">
-                                    <div>
-                                        <div class="d-flex flex-wrap align-items-center gap-2">
-                                            <a href="#" class="link-dark fw-medium text-decoration-none">Networking
-                                                Engineer</a>
-                                            <span class="badge rounded-pill bg-body-tertiary border text-secondary"
-                                                data-filter-tag="remote">Remote</span>
-                                        </div>
-                                        <div class="text-muted small d-flex flex-wrap align-items-center gap-3">
-                                            <span><i class="bi bi-geo-alt me-1"></i>Washington</span>
-                                            <span><i class="bi bi-cash-coin me-1"></i>$50k–80k/month</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-lg-2 text-lg-start text-muted small">Feb 2, 2019 19:28</div>
-                                <div class="col-6 col-lg-2">
-                                    <span class="text-success d-inline-flex align-items-center gap-1"><i
-                                            class="bi bi-check2-circle"></i> Activo</span>
-                                </div>
-                                <div class="col-12 col-lg-2 text-lg-end">
-                                    <button class="btn btn-outline-primary btn-sm" type="button" data-action="open-job"
-                                        data-job-id="1">Ver Detalles</button>
-                                </div>
-                            </div>
-                        </article>
 
-                        <!-- Row 2 -->
-                        <article class="list-group-item px-2 py-3">
-                            <div class="row g-2 align-items-center">
-                                <div class="col-lg-6 d-flex align-items-center gap-3">
-                                    <img src="./assets/img/logo-pink.png" class="rounded-3 border img-fluid"
-                                        alt="Logo empresa (rosa)" width="42" height="42">
-                                    <div>
-                                        <div class="d-flex flex-wrap align-items-center gap-2">
-                                            <a href="#" class="link-dark fw-medium text-decoration-none">Product
-                                                Designer</a>
-                                            <span
-                                                class="badge rounded-pill bg-primary-subtle border border-primary-subtle text-primary"
-                                                data-filter-tag="full-time">Full Time</span>
-                                        </div>
-                                        <div class="text-muted small d-flex flex-wrap align-items-center gap-3">
-                                            <span><i class="bi bi-geo-alt me-1"></i>Dhaka</span>
-                                            <span><i class="bi bi-cash-coin me-1"></i>$50k–80k/month</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-lg-2 text-lg-start text-muted small">Dec 7, 2019 23:26</div>
-                                <div class="col-6 col-lg-2">
-                                    <span class="text-success d-inline-flex align-items-center gap-1"><i
-                                            class="bi bi-check2-circle"></i> Activo</span>
-                                </div>
-                                <div class="col-12 col-lg-2 text-lg-end">
-                                    <button class="btn btn-outline-primary btn-sm" type="button" data-action="open-job"
-                                        data-job-id="2">Ver Detalles</button>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Row 3 -->
-                        <article class="list-group-item px-2 py-3">
-                            <div class="row g-2 align-items-center">
-                                <div class="col-lg-6 d-flex align-items-center gap-3">
-                                    <img src="./assets/img/logo-apple.png" class="rounded-3 border img-fluid"
-                                        alt="Logo empresa Apple" width="42" height="42">
-                                    <div>
-                                        <div class="d-flex flex-wrap align-items-center gap-2">
-                                            <a href="#" class="link-dark fw-medium text-decoration-none">Junior Graphic
-                                                Designer</a>
-                                            <span class="badge rounded-pill bg-body-tertiary border text-secondary"
-                                                data-filter-tag="temporary">Temporary</span>
-                                        </div>
-                                        <div class="text-muted small d-flex flex-wrap align-items-center gap-3">
-                                            <span><i class="bi bi-geo-alt me-1"></i>Brazil</span>
-                                            <span><i class="bi bi-cash-coin me-1"></i>$50k–80k/month</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-lg-2 text-lg-start text-muted small">Feb 2, 2019 19:28</div>
-                                <div class="col-6 col-lg-2">
-                                    <span class="text-success d-inline-flex align-items-center gap-1"><i
-                                            class="bi bi-check2-circle"></i> Activo</span>
-                                </div>
-                                <div class="col-12 col-lg-2 text-lg-end">
-                                    <button class="btn btn-outline-primary btn-sm" type="button" data-action="open-job"
-                                        data-job-id="3">Ver Detalles</button>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Row 4 (seleccionado estilo focus) -->
-                        <article class="list-group-item px-2 py-3">
-                            <div class="row g-2 align-items-center">
-                                <div class="col-lg-6 d-flex align-items-center gap-3">
-                                    <img src="./assets/img/logo-ms.png" class="rounded-3 border img-fluid"
-                                        alt="Logo empresa Microsoft" width="42" height="42">
-                                    <div>
-                                        <div class="d-flex flex-wrap align-items-center gap-2">
-                                            <a href="#" class="link-dark fw-medium text-decoration-none">Visual
-                                                Designer</a>
-                                            <span class="badge rounded-pill bg-body-tertiary border text-secondary"
-                                                data-filter-tag="contract">Contract Base</span>
-                                        </div>
-                                        <div class="text-muted small d-flex flex-wrap align-items-center gap-3">
-                                            <span><i class="bi bi-geo-alt me-1"></i>Wisconsin</span>
-                                            <span><i class="bi bi-cash-coin me-1"></i>$50k–80k/month</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-lg-2 text-lg-start text-muted small">Dec 7, 2019 23:26</div>
-                                <div class="col-6 col-lg-2">
-                                    <span class="text-success d-inline-flex align-items-center gap-1"><i
-                                            class="bi bi-check2-circle"></i> Activo</span>
-                                </div>
-                                <div class="col-12 col-lg-2 text-lg-end">
-                                    <button class="btn btn-outline-primary btn-sm" type="button" data-action="open-job"
-                                        data-job-id="4">Ver Detalles</button>
-                                </div>
-                            </div>
-                        </article>
                     </div>
                 </section>
             </section>
@@ -348,7 +225,8 @@
     <!-- Route Protection Script (must load before other scripts) -->
     <script type="module" src="/src/controllers/routeProtection.ts"></script>
 
-    <script type="module" src="/src/controllers/candidate/perfilController.ts"></script>
+    <!-- Candidate Profile General Controller (for dashboard data) -->
+    <script type="module" src="/src/controllers/candidate/perfilGeneralController.ts"></script>
 
     <!-- Load user data for navbar -->
     <script type="module">
