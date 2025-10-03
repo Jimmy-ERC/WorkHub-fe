@@ -5,4 +5,5 @@ export interface Empresa {
     id_seguidor: number;
     es_seguida: boolean;
     ubicacion_seguido: string;
+    te_sigue: boolean; // Propiedad opcional
 }

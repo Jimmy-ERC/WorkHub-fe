@@ -14,7 +14,8 @@ export class EnterpriseViewEnterprisesController {
             foto_seguido: "https://pzplniihhetjlxdkhljz.supabase.co/storage/v1/object/public/Archivos_WorkHub/3cbac7ba-1995-42ce-ac79-0b30ba522831/avatar.png",
             id_seguidor: 10,
             es_seguida: true,
-            ubicacion_seguido: "Estados Unidos"
+            ubicacion_seguido: "Estados Unidos",
+            te_sigue: false
         },
         {
             id_seguido: 12,
@@ -22,7 +23,8 @@ export class EnterpriseViewEnterprisesController {
             foto_seguido: "https://pzplniihhetjlxdkhljz.supabase.co/storage/v1/object/public/Archivos_WorkHub/4dbac7ba-1995-42ce-ac79-0b30ba522832/avatar.png",
             id_seguidor: 10,
             es_seguida: false,
-            ubicacion_seguido: "Estados Unidos"
+            ubicacion_seguido: "Estados Unidos",
+            te_sigue: true
         },
         {
             id_seguido: 13,
@@ -30,9 +32,10 @@ export class EnterpriseViewEnterprisesController {
             foto_seguido: "https://pzplniihhetjlxdkhljz.supabase.co/storage/v1/object/public/Archivos_WorkHub/5ebac7ba-1995-42ce-ac79-0b30ba522833/avatar.png",
             id_seguidor: 10,
             es_seguida: true,
-            ubicacion_seguido: "Estados Unidos"
+            ubicacion_seguido: "Estados Unidos",
+            te_sigue: false
         }
-    ] as any[];
+    ] as Empresa[];
 
     private filteredEnterprises = [...this.enterprises]
     constructor() {
@@ -67,6 +70,8 @@ export class EnterpriseViewEnterprisesController {
         }
 
         const enterPrises = await EnterprisesEnterpriseService.getEnterprises(enterPriseProfile.data.id_perfil) as EmpresaResponse;
+
+        console.log("Empresas cargadas:", enterPrises);
 
         if (enterPrises.success) {
             this.enterprises = enterPrises.data;
@@ -112,10 +117,25 @@ export class EnterpriseViewEnterprisesController {
                                 <div class="card-body">
                                     <h5 class="card-title">
                                         ${enterprise.nombre_seguido}
-
                                     </h5>
-                                    <div class="d-flex flex-wrap">
-                                        <p class="me-3"><i class="bi bi-geo-alt"></i> ${enterprise.ubicacion_seguido}</p>
+                                    <div class="d-flex flex-wrap align-items-center">
+                                        <p class="me-3 mb-0"><i class="bi bi-geo-alt"></i> ${enterprise.ubicacion_seguido}</p>
+                                        ${enterprise.te_sigue
+                    ? `<span style="
+                                                background: #e6f9f0;
+                                                color: #16a34a;
+                                                border-radius: 4px;
+                                                padding: 2px 10px;
+                                                margin-left: 10px;
+                                                font-size: 0.92em;
+                                                font-weight: 500;
+                                                box-shadow: 0 0 0 1px #b6f3d3;
+                                                vertical-align: middle;
+                                                display: inline-block;
+                                                line-height: 1.6;
+                                            ">Te sigue</span>`
+                    : ''
+                }
                                     </div>
                                 </div>
                             </div>
