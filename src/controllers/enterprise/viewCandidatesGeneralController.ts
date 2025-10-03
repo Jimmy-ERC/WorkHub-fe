@@ -91,7 +91,12 @@ export class EnterpriseViewCandidatesGeneralController {
                 this.filteredCandidates = this.filteredCandidates.filter(c => c.genero.toLowerCase() === valorGenero)
             }
         }
-
+        // Ordenar candidatos por nombre_trabajo
+        this.filteredCandidates = this.filteredCandidates.sort((a, b) => {
+            const nombreA = a.nombre_trabajo?.toLowerCase() || '';
+            const nombreB = b.nombre_trabajo?.toLowerCase() || '';
+            return nombreA.localeCompare(nombreB);
+        });
 
         document.getElementById('nombreVacante')!.innerText = this.filteredCandidates[0]?.nombre_trabajo || 'Sin candidatos para la empresa';
         const listCandidatos = document.getElementById('listCandidatos');
@@ -122,7 +127,7 @@ export class EnterpriseViewCandidatesGeneralController {
             if (candidate.estado?.toLowerCase() === "pendiente") {
                 htmlAcciones = `<div
                                 class="col-12 col-sm-12 col-md-12 col-lg-2 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0 flex-column" style="align-self: center; gap: 5px;">
-                                <button data-bs-toggle="modal"  data-bs-target="#modalDetalleCandidato" type="button" class="btn btn-primary w-100 w-md-auto" onClick="enterpriseViewCandidatesController.llenarModalDetalleCandidato(${candidate.id_perfil})">Ver Perfil →</button>
+                                <button data-bs-toggle="modal"  data-bs-target="#modalDetalleCandidato" type="button" class="btn btn-primary w-100 w-md-auto" onClick="enterpriseViewCandidatesGeneralController.llenarModalDetalleCandidato(${candidate.id_perfil})">Ver Perfil →</button>
                                 <button type="button" class="btn btn-success w-100 w-md-auto"  onClick="enterpriseViewCandidatesGeneralController.actualizarEstadoAplicacion(${candidate.id_aplicacion}, 'aceptado')">
                                     Aceptar <i class="bi bi-check"></i>
                                 </button>
