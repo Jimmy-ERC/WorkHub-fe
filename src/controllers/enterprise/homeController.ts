@@ -244,6 +244,21 @@ export class EnterpriseHomeController {
         this.loadJobs();
 
     }
+
+    public filtrorPorBusqueda(): void {
+        const tituloBuscar = (document.getElementById("tituloBuscar") as HTMLInputElement).value.toLowerCase();
+        const ubicacionBuscar = (document.getElementById("ubicacionBuscar") as HTMLInputElement).value.toLowerCase();
+        const salarioBuscar = (document.getElementById("salarioBuscar") as HTMLInputElement).value;
+        console.log("Buscando por:", { tituloBuscar, ubicacionBuscar, salarioBuscar });
+
+        this.filteredJobs = this.jobs.filter(job => {
+            const matchesTitulo = job.nombre_trabajo.toLowerCase().includes(tituloBuscar);
+            const matchesUbicacion = job.ubicacion.toLowerCase().includes(ubicacionBuscar);
+            const matchesSalario = salarioBuscar ? (job.salario_minimo <= parseInt(salarioBuscar) && job.salario_maximo >= parseInt(salarioBuscar)) : true;
+            return matchesTitulo && matchesUbicacion && matchesSalario;
+        });
+        this.renderJobs();
+    }
 }
 
 function verCandidatos(puesto: any) {
