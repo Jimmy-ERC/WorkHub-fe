@@ -85,14 +85,14 @@ export class EnterpriseHomeController {
             // Cambios para trabajos cerrados
             const isClosed = job.estado === false;
             const lockIcon = isClosed ? `<i class="bi bi-lock-fill" style="margin-right: 6px;"></i>` : "";
-            const cardOpacity = isClosed ? "0.5" : "1";
+            const cardOpacity = isClosed ? "0.8" : "1";
             const titleStyle = isClosed ? "text-decoration: line-through;" : "";
-            const pointerEvents = isClosed ? "pointer-events: none;" : "";
+
 
             const lastRow = jobList.querySelector(".row:last-child");
             if (lastRow) {
                 lastRow.innerHTML += `<button onclick="enterpriseHomeController.llenarModalDetalleTrabajo(${job.id_trabajo})" data-bs-toggle="modal" data-bs-target="#modalDetalleTrabajo" class="card col-md-4 col-6 mx-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; opacity: ${cardOpacity}; ${pointerEvents}">
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; opacity: ${cardOpacity}; ">
 
                     <div class="card-body">
                         <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
@@ -157,17 +157,55 @@ export class EnterpriseHomeController {
         //enviar el nombre del trabajo al botón ver candidatos
         document.getElementById('btnVerCandidatos')!.addEventListener('click', () => verCandidatos(trabajo?.id_trabajo));
 
-        document.getElementById("btnCerrarVacante")!.setAttribute('data-job-id', trabajo!.id_trabajo.toString());
+        // document.getElementById("btnCerrarVacante")!.setAttribute('data-job-id', trabajo!.id_trabajo.toString());
 
-        //asignamos el evento al botón confirmar cerrar vacante
-        document.getElementById("btnConfirmarCerrarVacante")?.addEventListener('click', () => this.cerrarVacante(trabajo!.id_trabajo));
+        console.log("Estado del trabajo (true=abierto, false=cerrado):", trabajo!.estado);
+
+        if (trabajo!.estado) {
+
+
+            //si el trabajo está abierto, el botón debe permitir cerrarlo
+            document.getElementById("btnCambiarEstadoVacante")!.textContent = "Cerrar Vacante";
+            document.getElementById("btnCambiarEstadoVacante")!.className = "btn btn-danger ";
+
+            //cambiamos el texto y clase del botón y del modal según el estado del trabajo
+            document.getElementById("modalBodyConfirmacionCerrarVacante")!.textContent = "¿Estás seguro que deseas cerrar esta vacante?";
+            document.getElementById("btnConfirmarCambiarEstadoVacante")!.textContent = "Sí, cerrar vacante";
+            document.getElementById("btnConfirmarCambiarEstadoVacante")!.className = "btn btn-danger";
+
+
+            //asignamos el evento al botón confirmar cerrar vacante
+            document.getElementById("btnConfirmarCambiarEstadoVacante")?.addEventListener('click', () => this.cambiarEstadoVacante(trabajo!.id_trabajo, trabajo!.estado));
+        }
+        else {
+
+            //si el trabajo está cerrado, el botón debe permitir reabrirlo
+            document.getElementById("btnCambiarEstadoVacante")!.textContent = "Reabrir Vacante";
+            document.getElementById("btnCambiarEstadoVacante")!.className = "btn btn-success ";
+            //cambiamos el texto y clase del botón y del modal según el estado del trabajo
+            document.getElementById("modalBodyConfirmacionCerrarVacante")!.textContent = "¿Estás seguro que deseas reabrir esta vacante?";
+            document.getElementById("btnConfirmarCambiarEstadoVacante")!.textContent = "Sí, reabrir vacante";
+            document.getElementById("btnConfirmarCambiarEstadoVacante")!.className = "btn btn-success";
+
+            //asignamos el evento al botón confirmar reabrir vacante
+            document.getElementById("btnConfirmarCambiarEstadoVacante")?.addEventListener('click', () => this.cambiarEstadoVacante(trabajo!.id_trabajo, trabajo!.estado));
+        }
 
     }
 
-    public async cerrarVacante(idTrabajo: number) {
-        console.log("Cerrando vacante con ID:", idTrabajo);
+    public async cambiarEstadoVacante(idTrabajo: number, estado: boolean) {
+        console.log("Cerrando o abriendo vacante con ID:", idTrabajo);
 
-        const response = await JobsService.deleteJobById(idTrabajo);
+
+        let response;
+        //si esta abierta la cerramos, sino la reabrimos
+        if (estado) {
+            response = await JobsService.closeJob(idTrabajo);
+        }
+        else {
+            response = await JobsService.openJob(idTrabajo);
+        }
+
         if (!response.success) {
             alert(response.message);
             return;
