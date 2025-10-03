@@ -5,7 +5,8 @@ const apiUrl = api.baseUrl;
 export class JobApplicationsServiceEnterprise {
   public static async insertarTrabajo(data: any) {
     try {
-      const response = await fetch(`${apiUrl}/enterprise/trabajos/`, {
+      console.log("Enviando datos al servidor:", data);
+      const response = await fetch(`${apiUrl}/enterprise/trabajos`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

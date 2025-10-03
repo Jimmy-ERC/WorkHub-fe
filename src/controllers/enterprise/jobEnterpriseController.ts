@@ -1,5 +1,8 @@
+// jobControllerEnterprise.ts
 import type { Job } from "@/interfaces/job.interface.js";
+import type { ProfileResponse } from "@/interfaces/profileResponse.interface";
 import { JobApplicationsServiceEnterprise } from "@/services/jobEnterprise.service";
+import { ProfileEnterpriseService } from "@/services/profileEnterprise.service";
 
 export class JobControllerEnterprise {
   constructor() {
@@ -8,42 +11,50 @@ export class JobControllerEnterprise {
 
   private init(): void {
     const runAll = async () => {
+      const response =
+        (await ProfileEnterpriseService.fetchEnterpriseProfile()) as ProfileResponse;
       const form = document.getElementById(
         "form-publicar-trabajo"
       ) as HTMLFormElement;
+
+      console.log("ID del perfil de la empresa:", response.data.id_perfil);
 
       if (form) {
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
 
-          console.log("Formulario enviado");
+          console.log("Formulario enviado para publicar trabajo");
 
           const data = {
-            nombre: (
+            id_perfil: response.data.id_perfil,
+            nombre_trabajo: (
               document.getElementById("nombre-empleo") as HTMLInputElement
             ).value,
-            etiqueta: (
-              document.getElementById("etiquetas-empleo") as HTMLSelectElement
-            ).value,
-            salarioMinimo: (
-              document.getElementById("salario-minimo") as HTMLInputElement
-            ).value,
-            salarioMaximo: (
-              document.getElementById("salario-maximo") as HTMLInputElement
-            ).value,
+            id_categoria: parseInt(
+              (document.getElementById("etiquetas-empleo") as HTMLSelectElement)
+                .value
+            ),
+            salario_minimo: parseFloat(
+              (document.getElementById("salario-minimo") as HTMLInputElement)
+                .value
+            ),
+            salario_maximo: parseFloat(
+              (document.getElementById("salario-maximo") as HTMLInputElement)
+                .value
+            ),
             educacion: (
               document.getElementById("educacion") as HTMLSelectElement
             ).value,
             experiencia: (
               document.getElementById("experiencia") as HTMLSelectElement
             ).value,
-            tipoTrabajo: (
+            modalidad: (
               document.getElementById("tipo-trabajo") as HTMLSelectElement
             ).value,
-            fechaExpiracion: (
+            fecha_expiracion: (
               document.getElementById("fecha-expiracion") as HTMLInputElement
             ).value,
-            nivelTrabajo: (
+            nivel: (
               document.getElementById("nivel-trabajo") as HTMLSelectElement
             ).value,
             descripcion: (
@@ -56,6 +67,7 @@ export class JobControllerEnterprise {
                 "responsabilidades-empleo"
               ) as HTMLTextAreaElement
             ).value,
+            ubicacion: response.data.ubicacion,
           };
 
           await this.insertarTrabajo(data);
@@ -75,9 +87,19 @@ export class JobControllerEnterprise {
 
     if (!response.success) {
       alert(response.message);
+
       return;
     }
 
-    window.location.href = "/enterprise/home";
+    // Redirigir al archivo HTML correcto dentro de la carpeta src/pages/enterprise
+    window.location.href = "/src/pages/enterprise/home.html";
   }
 }
+
+declare global {
+  interface Window {
+    jobControllerEnterprise: JobControllerEnterprise;
+  }
+}
+
+window.jobControllerEnterprise = new JobControllerEnterprise();
