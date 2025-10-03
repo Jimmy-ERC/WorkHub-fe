@@ -91,6 +91,7 @@ export class EnterpriseViewCandidatesGeneralController {
                 this.filteredCandidates = this.filteredCandidates.filter(c => c.genero.toLowerCase() === valorGenero)
             }
         }
+        console.log("candidatos despues de filtrar por genero: ", this.filteredCandidates);
         // Ordenar candidatos por nombre_trabajo
         this.filteredCandidates = this.filteredCandidates.sort((a, b) => {
             const nombreA = a.nombre_trabajo?.toLowerCase() || '';
@@ -98,7 +99,7 @@ export class EnterpriseViewCandidatesGeneralController {
             return nombreA.localeCompare(nombreB);
         });
 
-        document.getElementById('nombreVacante')!.innerText = this.filteredCandidates[0]?.nombre_trabajo || 'Sin candidatos para la empresa';
+        document.getElementById('nombreVacante')!.innerText = (this.filteredCandidates[0]?.nombre_trabajo || 'Sin candidatos para la empresa') + '- Publicacion: ' + (this.filteredCandidates[0]?.fecha_publicacion || 'Sin fecha');
         const listCandidatos = document.getElementById('listCandidatos');
         if (!listCandidatos) return;
         listCandidatos.innerHTML = ``;
@@ -108,7 +109,7 @@ export class EnterpriseViewCandidatesGeneralController {
             if (this.filteredCandidates.indexOf(candidate) > 0) {
                 if (candidate.id_trabajo !== this.filteredCandidates[this.filteredCandidates.indexOf(candidate) - 1]?.id_trabajo) {
                     listCandidatos.appendChild(document.createElement('hr'));
-                    listCandidatos.innerHTML += `<h5 id="nombreVacante">${candidate.nombre_trabajo}</h5>`;
+                    listCandidatos.innerHTML += `<h5 id="nombreVacante">${candidate.nombre_trabajo} - Publicacion: ${candidate.fecha_publicacion || 'Sin fecha'}</h5>`;
                 }
             }
             let colorBadge;
