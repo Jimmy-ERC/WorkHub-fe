@@ -34,10 +34,11 @@
                 <!-- Buscador -->
                 <form id="globalSearchForm" class="d-flex mx-2 flex-grow-1 align-items-start my-3 my-lg-0"
                     style="max-width:520px" role="search" aria-label="Buscar trabajos" data-action="search">
-                    <label for="q" class="visually-hidden">Título, palabra clave o compañía</label>
-                    <input id="q" class="form-control me-2" type="search"
-                        placeholder="Título, palabra clave o compañía">
-                    <button class="btn btn-primary" type="button">Encontrar</button>
+                    <label for="q" class="visually-hidden">Título, palabra clave o nombre de vacante</label>
+                    <input id="vacanteGeneralBuscar" class="form-control me-2" type="search"
+                        placeholder="Título, palabra clave o vacante">
+                    <button class="btn btn-primary" type="button"
+                        onclick="enterpriseHomeController.verCandidatos(vacanteGeneralBuscar.value)">Encontrar</button>
                 </form>
 
                 <!-- Menú de navegación -->
