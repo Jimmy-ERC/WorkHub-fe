@@ -77,13 +77,14 @@
             <h6>Busca vacantes publicadas</h6>
         </div>
         <div class="row g-2">
-            <div class="col-md"><input type="text" class="form-control" placeholder="Título de Trabajo..."></div>
-            <div class="col-md"><input type="text" class="form-control" placeholder="Ubicación"></div>
-            <div class="col-md"><input type="text" class="form-control" placeholder="Salario"></div>
-            <div class="col-md"><select class="form-select">
-                    <option>Filtro Avanzado</option>
-                </select></div>
-            <div class="col-md-auto"><button class="btn btn-primary w-100">Encontrar</button></div>
+            <div class="col-md"><input id="tituloBuscar" type="text" class="form-control"
+                    placeholder="Título de Trabajo..."></div>
+            <div class="col-md"><input id="ubicacionBuscar" type="text" class="form-control" placeholder="Ubicación">
+            </div>
+            <div class="col-md"><input id="salarioBuscar" type="text" class="form-control" placeholder="Salario"></div>
+
+            <div class="col-md-auto"><button class="btn btn-primary w-100"
+                    onclick="enterpriseHomeController.filtrorPorBusqueda()">Encontrar</button></div>
         </div>
     </div>
 
@@ -188,7 +189,7 @@
                     consectetur at in aut praesentium.</p>
             </div>
             <div class="modal-footer">
-                <button id="btnCerrarVacante" type="button" class="btn btn-danger "
+                <button id="btnCambiarEstadoVacante" type="button" class="btn btn-danger "
                     data-bs-target="#modalConfirmarCerrarVacante" data-bs-toggle="modal">Cerrar
                     Vacante</button>
                 <!-- llamamos a la función verCandidatos con el puesto correspondiente -->
@@ -210,12 +211,12 @@
                 <h5 class="modal-title" id="modalConfirmarCerrarVacanteLabel">Confirmar acción</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="modalBodyConfirmacionCerrarVacante">
                 ¿Estás seguro que deseas cerrar esta vacante?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-danger" id="btnConfirmarCerrarVacante"
+                <button type="button" class="btn btn-danger" id="btnConfirmarCambiarEstadoVacante"
                     data-bs-dismiss="modal">Sí</button>
             </div>
         </div>
