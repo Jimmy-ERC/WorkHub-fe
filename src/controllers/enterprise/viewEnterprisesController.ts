@@ -5,6 +5,7 @@ import type { ProfileResponse } from '@/interfaces/profileResponse.interface.js'
 import type { Empresa } from '@/interfaces/empresa.interface.js';
 import { EnterprisesEnterpriseService } from '@/services/EnterprisesEnterpriseService.js';
 import type { EmpresaResponse } from '@/interfaces/empresaResponse.interface.js';
+import { ProfileCandidateService } from '@/services/profileCandidate.service.js';
 
 export class EnterpriseViewEnterprisesController {
     private enterprises: Empresa[] = [
@@ -46,6 +47,8 @@ export class EnterpriseViewEnterprisesController {
             await loadUserData();
             await this.loadEnterprises()
             this.renderEnterprises();
+
+            ProfileCandidateService.fetchCandidateProfile();
         };
 
         if (document.readyState === 'loading') {
@@ -97,14 +100,14 @@ export class EnterpriseViewEnterprisesController {
             if (enterprise.es_seguida) {
                 htmlAcciones = ` <div
                                 class="col-12 col-sm-12 col-md-12 col-lg-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0 flex-column" style="align-self: center; gap: 5px;">
-                               <button onClick="enterpriseViewEnterprisesController.actualizarSeguimiento(${enterprise.id_seguido})" type="button" style="background-color: #E7F0FA; color: #0A65CC; border: none;"
+                               <button onClick="enterpriseViewEnterprisesController.actualizarSeguimiento(${enterprise.id_seguido},${enterprise.es_seguida})" type="button" style="background-color: #E7F0FA; color: #0A65CC; border: none;"
                                     class="btn btn-primary w-100 w-md-auto">Siguiendo <i class="bi bi-check"></i></button>
                             </div>`
             }
             else {
                 htmlAcciones = ` <div
                                 class="col-12 col-sm-12 col-md-12 col-lg-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0 flex-column" style="align-self: center; gap: 5px;">
-                                <button onClick="enterpriseViewEnterprisesController.actualizarSeguimiento(${enterprise.id_seguido})" type="button" style="background-color: #E7F0FA; color: #0A65CC; border: none;"
+                                <button onClick="enterpriseViewEnterprisesController.actualizarSeguimiento(${enterprise.id_seguido},${enterprise.es_seguida})" type="button" style="background-color: #E7F0FA; color: #0A65CC; border: none;"
                                     class="btn btn-primary w-100 w-md-auto">Seguir →</button>
                             </div>`
             }
@@ -147,21 +150,29 @@ export class EnterpriseViewEnterprisesController {
 
     }
 
-    public async actualizarSeguimiento(enterpriseId: number): Promise<void> {
-        this.enterprises.map((e) => {
-            if (e.id_seguido === enterpriseId) {
-                e.es_seguida = !e.es_seguida;
-                return;
-            }
-        })
+    public async actualizarSeguimiento(enterpriseId: number, es_seguida: boolean): Promise<void> {
+        const response = await ProfileEnterpriseService.fetchEnterpriseProfile() as ProfileResponse;
+        if (!response.success) {
+            alert(response.message);
+            return;
+        }
+        const id_seguidor = response.data.id_perfil;
+
+        let seguimientoResponse;
+        if (es_seguida) {
+            seguimientoResponse = await EnterprisesEnterpriseService.dejarDeSeguirEmpresa(id_seguidor, enterpriseId);
+        } else {
+            seguimientoResponse = await EnterprisesEnterpriseService.seguirEmpresa(id_seguidor, enterpriseId);
+
+        }
+
+        await this.loadEnterprises()
 
         this.renderEnterprises();
 
-        //TODO: conctar a backend
+
 
     }
-
-
 }
 
 

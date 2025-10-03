@@ -73,19 +73,18 @@ export class EnterprisesEnterpriseService {
     }
   }
 
-  public static async updateApplicationStatus(
-    application_id: number,
-    status: string
-  ): Promise<any> {
+  public static async seguirEmpresa(id_seguidor: number, id_seguido: number): Promise<any> {
+
+    console.log("Seguir empresa:", { id_seguidor, id_seguido });
     try {
       const response = await fetch(
-        `${apiUrl}/enterprise/aplicaciones/${application_id}`,
+        `${apiUrl}/enterprise/empresas/seguir`,
         {
-          method: "PUT",
+          method: "POST",
+          body: JSON.stringify({ id_seguidor, id_seguido }),
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ nuevo_estado: status }),
         }
       );
 
@@ -98,15 +97,52 @@ export class EnterprisesEnterpriseService {
           data.message || `Error ${response.status}: ${response.statusText}`,
       };
     } catch (error) {
-      console.error("Error al actualizar el estado de la aplicación", error);
+      console.error("Error al seguir empresa", error);
       return {
         success: false,
         data: [],
         message:
           error instanceof Error
             ? error.message
-            : "Error desconocido al actualizar el estado de la aplicación",
+            : "Error desconocido al seguir empresa",
       };
     }
   }
+
+  public static async dejarDeSeguirEmpresa(id_seguidor: number, id_seguido: number): Promise<any> {
+    console.log("Dejar de seguir empresa:", { id_seguidor, id_seguido });
+    try {
+      const response = await fetch(
+        `${apiUrl}/enterprise/empresas/dejar-seguir`,
+        {
+          method: "POST",
+          body: JSON.stringify({ id_seguidor, id_seguido }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      return {
+        success: data.success || false,
+        data: data.data || [],
+        message:
+          data.message || `Error ${response.status}: ${response.statusText}`,
+      };
+    } catch (error) {
+      console.error("Error al dejar de seguir empresa", error);
+      return {
+        success: false,
+        data: [],
+        message:
+          error instanceof Error
+            ? error.message
+            : "Error desconocido al dejar de seguir empresa",
+      };
+    }
+  }
+
+
 }
