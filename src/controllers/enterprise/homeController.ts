@@ -66,37 +66,29 @@ export class EnterpriseHomeController {
 
         jobList.innerHTML = "";
 
-        // Creamos row inicial
-        jobList.innerHTML += `<div class="row py-2" style="justify-content: center; justify-self: center;"></div>`;
+        // Separar trabajos abiertos y cerrados
+        const openJobs = this.filteredJobs.filter(job => job.estado);
+        const closedJobs = this.filteredJobs.filter(job => !job.estado);
 
-        for (let i = 0; i < this.filteredJobs.length; i++) {
-            const job = this.filteredJobs[i];
-            if (!job) continue;
-
-            let colorBadge = "grey";
-            if (job.modalidad === "Remota") {
-                colorBadge = "blue";
-            } else if (job.modalidad === "Híbrido" || job.modalidad === "Híbrida") {
-                colorBadge = "red";
-            } else {
-                colorBadge = "green";
-            }
-
-            // Cambios para trabajos cerrados
-            const isClosed = job.estado === false;
-            const lockIcon = isClosed ? `<i class="bi bi-lock-fill" style="margin-right: 6px;"></i>` : "";
-            const cardOpacity = isClosed ? "0.8" : "1";
-            const titleStyle = isClosed ? "text-decoration: line-through;" : "";
-
-
-            const lastRow = jobList.querySelector(".row:last-child");
-            if (lastRow) {
-                lastRow.innerHTML += `<button onclick="enterpriseHomeController.llenarModalDetalleTrabajo(${job.id_trabajo})" data-bs-toggle="modal" data-bs-target="#modalDetalleTrabajo" class="card col-md-4 col-6 mx-2"
-                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; opacity: ${cardOpacity}; ">
-
+        // Renderizar trabajos abiertos
+        if (openJobs.length > 0) {
+            jobList.innerHTML += `<h4 class="mt-3 mb-2">Vacantes abiertas</h4>`;
+            jobList.innerHTML += `<div class="row py-2" id="openJobsRow" style="justify-content: center; justify-self: center;"></div>`;
+            const openJobsRow = jobList.querySelector("#openJobsRow");
+            openJobs.forEach((job, i) => {
+                let colorBadge = "grey";
+                if (job.modalidad === "Remota") {
+                    colorBadge = "blue";
+                } else if (job.modalidad === "Híbrido" || job.modalidad === "Híbrida") {
+                    colorBadge = "red";
+                } else {
+                    colorBadge = "green";
+                }
+                openJobsRow!.innerHTML += `<button onclick="enterpriseHomeController.llenarModalDetalleTrabajo(${job.id_trabajo})" data-bs-toggle="modal" data-bs-target="#modalDetalleTrabajo" class="card col-md-4 col-6 mx-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; opacity: 1;">
                     <div class="card-body">
                         <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-                            <h5 class="card-title" style="${titleStyle}">${lockIcon}${job.nombre_trabajo}</h5>
+                            <h5 class="card-title">${job.nombre_trabajo}</h5>
                             <span class="badge text-bg-secondary"
                             style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center; background-color:${colorBadge}!important "> 
                                 <p style="margin: 0;">${job.modalidad}</p>
@@ -106,11 +98,50 @@ export class EnterpriseHomeController {
                         <p class="card-text"><i class="bi bi-geo-alt"></i>${job.ubicacion}.</p>
                     </div>
                 </button>`;
-            }
+                if ((i + 1) % 3 === 0 && i !== openJobs.length - 1) {
+                    openJobsRow!.innerHTML += `<div class="w-100"></div>`;
+                }
+            });
+        }
 
-            if ((i + 1) % 3 === 0) {
-                jobList.innerHTML += `<div class="row p-2" style="justify-content: center; justify-self: center;"></div>`;
-            }
+        // Renderizar trabajos cerrados
+        if (closedJobs.length > 0) {
+            jobList.innerHTML += `<h4 class="mt-4 mb-2 text-secondary">Vacantes cerradas</h4>`;
+            jobList.innerHTML += `<div class="row py-2" id="closedJobsRow" style="justify-content: center; justify-self: center;"></div>`;
+            const closedJobsRow = jobList.querySelector("#closedJobsRow");
+            closedJobs.forEach((job, i) => {
+                let colorBadge = "grey";
+                if (job.modalidad === "Remota") {
+                    colorBadge = "blue";
+                } else if (job.modalidad === "Híbrido" || job.modalidad === "Híbrida") {
+                    colorBadge = "red";
+                } else {
+                    colorBadge = "green";
+                }
+                const lockIcon = `<i class="bi bi-lock-fill" style="margin-right: 6px;"></i>`;
+                closedJobsRow!.innerHTML += `<button onclick="enterpriseHomeController.llenarModalDetalleTrabajo(${job.id_trabajo})" data-bs-toggle="modal" data-bs-target="#modalDetalleTrabajo" class="card col-md-4 col-6 mx-2"
+                    style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; opacity: 0.8;">
+                    <div class="card-body">
+                        <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
+                            <h5 class="card-title" style="text-decoration: line-through;">${lockIcon}${job.nombre_trabajo}</h5>
+                            <span class="badge text-bg-secondary"
+                            style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center; background-color:${colorBadge}!important "> 
+                                <p style="margin: 0;">${job.modalidad}</p>
+                            </span>
+                        </div>
+                        <p class="card-text">${job.nivel} - $${job.salario_minimo}–${job.salario_maximo}</p>
+                        <p class="card-text"><i class="bi bi-geo-alt"></i>${job.ubicacion}.</p>
+                    </div>
+                </button>`;
+                if ((i + 1) % 3 === 0 && i !== closedJobs.length - 1) {
+                    closedJobsRow!.innerHTML += `<div class="w-100"></div>`;
+                }
+            });
+        }
+
+        // Si no hay trabajos
+        if (openJobs.length === 0 && closedJobs.length === 0) {
+            jobList.innerHTML = `<p class="text-center mt-4">No hay vacantes para mostrar.</p>`;
         }
     }
 
