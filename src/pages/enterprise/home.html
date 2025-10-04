@@ -25,128 +25,108 @@
 
   <body>
     <!-- ===================== Navbar (igual a home.html) ===================== -->
-    <nav
-      class="navbar navbar-expand-lg navbar-light bg-white shadow-sm"
-      data-component="Navbar"
-    >
-      <div class="container-fluid px-3 px-lg-4">
-        <!-- Logo -->
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container-fluid px-4">
         <a class="navbar-brand d-flex align-items-center" href="#">
           <img
-            src="/src/assets/img/logo.png"
+            src="../../assets/img/logo.png"
             alt="Workhub"
             style="height: 30px"
-            class="mx-2 img-fluid"
+            class="mx-2"
           />
         </a>
-
-        <!-- Botón hamburguesa para móvil -->
-        <button
-          class="navbar-toggler border-0 px-1"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarContent"
-          aria-controls="navbarContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+        <!-- Buscador -->
+        <form
+          id="globalSearchForm"
+          class="d-flex mx-2 flex-grow-1 align-items-start my-3 my-lg-0"
+          style="max-width: 520px"
+          role="search"
+          aria-label="Buscar trabajos"
+          data-action="search"
         >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Contenido colapsable -->
-        <div class="collapse navbar-collapse" id="navbarContent">
-          <!-- Buscador -->
-          <form
-            id="globalSearchForm"
-            class="d-flex mx-2 flex-grow-1 align-items-start my-3 my-lg-0"
-            style="max-width: 520px"
-            role="search"
-            aria-label="Buscar trabajos"
-            data-action="search"
+          <label for="q" class="visually-hidden"
+            >Título, palabra clave o nombre de vacante</label
           >
-            <label for="q" class="visually-hidden"
-              >Título, palabra clave o nombre de vacante</label
+          <input
+            id="vacanteGeneralBuscar"
+            class="form-control me-2"
+            type="search"
+            placeholder="Título, palabra clave o vacante"
+          />
+          <button
+            class="btn btn-primary"
+            type="button"
+            onclick="enterpriseHomeController.verCandidatos(vacanteGeneralBuscar.value)"
+          >
+            Encontrar
+          </button>
+        </form>
+        <!-- Menú -->
+        <!-- Menú de navegación -->
+        <ul class="navbar-nav mb-2 mb-lg-0 me-auto me-lg-0">
+          <li class="nav-item">
+            <a class="nav-link px-3" href="/src/pages/enterprise/home.html"
+              >Inicio</a
             >
-            <input
-              id="vacanteGeneralBuscar"
-              class="form-control me-2"
-              type="search"
-              placeholder="Título, palabra clave o vacante"
-            />
-            <button
-              class="btn btn-primary"
-              type="button"
-              onclick="enterpriseHomeController.verCandidatos(vacanteGeneralBuscar.value)"
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link px-3"
+              href="/src/pages/enterprise/view-candidates-general.html"
+              >Candidatos</a
             >
-              Encontrar
-            </button>
-          </form>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link px-3"
+              href="/src/pages/enterprise/view-enterprises.html"
+              >Empresas</a
+            >
+          </li>
+        </ul>
 
-          <!-- Menú de navegación -->
-          <ul class="navbar-nav mb-2 mb-lg-0 me-auto me-lg-0">
-            <li class="nav-item">
-              <a class="nav-link px-3" href="/src/pages/enterprise/home.html"
-                >Inicio</a
+        <!-- Usuario -->
+        <div class="dropdown ms-auto ms-lg-3 mt-3 mt-lg-0">
+          <a
+            href="#"
+            class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="/src/assets/img/avatar.jpg"
+              id="profilePic"
+              alt="Avatar de usuario"
+              class="rounded-circle me-2"
+              width="35"
+              height="35"
+            />
+            <span id="userNameDisplay" class="d-none d-sm-inline"
+              >username</span
+            >
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a
+                class="dropdown-item"
+                href="/src/pages/enterprise/profile/index.html"
+                data-route="profile"
+                >Ver perfil</a
               >
             </li>
-            <li class="nav-item">
-              <a
-                class="nav-link px-3"
-                href="/src/pages/enterprise/view-candidates-general.html"
-                >Candidatos</a
-              >
+            <li>
+              <hr class="dropdown-divider" />
             </li>
-            <li class="nav-item">
+            <li>
               <a
-                class="nav-link px-3"
-                href="/src/pages/enterprise/view-enterprises.html"
-                >Empresas</a
+                class="dropdown-item text-danger"
+                href="/src/pages/auth/login.html"
+                data-action="logout"
+                >Cerrar sesión</a
               >
             </li>
           </ul>
-
-          <!-- Usuario -->
-          <div class="dropdown ms-auto ms-lg-3 mt-3 mt-lg-0">
-            <a
-              href="#"
-              class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="/src/assets/img/avatar.jpg"
-                id="profilePic"
-                alt="Avatar de usuario"
-                class="rounded-circle me-2"
-                width="35"
-                height="35"
-              />
-              <span id="userNameDisplay" class="d-none d-sm-inline"
-                >username</span
-              >
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li>
-                <a
-                  class="dropdown-item"
-                  href="/src/pages/enterprise/profile/index.html"
-                  data-route="profile"
-                  >Ver perfil</a
-                >
-              </li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li>
-                <a
-                  class="dropdown-item text-danger"
-                  href="/src/pages/auth/login.html"
-                  data-action="logout"
-                  >Cerrar sesión</a
-                >
-              </li>
-            </ul>
-          </div>
         </div>
       </div>
     </nav>
