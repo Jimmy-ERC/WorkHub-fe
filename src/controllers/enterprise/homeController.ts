@@ -133,7 +133,7 @@ export class EnterpriseHomeController {
                     </div>
                 </button>`;
         if ((i + 1) % 3 === 0 && i !== closedJobs.length - 1) {
-          closedJobsRow!.innerHTML += `<div class="w-100"></div>`;
+          closedJobsRow!.innerHTML += `<div class="m-2 w-100"></div>`;
         }
       });
     }
