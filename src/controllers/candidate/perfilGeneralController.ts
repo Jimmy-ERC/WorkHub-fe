@@ -285,6 +285,52 @@ function attachJobDetailListeners(): void {
 }
 
 /**
+ * Actualiza las tarjetas de métricas con los datos del backend
+ */
+async function updateStatsCards(): Promise<void> {
+    try {
+        const response = await ProfileGeneralCandidateService.fetchProfileStats();
+
+        if (!response.success || !response.data) {
+            console.error('Error loading stats:', response.message);
+            // Mantener valores por defecto si hay error
+            return;
+        }
+
+        const { aplicaciones_count, favoritos_count, alertas_trabajo_count } = response.data;
+
+        // Actualizar Card 1 - Trabajos aplicados
+        const appliedCountElement = document.getElementById('statsAppliedCount');
+        if (appliedCountElement) {
+            appliedCountElement.textContent = aplicaciones_count;
+        }
+
+        // Actualizar Card 2 - Trabajos favoritos
+        const favoritesCountElement = document.getElementById('statsFavoritesCount');
+        if (favoritesCountElement) {
+            favoritesCountElement.textContent = favoritos_count;
+        }
+
+        // Actualizar Card 3 - Alertas de trabajo
+        const alertsCountElement = document.getElementById('statsAlertsCount');
+        if (alertsCountElement) {
+            alertsCountElement.textContent = alertas_trabajo_count;
+        }
+
+        // También actualizar el badge de alertas en el sidebar si existe
+        const alertBadge = document.querySelector('[data-route="alerts"] .badge');
+        if (alertBadge) {
+            const alertCount = parseInt(alertas_trabajo_count);
+            alertBadge.textContent = alertCount > 0 ? alertCount.toString().padStart(2, '0') : '00';
+        }
+
+    } catch (error) {
+        console.error('Error updating stats cards:', error);
+        // Mantener valores por defecto si hay error
+    }
+}
+
+/**
  * Carga y muestra los trabajos aplicados recientemente
  */
 async function loadRecentlyAppliedJobs(): Promise<void> {
@@ -317,6 +363,9 @@ function initProfileGeneralController(): void {
         // Actualizar el saludo con el nombre del usuario
         await updateUserGreeting();
 
+        // Cargar y actualizar las estadísticas
+        await updateStatsCards();
+
         // Cargar los trabajos aplicados cuando la página cargue
         await loadRecentlyAppliedJobs();
 
@@ -345,6 +394,7 @@ export {
     renderAppliedJobs,
     initProfileGeneralController,
     updateUserGreeting,
+    updateStatsCards,
     formatDate,
     formatSalaryRange,
     getModalityBadge,

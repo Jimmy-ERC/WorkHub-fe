@@ -13,6 +13,52 @@ export class ProfileGeneralCandidateService {
     constructor() { }
 
     /**
+     * Obtiene las estadísticas del perfil del candidato
+     */
+    public static async fetchProfileStats(): Promise<{
+        success: boolean;
+        data?: {
+            aplicaciones_count: string;
+            favoritos_count: string;
+            alertas_trabajo_count: string;
+        };
+        message: string;
+    }> {
+        try {
+            if (!user || !user.id) {
+                return {
+                    success: false,
+                    message: 'No se pudo obtener la información del usuario. Por favor, inicia sesión nuevamente.'
+                };
+            }
+
+            const response = await fetch(`${apiUrl}/candidate/perfiles/stats/${user.id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                return {
+                    success: false,
+                    message: data.message || `Error ${response.status}: ${response.statusText}`
+                };
+            }
+
+            return data;
+        } catch (error) {
+            console.error('Error fetching profile stats:', error);
+            return {
+                success: false,
+                message: error instanceof Error ? error.message : 'Error desconocido al cargar las estadísticas'
+            };
+        }
+    }
+
+    /**
      * Obtiene la lista de trabajos aplicados recientemente por el candidato
      */
     public static async fetchRecentlyAppliedJobs(): Promise<TrabajosAplicadosInterface> {
