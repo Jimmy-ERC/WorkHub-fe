@@ -3,7 +3,7 @@ import { api } from "@/lib/api";
 // Base API URL from environment variables
 const apiUrl = api.baseUrl;
 export class JobApplicationsService {
-  constructor() { }
+  constructor() {}
 
   public static async getApplicationsByJobId(jobId: number): Promise<any> {
     try {
@@ -38,7 +38,9 @@ export class JobApplicationsService {
     }
   }
 
-  public static async getApplicationsByEnterpriseId(enterpriseId: number): Promise<any> {
+  public static async getApplicationsByEnterpriseId(
+    enterpriseId: number
+  ): Promise<any> {
     try {
       const response = await fetch(
         `${apiUrl}/enterprise/aplicaciones/by-empresa/${enterpriseId}`,

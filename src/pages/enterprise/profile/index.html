@@ -1,200 +1,355 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Workhub — Ajustes de perfil</title>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Bootstrap 5.3.8 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+
     <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/src/assets/css/enterprise-profile.css">
-</head>
+    <link rel="stylesheet" href="/src/assets/css/enterprise-profile.css" />
+  </head>
 
-<body style="font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial,'Noto Sans'">
-
+  <body
+    style="
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto,
+        'Helvetica Neue', Arial, 'Noto Sans';
+    "
+  >
     <!-- ===================== Navbar (igual a home.html) ===================== -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" data-component="Navbar">
-        <div class="container-fluid px-3 px-lg-4">
-            <!-- Logo -->
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="/src/assets/img/logo.png" alt="Workhub" style="height:30px" class="mx-2 img-fluid">
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-white shadow-sm"
+      data-component="Navbar"
+    >
+      <div class="container-fluid px-3 px-lg-4">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <img
+            src="/src/assets/img/logo.png"
+            alt="Workhub"
+            style="height: 30px"
+            class="mx-2 img-fluid"
+          />
+        </a>
+
+        <!-- Botón hamburguesa para móvil -->
+        <button
+          class="navbar-toggler border-0 px-1"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarContent"
+          aria-controls="navbarContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Contenido colapsable -->
+        <div class="collapse navbar-collapse" id="navbarContent">
+          <!-- Buscador -->
+          <form
+            id="globalSearchForm"
+            class="d-flex mx-2 flex-grow-1 align-items-start my-3 my-lg-0"
+            style="max-width: 520px"
+            role="search"
+            aria-label="Buscar trabajos"
+            data-action="search"
+          >
+            <label for="q" class="visually-hidden"
+              >Título, palabra clave o compañía</label
+            >
+            <input
+              id="q"
+              class="form-control me-2"
+              type="search"
+              placeholder="Título, palabra clave o compañía"
+            />
+            <button class="btn btn-primary" type="button">Encontrar</button>
+          </form>
+
+          <!-- Menú de navegación -->
+          <ul class="navbar-nav mb-2 mb-lg-0 me-auto me-lg-0">
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/src/pages/enterprise/home.html"
+                >Inicio</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link px-3"
+                href="/src/pages/enterprise/candidates/index.html"
+                >Candidatos</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link px-3"
+                href="/src/pages/enterprise/companies/index.html"
+                >Empresas</a
+              >
+            </li>
+          </ul>
+
+          <!-- Usuario -->
+          <div class="dropdown ms-auto ms-lg-3 mt-3 mt-lg-0">
+            <a
+              href="#"
+              class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="/src/assets/img/avatar.jpg"
+                id="profilePic"
+                alt="Avatar de usuario"
+                class="rounded-circle me-2"
+                width="35"
+                height="35"
+              />
+              <span id="userNameDisplay" class="d-none d-sm-inline"
+                >username</span
+              >
             </a>
-
-            <!-- Botón hamburguesa para móvil -->
-            <button class="navbar-toggler border-0 px-1" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Contenido colapsable -->
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <!-- Buscador -->
-                <form id="globalSearchForm" class="d-flex mx-2 flex-grow-1 align-items-start my-3 my-lg-0"
-                    style="max-width:520px" role="search" aria-label="Buscar trabajos" data-action="search">
-                    <label for="q" class="visually-hidden">Título, palabra clave o compañía</label>
-                    <input id="q" class="form-control me-2" type="search"
-                        placeholder="Título, palabra clave o compañía">
-                    <button class="btn btn-primary" type="button">Encontrar</button>
-                </form>
-
-                <!-- Menú de navegación -->
-                <ul class="navbar-nav mb-2 mb-lg-0 me-auto me-lg-0">
-                    <li class="nav-item"><a class="nav-link px-3" href="/src/pages/enterprise/home.html">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link px-3"
-                            href="/src/pages/enterprise/candidates/index.html">Candidatos</a></li>
-                    <li class="nav-item"><a class="nav-link px-3"
-                            href="/src/pages/enterprise/companies/index.html">Empresas</a></li>
-                </ul>
-
-                <!-- Usuario -->
-                <div class="dropdown ms-auto ms-lg-3 mt-3 mt-lg-0">
-                    <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="/src/assets/img/avatar.jpg" id="profilePic" alt="Avatar de usuario" class="rounded-circle me-2"
-                            width="35" height="35">
-                        <span id="userNameDisplay" class="d-none d-sm-inline">username</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="/src/pages/enterprise/profile/index.html"
-                                data-route="profile">Ver perfil</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item text-danger" href="/src/pages/auth/login.html"
-                                data-action="logout">Cerrar sesión</a></li>
-                    </ul>
-                </div>
-            </div>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="/src/pages/enterprise/profile/index.html"
+                  data-route="profile"
+                  >Ver perfil</a
+                >
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a
+                  class="dropdown-item text-danger"
+                  href="/src/pages/auth/login.html"
+                  data-action="logout"
+                  >Cerrar sesión</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- ===================== Contenido ===================== -->
     <main class="container py-4">
-        <h4 class="mb-4">Ajustes</h4>
+      <h4 class="mb-4">Ajustes</h4>
 
-        <form id="settingsForm" class="row g-4" novalidate>
-            <!-- Columna izquierda: Foto -->
-            <aside class="col-12 col-lg-4">
-                <h6 class="mb-3">Información básica</h6>
+      <form id="settingsForm" class="row g-4" novalidate>
+        <!-- Columna izquierda: Foto -->
+        <aside class="col-12 col-lg-4">
+          <h6 class="mb-3">Información básica</h6>
 
-                <div class="mb-2"><small class="text-muted">Foto de perfil</small></div>
+          <div class="mb-2">
+            <small class="text-muted">Foto de perfil</small>
+          </div>
 
-                <!-- Dropzone -->
-                <input class="visually-hidden" id="profilePhoto" type="file" accept="image/*" data-action="upload-file"
-                    data-dropzone="#dropArea">
-                <label for="profilePhoto" id="dropArea"
-                    class="dropzone w-100 d-flex flex-column align-items-center justify-content-center text-center p-4"
-                    role="button" tabindex="0" aria-describedby="photoHelp" data-component="UploadZone">
-                    <i class="bi bi-cloud-arrow-up fs-1 mb-2 text-primary" aria-hidden="true"></i>
-                    <div class="fw-medium">Explorar foto</div>
-                    <small class="text-muted">o suéltala aquí</small>
-                    <div class="text-muted small mt-2" id="photoHelp">
-                        Una imagen mayor a 400px funciona mejor. Tamaño máx. 5&nbsp;MB.
-                    </div>
-                    <!-- TODO:TS – soporte dragover/drop, vista previa y validaciones -->
-                </label>
-            </aside>
+          <!-- Dropzone -->
+          <input
+            class="visually-hidden"
+            id="profilePhoto"
+            type="file"
+            accept="image/*"
+            data-action="upload-file"
+            data-dropzone="#dropArea"
+          />
+          <label
+            for="profilePhoto"
+            id="dropArea"
+            class="dropzone w-100 d-flex flex-column align-items-center justify-content-center text-center p-4"
+            role="button"
+            tabindex="0"
+            aria-describedby="photoHelp"
+            data-component="UploadZone"
+          >
+            <i
+              class="bi bi-cloud-arrow-up fs-1 mb-2 text-primary"
+              aria-hidden="true"
+            ></i>
+            <div class="fw-medium">Explorar foto</div>
+            <small class="text-muted">o suéltala aquí</small>
+            <div class="text-muted small mt-2" id="photoHelp">
+              Una imagen mayor a 400px funciona mejor. Tamaño máx. 5&nbsp;MB.
+            </div>
+            <!-- TODO:TS – soporte dragover/drop, vista previa y validaciones -->
+          </label>
+        </aside>
 
-            <!-- Columna derecha: Form -->
-            <section class="col-12 col-lg-8">
-                <div class="row g-3">
-                    <!-- Nombre / Ubicación -->
-                    <div class="col-12 col-md-6">
-                        <label for="companyName" class="form-label">Nombre de la Compañía</label>
-                        <input type="text" class="form-control" id="companyName" data-field="companyName"
-                            placeholder="Acme Inc.">
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label for="location" class="form-label">Ubicación</label>
-                        <input type="text" class="form-control" id="location" data-field="location"
-                            placeholder="San Salvador, SV">
-                    </div>
+        <!-- Columna derecha: Form -->
+        <section class="col-12 col-lg-8">
+          <div class="row g-3">
+            <!-- Nombre / Ubicación -->
+            <div class="col-12 col-md-6">
+              <label for="companyName" class="form-label"
+                >Nombre de la Compañía</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="companyName"
+                data-field="companyName"
+                placeholder="Acme Inc."
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <label for="location" class="form-label">Ubicación</label>
+              <input
+                type="text"
+                class="form-control"
+                id="location"
+                data-field="location"
+                placeholder="San Salvador, SV"
+              />
+            </div>
 
-                    <!-- Sobre nosotros -->
-                    <div class="col-12">
-                        <label for="about" class="form-label">Sobre nosotros</label>
-                        <textarea id="about" class="form-control" rows="4"
-                            placeholder="Escribe sobre tu compañía. Que los candidatos sepan quiénes son…"></textarea>
-                    </div>
+            <!-- Sobre nosotros -->
+            <div class="col-12">
+              <label for="about" class="form-label">Sobre nosotros</label>
+              <textarea
+                id="about"
+                class="form-control"
+                rows="4"
+                placeholder="Escribe sobre tu compañía. Que los candidatos sepan quiénes son…"
+              ></textarea>
+            </div>
 
-                    <!-- Fundada en / Teléfono -->
-                    <div class="col-12 col-md-6">
-                        <label for="foundedAt" class="form-label">Fundada en</label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="calendarIcon"><i class="bi bi-calendar-event"></i></span>
-                            <input type="date" class="form-control" id="foundedAt" aria-describedby="calendarIcon"
-                                data-plugin="datepicker">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label for="phone" class="form-label">Teléfono</label>
-                        <input type="tel" class="form-control" id="phone" placeholder="+503 1234-5678">
-                    </div>
+            <!-- Fundada en / Teléfono -->
+            <div class="col-12 col-md-6">
+              <label for="foundedAt" class="form-label">Fundada en</label>
+              <div class="input-group">
+                <span class="input-group-text" id="calendarIcon"
+                  ><i class="bi bi-calendar-event"></i
+                ></span>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="foundedAt"
+                  aria-describedby="calendarIcon"
+                  data-plugin="datepicker"
+                />
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <label for="phone" class="form-label">Teléfono</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="phone"
+                placeholder="+503 1234-5678"
+              />
+            </div>
 
-                    <!-- Email -->
-                    <div class="col-12">
-                        <label for="email" class="form-label">Email</label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="emailIcon"><i class="bi bi-envelope"></i></span>
-                            <input type="email" class="form-control" id="email" aria-describedby="emailIcon"
-                                placeholder="correo@empresa.com">
-                        </div>
-                    </div>
+            <!-- Email -->
+            <div class="col-12">
+              <label for="email" class="form-label">Email</label>
+              <div class="input-group">
+                <span class="input-group-text" id="emailIcon"
+                  ><i class="bi bi-envelope"></i
+                ></span>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  aria-describedby="emailIcon"
+                  placeholder="correo@empresa.com"
+                />
+              </div>
+            </div>
 
-                    <!-- Página web -->
-                    <div class="col-12">
-                        <label for="website" class="form-label">Página web</label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="linkIcon"><i class="bi bi-link-45deg"></i></span>
-                            <input type="url" class="form-control" id="website" data-field="website"
-                                aria-describedby="linkIcon" placeholder="https://empresa.com">
-                        </div>
-                    </div>
+            <!-- Página web -->
+            <div class="col-12">
+              <label for="website" class="form-label">Página web</label>
+              <div class="input-group">
+                <span class="input-group-text" id="linkIcon"
+                  ><i class="bi bi-link-45deg"></i
+                ></span>
+                <input
+                  type="url"
+                  class="form-control"
+                  id="website"
+                  data-field="website"
+                  aria-describedby="linkIcon"
+                  placeholder="https://empresa.com"
+                />
+              </div>
+            </div>
 
-                    <!-- Social -->
-                    <div class="col-12">
-                        <label for="social" class="form-label">Social Link</label>
-                        <input type="url" class="form-control" id="social" data-field="social"
-                            placeholder="https://linkedin.com/company/tu-empresa">
-                    </div>
+            <!-- Social -->
+            <div class="col-12">
+              <label for="social" class="form-label">Social Link</label>
+              <input
+                type="url"
+                class="form-control"
+                id="social"
+                data-field="social"
+                placeholder="https://linkedin.com/company/tu-empresa"
+              />
+            </div>
 
-                    <!-- Acción -->
-                    <div class="col-12">
-                        <button type="button" class="btn btn-primary px-4" data-action="save-profile">Guardar
-                            Cambios</button>
-                    </div>
-                </div>
-            </section>
-        </form>
+            <!-- Acción -->
+            <div class="col-12">
+              <button
+                type="button"
+                class="btn btn-primary px-4"
+                data-action="save-profile"
+              >
+                Guardar Cambios
+              </button>
+            </div>
+          </div>
+        </section>
+      </form>
     </main>
 
     <footer class="py-4 border-top bg-white">
-        <div class="container">
-            <p class="small text-muted mb-0">© <span id="year">2025</span> Workhub. Todos los derechos reservados.</p>
-        </div>
+      <div class="container">
+        <p class="small text-muted mb-0">
+          © <span id="year">2025</span> Workhub. Todos los derechos reservados.
+        </p>
+      </div>
     </footer>
 
     <!-- Route Protection Script (must load before other scripts) -->
     <script type="module" src="/src/controllers/routeProtection.ts"></script>
+
     <!-- Profile Controller Script -->
-    <script type="module" src="/src/controllers/enterprise/perfilController.ts"></script>
+    <script
+      type="module"
+      src="/src/controllers/enterprise/perfilController.ts"
+    ></script>
 
     <script type="module" src="/src/controllers/logout.ts"></script>
 
     <!-- Bootstrap bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-</body>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
