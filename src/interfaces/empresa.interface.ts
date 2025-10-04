@@ -6,4 +6,5 @@ export interface Empresa {
     es_seguida: boolean;
     ubicacion_seguido: string;
     te_sigue: boolean; // Propiedad opcional
+    seguidores: []
 }

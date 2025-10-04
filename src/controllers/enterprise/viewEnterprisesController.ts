@@ -88,66 +88,83 @@ export class EnterpriseViewEnterprisesController {
 
     }
     public renderEnterprises(): void {
-
         const listCandidatos = document.getElementById('listCandidatos');
         if (!listCandidatos) return;
         listCandidatos.innerHTML = ``;
         for (const enterprise of this.filteredEnterprises) {
+            let htmlAcciones = ``;
 
-            let htmlAcciones = ``
-
-            //TODO: distinguir si la empresa ya se sigue o no
             if (enterprise.es_seguida) {
-                htmlAcciones = ` <div
-                                class="col-12 col-sm-12 col-md-12 col-lg-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0 flex-column" style="align-self: center; gap: 5px;">
-                               <button onClick="enterpriseViewEnterprisesController.actualizarSeguimiento(${enterprise.id_seguido},${enterprise.es_seguida})" type="button" style="background-color: #E7F0FA; color: #0A65CC; border: none;"
-                                    class="btn btn-primary w-100 w-md-auto">Siguiendo <i class="bi bi-check"></i></button>
-                            </div>`
+                htmlAcciones = `<div
+                    class="col-12 col-sm-12 col-md-12 col-lg-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0 flex-column" style="align-self: center; gap: 5px;">
+                    <button onClick="enterpriseViewEnterprisesController.actualizarSeguimiento(${enterprise.id_seguido},${enterprise.es_seguida})" type="button" style="background-color: #E7F0FA; color: #0A65CC; border: none;"
+                        class="btn btn-primary w-100 w-md-auto">Siguiendo <i class="bi bi-check"></i></button>
+                </div>`;
+            } else {
+                htmlAcciones = `<div
+                    class="col-12 col-sm-12 col-md-12 col-lg-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0 flex-column" style="align-self: center; gap: 5px;">
+                    <button onClick="enterpriseViewEnterprisesController.actualizarSeguimiento(${enterprise.id_seguido},${enterprise.es_seguida})" type="button" style="background-color: #E7F0FA; color: #0A65CC; border: none;"
+                        class="btn btn-primary w-100 w-md-auto">Seguir →</button>
+                </div>`;
             }
-            else {
-                htmlAcciones = ` <div
-                                class="col-12 col-sm-12 col-md-12 col-lg-3 d-flex justify-content-md-end justify-content-center align-items-center mb-2 mb-md-0 flex-column" style="align-self: center; gap: 5px;">
-                                <button onClick="enterpriseViewEnterprisesController.actualizarSeguimiento(${enterprise.id_seguido},${enterprise.es_seguida})" type="button" style="background-color: #E7F0FA; color: #0A65CC; border: none;"
-                                    class="btn btn-primary w-100 w-md-auto">Seguir →</button>
-                            </div>`
+
+            // Seguidores message
+            let seguidoresMsg = '';
+            const seguidores: Array<{ nombre: string }> = Array.isArray(enterprise.seguidores) ? enterprise.seguidores : [];
+            if (seguidores.length > 0) {
+                const nombres = seguidores.map(s => s.nombre);
+                if (seguidores.length === 1) {
+                    seguidoresMsg = `${nombres[0]} la sigue`;
+                } else if (seguidores.length === 2) {
+                    seguidoresMsg = `${nombres[0]} y ${nombres[1]} la siguen`;
+                } else if (seguidores.length === 3) {
+                    seguidoresMsg = `${nombres[0]}, ${nombres[1]} y ${nombres[2]} la siguen`;
+                } else {
+                    seguidoresMsg = `${nombres[0]}, ${nombres[1]}, ${nombres[2]} y otros ${seguidores.length - 3} la siguen`;
+                }
             }
-            listCandidatos.innerHTML += `  <div class="card flex row mb-2"
-                            style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap; padding-left:3%;">
-                            <!-- contenido  -->
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-9 d-flex align-items-center" style="padding: 1%;">
-                                <img src="${enterprise.foto_seguido}" class="card-img-top"
-                                    style="max-width: 90px; border-radius: 20px; height: auto;" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        ${enterprise.nombre_seguido}
-                                    </h5>
-                                    <div class="d-flex flex-wrap align-items-center">
-                                        <p class="me-3 mb-0"><i class="bi bi-geo-alt"></i> ${enterprise.ubicacion_seguido}</p>
-                                        ${enterprise.te_sigue
+
+            listCandidatos.innerHTML += `<div class="card flex row mb-2"
+                style="width: 100%; display:flex !important; flex-direction:row; overflow: auto; justify-content: center; flex-wrap: wrap; padding-left:3%;">
+                <!-- contenido  -->
+                <div class="col-12 col-sm-12 col-md-12 col-lg-9 d-flex align-items-center" style="padding: 1%;">
+                    <img src="${enterprise.foto_seguido}" class="card-img-top"
+                        style="max-width: 90px; border-radius: 20px; height: auto;" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            ${enterprise.nombre_seguido}
+                        </h5>
+                        <div class="d-flex flex-wrap align-items-center">
+                            <p class="me-3 mb-0"><i class="bi bi-geo-alt"></i> ${enterprise.ubicacion_seguido}</p>
+                            ${enterprise.te_sigue
                     ? `<span style="
-                                                background: #e6f9f0;
-                                                color: #16a34a;
-                                                border-radius: 4px;
-                                                padding: 2px 10px;
-                                                margin-left: 10px;
-                                                font-size: 0.92em;
-                                                font-weight: 500;
-                                                box-shadow: 0 0 0 1px #b6f3d3;
-                                                vertical-align: middle;
-                                                display: inline-block;
-                                                line-height: 1.6;
-                                            ">Te sigue</span>`
+                                    background: #e6f9f0;
+                                    color: #16a34a;
+                                    border-radius: 4px;
+                                    padding: 2px 10px;
+                                    margin-left: 10px;
+                                    font-size: 0.92em;
+                                    font-weight: 500;
+                                    box-shadow: 0 0 0 1px #b6f3d3;
+                                    vertical-align: middle;
+                                    display: inline-block;
+                                    line-height: 1.6;
+                                ">Te sigue</span>`
                     : ''
                 }
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- acciones -->
-                           ${htmlAcciones}
                         </div>
-            `
+                        ${seguidoresMsg
+                    ? `<div style="font-size: 0.95em; color: #555; margin-top: 4px;">
+                                <i class="bi bi-people"></i> ${seguidoresMsg}
+                            </div>`
+                    : ''
+                }
+                    </div>
+                </div>
+                <!-- acciones -->
+                ${htmlAcciones}
+            </div>`;
         }
-
     }
 
     public async actualizarSeguimiento(enterpriseId: number, es_seguida: boolean): Promise<void> {
