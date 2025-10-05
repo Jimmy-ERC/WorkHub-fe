@@ -1,5 +1,6 @@
 import { AppliedJobsService } from '@/services/appliedJobs.service';
 import type { DataTrabajosAplicados } from '@/interfaces/trabajosAplicados.interface';
+import { ProfileGeneralCandidateService } from '@/services/profileGeneralCandidate.service';
 
 // Estado global del controlador
 let allJobs: DataTrabajosAplicados[] = [];
@@ -425,6 +426,24 @@ function initFilterListeners(): void {
 }
 
 /**
+ * Actualiza el contador de alertas en el sidebar
+ */
+async function updateAlertsBadge(): Promise<void> {
+    try {
+        const response = await ProfileGeneralCandidateService.fetchProfileStats();
+        if (response.success && response.data) {
+            const alertBadge = document.getElementById('jobAlertsCount');
+            if (alertBadge) {
+                const alertCount = parseInt(response.data.alertas_trabajo_count);
+                alertBadge.textContent = alertCount > 0 ? alertCount.toString().padStart(2, '0') : '00';
+            }
+        }
+    } catch (error) {
+        console.error('Error updating alerts badge:', error);
+    }
+}
+
+/**
  * Carga todos los trabajos aplicados
  */
 async function loadAllAppliedJobs(): Promise<void> {
@@ -469,6 +488,9 @@ function initAppliedJobsController(): void {
 
             // Cargar todos los trabajos aplicados
             await loadAllAppliedJobs();
+
+            // Actualizar el badge de alertas en el sidebar
+            await updateAlertsBadge();
 
             console.log('Controlador de trabajos aplicados inicializado correctamente');
         } catch (error) {

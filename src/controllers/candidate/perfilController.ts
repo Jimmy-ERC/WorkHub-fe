@@ -2,6 +2,7 @@ import type { ProfileResponse } from "@/interfaces/profileResponse.interface";
 import sessionManager from "@/lib/session";
 import { diagnoseStorageSetup } from "@/lib/avatarUpload";
 import { ProfileCandidateService } from "@/services/profileCandidate.service";
+import { ProfileGeneralCandidateService } from "@/services/profileGeneralCandidate.service";
 import { loadUserData } from "@/lib/userDataLoader";
 import { initCVUpload } from "@/lib/cvUpload";
 import { CurriculumService } from "@/services/curriculumService";
@@ -104,6 +105,24 @@ function showSuccess(message: string) {
             successAlert.parentNode.removeChild(successAlert);
         }
     }, 5000);
+}
+
+/**
+ * Actualiza el contador de alertas en el sidebar
+ */
+async function updateAlertsBadge(): Promise<void> {
+    try {
+        const response = await ProfileGeneralCandidateService.fetchProfileStats();
+        if (response.success && response.data) {
+            const alertBadge = document.getElementById('jobAlertsCount');
+            if (alertBadge) {
+                const alertCount = parseInt(response.data.alertas_trabajo_count);
+                alertBadge.textContent = alertCount > 0 ? alertCount.toString().padStart(2, '0') : '00';
+            }
+        }
+    } catch (error) {
+        console.error('Error updating alerts badge:', error);
+    }
 }
 
 // Function to get current avatar URL from the preview
@@ -505,6 +524,9 @@ function initProfileController() {
             initCVUpload(currentProfileId);
         }
     });
+
+    // Update alerts badge in sidebar
+    updateAlertsBadge();
 }
 
 // Export functions for potential external use

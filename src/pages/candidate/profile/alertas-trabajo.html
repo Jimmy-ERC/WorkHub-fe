@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Trabajos Favoritos — Workhub</title>
+    <title>Alertas de Trabajo — Workhub</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -93,13 +93,13 @@
                         href="/src/pages/candidate/profile/trabajos_aplicados.html" data-route="applied">
                         <i class="bi bi-briefcase me-2"></i> Trabajos aplicados
                     </a>
-                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2 active bg-body-tertiary"
-                        href="/src/pages/candidate/profile/trabajos_favoritos.html" data-route="favorites"
-                        aria-current="page">
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/trabajos_favoritos.html" data-route="favorites">
                         <i class="bi bi-bookmark me-2"></i> Trabajos favoritos
                     </a>
-                    <a class="nav-link d-flex align-items-center justify-content-between rounded-2 px-3 py-2"
-                        href="/src/pages/candidate/profile/alertas-trabajo.html" data-route="alerts">
+                    <a class="nav-link d-flex align-items-center justify-content-between rounded-2 px-3 py-2 active bg-body-tertiary"
+                        href="/src/pages/candidate/profile/alertas-trabajo.html" data-route="alerts"
+                        aria-current="page">
                         <span><i class="bi bi-bell me-2"></i> Alertas de trabajo</span>
                         <span class="badge text-bg-primary border border-primary" id="jobAlertsCount">00</span>
                     </a>
@@ -117,71 +117,45 @@
                     <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
                         <div>
                             <h4 class="mb-1">
-                                <i class="bi bi-bookmark-heart text-primary me-2"></i>
-                                Trabajos Favoritos
+                                <i class="bi bi-bell-fill text-primary me-2"></i>
+                                Alertas de Trabajo
                             </h4>
                             <p class="text-muted mb-0">
-                                Administra tu lista de trabajos guardados
-                                <span id="totalJobsCount" class="badge bg-primary-subtle text-primary ms-2">0</span>
+                                Mantente al día con las notificaciones sobre tus aplicaciones
+                                <span id="totalAlertsCount" class="badge bg-primary-subtle text-primary ms-2">0</span>
+                                <span id="unreadAlertsCount" class="badge bg-danger ms-1">0 sin leer</span>
                             </p>
                         </div>
                         <div class="d-flex gap-2 align-items-center flex-wrap">
-                            <!-- Filtro por estado -->
-                            <select id="filterStatus" class="form-select form-select-sm" style="min-width: 150px;">
-                                <option value="all">Todos los estados</option>
-                                <option value="activo">Activo</option>
-                                <option value="cerrado">Cerrado</option>
+                            <!-- Filtro por estado de lectura -->
+                            <select id="filterReadStatus" class="form-select form-select-sm" style="min-width: 150px;">
+                                <option value="all">Todas las alertas</option>
+                                <option value="unread">No leídas</option>
+                                <option value="read">Leídas</option>
                             </select>
-                            <!-- Filtro por modalidad -->
-                            <select id="filterModality" class="form-select form-select-sm" style="min-width: 150px;">
-                                <option value="all">Todas las modalidades</option>
-                                <option value="remoto">Remoto</option>
-                                <option value="tiempo completo">Tiempo Completo</option>
-                                <option value="medio tiempo">Medio Tiempo</option>
-                                <option value="temporal">Temporal</option>
-                                <option value="contrato">Contrato</option>
+                            <!-- Filtro por tipo -->
+                            <select id="filterType" class="form-select form-select-sm" style="min-width: 150px;">
+                                <option value="all">Todos los tipos</option>
+                                <option value="aplicacion">Aplicación</option>
+                                <option value="actualizacion">Actualización</option>
+                                <option value="expiracion">Expiración</option>
                             </select>
-                            <!-- Ordenamiento -->
-                            <select id="sortBy" class="form-select form-select-sm" style="min-width: 150px;">
-                                <option value="date-desc">Más recientes</option>
-                                <option value="date-asc">Más antiguos</option>
-                                <option value="salary-desc">Salario (mayor)</option>
-                                <option value="salary-asc">Salario (menor)</option>
-                            </select>
+                            <!-- Botón marcar todas como leídas -->
+                            <button class="btn btn-outline-primary btn-sm" type="button" id="markAllAsReadBtn">
+                                <i class="bi bi-check-all me-1"></i>
+                                Marcar todas como leídas
+                            </button>
                         </div>
                     </div>
                 </header>
 
-                <!-- Banner informativo -->
-                <div class="alert alert-info d-flex align-items-start gap-3 mb-4" role="alert">
-                    <i class="bi bi-info-circle-fill fs-5"></i>
-                    <div>
-                        <strong>Tip:</strong> Guarda trabajos interesantes para revisarlos más tarde.
-                        Recuerda que algunos pueden expirar pronto, así que no olvides aplicar a tiempo.
-                    </div>
-                </div>
+                <!-- Lista de alertas -->
+                <section aria-labelledby="alerts-title">
+                    <div class="visually-hidden" id="alerts-title">Lista de alertas de trabajo</div>
 
-                <!-- Lista de trabajos favoritos -->
-                <section aria-labelledby="favorite-jobs-title">
-                    <div class="visually-hidden" id="favorite-jobs-title">Lista de trabajos favoritos</div>
-
-                    <!-- Cabecera de la tabla (desktop) -->
-                    <div class="row g-0 text-muted small border-bottom py-2 px-2 d-none d-lg-flex">
-                        <div class="col-5">Trabajo</div>
-                        <div class="col-2">Salario</div>
-                        <div class="col-2">Estado</div>
-                        <div class="col-2">Expira en</div>
-                        <div class="col-1 text-end">Acciones</div>
-                    </div>
-
-                    <!-- Contenedor de trabajos -->
-                    <div id="jobsListContainer" class="list-group list-group-flush">
-                        <!-- Los trabajos se renderizarán aquí dinámicamente -->
-                    </div>
-
-                    <!-- Paginación (opcional para futuro) -->
-                    <div id="paginationContainer" class="d-flex justify-content-center mt-4">
-                        <!-- Paginación se puede agregar aquí -->
+                    <!-- Contenedor de alertas -->
+                    <div id="alertsListContainer" class="list-group">
+                        <!-- Las alertas se renderizarán aquí dinámicamente -->
                     </div>
                 </section>
             </section>
@@ -198,8 +172,8 @@
     <!-- Route Protection Script (must load before other scripts) -->
     <script type="module" src="/src/controllers/routeProtection.ts"></script>
 
-    <!-- Favorite Jobs Controller -->
-    <script type="module" src="/src/controllers/candidate/favoriteJobsController.ts"></script>
+    <!-- Alertas Trabajo Controller -->
+    <script type="module" src="/src/controllers/candidate/alertasTrabajoController.ts"></script>
 
     <!-- Load user data for navbar -->
     <script type="module">

@@ -56,7 +56,8 @@
 
                 <!-- Usuario -->
                 <div class="dropdown ms-3">
-                    <a href="/src/pages/candidate/home.html" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
+                    <a href="/src/pages/candidate/home.html"
+                        class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="/src/assets/img/avatar.jpg" id="profilePic" alt="Avatar de usuario"
                             class="rounded-circle me-2" width="35" height="35">
@@ -87,31 +88,28 @@
                 </div>
 
                 <nav class="nav flex-column gap-1 px-2">
-                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2 active bg-body-tertiary"
-                        href="/src/pages/candidate/profile/index.html" data-route="dashboard" aria-current="page">
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/index.html" data-route="dashboard">
                         <i class="bi bi-grid-1x2 me-2"></i> General
                     </a>
-                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2" href="#" data-route="applied">
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/trabajos_aplicados.html" data-route="applied">
                         <i class="bi bi-briefcase me-2"></i> Trabajos aplicados
                     </a>
-                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2" href="#" data-route="favorites">
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/trabajos_favoritos.html" data-route="favorites">
                         <i class="bi bi-bookmark me-2"></i> Trabajos favoritos
                     </a>
-                    <a class="nav-link d-flex align-items-center justify-content-between rounded-2 px-3 py-2" href="#"
-                        data-route="alerts">
+                    <a class="nav-link d-flex align-items-center justify-content-between rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/alertas-trabajo.html" data-route="alerts">
                         <span><i class="bi bi-bell me-2"></i> Alertas de trabajo</span>
-                        <span class="badge text-bg-primary-subtle border border-primary-subtle">09</span>
+                        <span class="badge text-bg-primary border border-primary" id="jobAlertsCount">00</span>
                     </a>
-                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2" href="#" data-route="settings">
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2 active bg-body-tertiary"
+                        href="/src/pages/candidate/profile/settings.html" data-route="settings" aria-current="page">
                         <i class="bi bi-gear me-2"></i> Ajustes
                     </a>
 
-                    <div class="mt-4 px-3">
-                        <a href="#"
-                            class="text-decoration-none small d-inline-flex align-items-center gap-2 text-muted">
-                            <i class="bi bi-box-arrow-left"></i> <span>Salir</span>
-                        </a>
-                    </div>
                 </nav>
             </aside>
 

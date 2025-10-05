@@ -317,11 +317,11 @@ async function updateStatsCards(): Promise<void> {
             alertsCountElement.textContent = alertas_trabajo_count;
         }
 
-        // También actualizar el badge de alertas en el sidebar si existe
-        const alertBadge = document.querySelector('[data-route="alerts"] .badge');
-        if (alertBadge) {
+        // También actualizar el badge de alertas en el sidebar
+        const alertBadgeSidebar = document.getElementById('jobAlertsCount');
+        if (alertBadgeSidebar) {
             const alertCount = parseInt(alertas_trabajo_count);
-            alertBadge.textContent = alertCount > 0 ? alertCount.toString().padStart(2, '0') : '00';
+            alertBadgeSidebar.textContent = alertCount > 0 ? alertCount.toString().padStart(2, '0') : '00';
         }
 
     } catch (error) {

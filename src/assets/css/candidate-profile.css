@@ -1,6 +1,36 @@
 /* Variables & helpers */
-:root{
-  /* Ajuste sutil al azul del banner para aproximar el diseño */
+/* Lista de aplicados: foco accesible similar al "seleccionado" del mock */
+.list-group-item:focus-within{
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 2px;
+  border-radius: .5rem;
+}
+
+/* Toggle Read Button - Alertas de trabajo */
+.toggle-read-btn {
+  transition: all 0.2s ease;
+  background: transparent;
+}
+
+.toggle-read-btn:hover {
+  transform: scale(1.1);
+  background: rgba(var(--bs-primary-rgb), 0.1) !important;
+}
+
+.toggle-read-btn:active {
+  transform: scale(0.95);
+}
+
+.toggle-read-btn i {
+  transition: all 0.2s ease;
+}
+
+/* Animación suave para cambio de estado de alertas */
+.list-group-item[data-alert-id] {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Evitar desbordes en móviles */ /* Ajuste sutil al azul del banner para aproximar el diseño */
   --wh-banner: #4c74ff;
 }
 

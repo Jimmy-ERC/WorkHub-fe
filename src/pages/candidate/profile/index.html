@@ -56,7 +56,8 @@
 
                 <!-- Usuario -->
                 <div class="dropdown ms-3">
-                    <a href="/src/pages/candidate/home.html" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
+                    <a href="/src/pages/candidate/home.html"
+                        class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="/src/assets/img/avatar.jpg" id="profilePic" alt="Avatar de usuario"
                             class="rounded-circle me-2" width="35" height="35">
@@ -99,22 +100,16 @@
                         href="/src/pages/candidate/profile/trabajos_favoritos.html" data-route="favorites">
                         <i class="bi bi-bookmark me-2"></i> Trabajos favoritos
                     </a>
-                    <a class="nav-link d-flex align-items-center justify-content-between rounded-2 px-3 py-2" href="#"
-                        data-route="alerts">
+                    <a class="nav-link d-flex align-items-center justify-content-between rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/alertas-trabajo.html" data-route="alerts">
                         <span><i class="bi bi-bell me-2"></i> Alertas de trabajo</span>
-                        <span class="badge text-bg-primary-subtle border border-primary-subtle">09</span>
+                        <span class="badge text-bg-primary border border-primary" id="jobAlertsCount">00</span>
                     </a>
                     <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
                         href="/src/pages/candidate/profile/settings.html" data-route="settings">
                         <i class="bi bi-gear me-2"></i> Ajustes
                     </a>
 
-                    <div class="mt-4 px-3">
-                        <a href="#"
-                            class="text-decoration-none small d-inline-flex align-items-center gap-2 text-muted">
-                            <i class="bi bi-box-arrow-left"></i> <span>Salir</span>
-                        </a>
-                    </div>
                 </nav>
             </aside>
 
@@ -130,49 +125,60 @@
                 <div class="row g-3 mb-4">
                     <!-- Card 1 -->
                     <article class="col-12 col-lg-4">
-                        <div
-                            class="stat-card d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border">
-                            <div>
-                                <div class="fs-2 fw-semibold" id="statsAppliedCount">0</div>
-                                <div class="text-muted">Trabajos aplicados</div>
+                        <a href="/src/pages/candidate/profile/trabajos_aplicados.html" class="text-decoration-none"
+                            data-action="see-all-applied">
+                            <div
+                                class="stat-card d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border">
+                                <div>
+                                    <div class="fs-2 fw-semibold" id="statsAppliedCount">0</div>
+                                    <div class="text-muted">Trabajos aplicados</div>
+                                </div>
+                                <div class="icon-box d-inline-flex align-items-center justify-content-center rounded-3">
+                                    <i class="bi bi-briefcase fs-4" aria-hidden="true"></i>
+                                    <span class="visually-hidden">Trabajos aplicados</span>
+                                </div>
                             </div>
-                            <div class="icon-box d-inline-flex align-items-center justify-content-center rounded-3">
-                                <i class="bi bi-briefcase fs-4" aria-hidden="true"></i>
-                                <span class="visually-hidden">Trabajos aplicados</span>
-                            </div>
-                        </div>
+                        </a>
                     </article>
 
                     <!-- Card 2 -->
                     <article class="col-12 col-lg-4">
-                        <div
-                            class="stat-card d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border">
-                            <div>
-                                <div class="fs-2 fw-semibold" id="statsFavoritesCount">0</div>
-                                <div class="text-muted">Trabajos favoritos</div>
-                            </div>
+                        <a href="/src/pages/candidate/profile/trabajos_favoritos.html" class="text-decoration-none"
+                            data-action="see-all-favorites">
+
                             <div
-                                class="icon-box d-inline-flex align-items-center justify-content-center rounded-3 bg-info-subtle">
-                                <i class="bi bi-bookmark fs-4" aria-hidden="true"></i>
-                                <span class="visually-hidden">Trabajos favoritos</span>
+                                class="stat-card d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border">
+                                <div>
+                                    <div class="fs-2 fw-semibold" id="statsFavoritesCount">0</div>
+                                    <div class="text-muted">Trabajos favoritos</div>
+                                </div>
+                                <div
+                                    class="icon-box d-inline-flex align-items-center justify-content-center rounded-3 bg-info-subtle">
+                                    <i class="bi bi-bookmark fs-4" aria-hidden="true"></i>
+                                    <span class="visually-hidden">Trabajos favoritos</span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </article>
 
                     <!-- Card 3 -->
                     <article class="col-12 col-lg-4">
-                        <div
-                            class="stat-card d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border">
-                            <div>
-                                <div class="fs-2 fw-semibold" id="statsAlertsCount">0</div>
-                                <div class="text-muted">Alertas de trabajo</div>
-                            </div>
+                        <a href="/src/pages/candidate/profile/alertas-trabajo.html" class="text-decoration-none"
+                            data-action="see-all-alerts">
+
                             <div
-                                class="icon-box d-inline-flex align-items-center justify-content-center rounded-3 bg-primary-subtle">
-                                <i class="bi bi-bell fs-4" aria-hidden="true"></i>
-                                <span class="visually-hidden">Alertas de trabajo</span>
+                                class="stat-card d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border">
+                                <div>
+                                    <div class="fs-2 fw-semibold" id="statsAlertsCount">0</div>
+                                    <div class="text-muted">Alertas de trabajo</div>
+                                </div>
+                                <div
+                                    class="icon-box d-inline-flex align-items-center justify-content-center rounded-3 bg-primary-subtle">
+                                    <i class="bi bi-bell fs-4" aria-hidden="true"></i>
+                                    <span class="visually-hidden">Alertas de trabajo</span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </article>
                 </div>
 
@@ -197,7 +203,8 @@
                 <section aria-labelledby="aplicados-title">
                     <div class="d-flex align-items-center justify-content-between mb-2">
                         <h6 id="aplicados-title" class="mb-0">Aplicados recientemente</h6>
-                        <a href="#" class="link-primary small d-inline-flex align-items-center gap-1"
+                        <a href="/src/pages/candidate/profile/trabajos_aplicados.html"
+                            class="link-primary small d-inline-flex align-items-center gap-1"
                             data-action="see-all-applied">
                             Ver todo <i class="bi bi-arrow-right"></i>
                         </a>
