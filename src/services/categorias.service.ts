@@ -3,10 +3,15 @@ import { api } from "@/lib/api";
 // Base API URL from environment variables
 const apiUrl = api.baseUrl;
 
-export class CategoriasService {
-  constructor() {}
+export interface ApiResponse<T> {
+  success: boolean;
+  data?: T;
+  error?: string;
+  message?: string;
+}
 
-  public static async getCategorias(): Promise<any> {
+export class CategoriasService {
+  public static async getCategorias(): Promise<ApiResponse<any[]>> {
     try {
       const response = await fetch(`${apiUrl}/candidate/categorias/`, {
         method: "GET",
@@ -19,14 +24,15 @@ export class CategoriasService {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
+      const json = await response.json();
+      const data = json.data as any[];
 
       return {
         success: true,
         data,
+        message: json.message,
       };
     } catch (error) {
-      console.error("Error fetching categorias:", error);
       return {
         success: false,
         error: "Error fetching categorias",
