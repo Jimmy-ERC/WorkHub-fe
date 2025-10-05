@@ -1,4 +1,3 @@
-import { JobApplicationsService } from "@/services/jobApplicationsService.js";
 import { loadUserData } from "../../lib/userDataLoader.js";
 import { ProfileEnterpriseService } from "@/services/profileEnterprise.service.js";
 import type { ProfileResponse } from "@/interfaces/profileResponse.interface.js";
@@ -240,6 +239,7 @@ export class EnterpriseViewEnterprisesController {
     );
     this.renderEnterprises();
   }
+
   public limpiarFiltros(): void {
     this.filteredEnterprises = [...this.enterprises];
     this.renderEnterprises();

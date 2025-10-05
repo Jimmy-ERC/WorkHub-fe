@@ -20,14 +20,10 @@ export class CandidateViewEnterprisesController {
     }
   }
 
-  /**
-   * Carga las empresas desde la API y actualiza los arreglos locales
-   */
   private async loadEnterprises() {
     try {
       const response = await EnterpriseCandidateService.getEnterprises();
 
-      // ✅ Ya no es necesario mapear nombres distintos, porque la interfaz coincide con los del backend
       this.enterprises = response.data.map((item) => ({
         id_perfil: item.id_perfil,
         id_usuario: item.id_usuario,
@@ -42,7 +38,6 @@ export class CandidateViewEnterprisesController {
         email: item.email || "",
       }));
 
-      // Copiamos al arreglo filtrado
       this.filteredEnterprises = [...this.enterprises];
 
       this.renderEnterprises();
@@ -52,9 +47,6 @@ export class CandidateViewEnterprisesController {
     }
   }
 
-  /**
-   * Renderiza las empresas en el contenedor #listEmpresas
-   */
   public renderEnterprises(): void {
     const listEmpresas = document.getElementById("listEmpresas");
 
@@ -114,47 +106,39 @@ export class CandidateViewEnterprisesController {
     }
   }
 
-  /**
-   * Filtra empresas por nombre
-   */
   public buscarPorNombre(): void {
     const filtroNombreInput = document.getElementById(
       "filtroNombre"
     ) as HTMLInputElement;
     if (!filtroNombreInput) return;
-
     const nombreBuscar = filtroNombreInput.value.toLowerCase().trim();
-    if (!nombreBuscar) {
+
+    if (!nombreBuscar || nombreBuscar.length === 0) {
       this.limpiarFiltros();
       return;
     }
 
-    this.filteredEnterprises = this.enterprises.filter((enterprise) =>
+    this.filteredEnterprises = this.filteredEnterprises.filter((enterprise) =>
       enterprise.nombre.toLowerCase().includes(nombreBuscar)
     );
-
     this.renderEnterprises();
   }
 
-  /**
-   * Filtra empresas por ubicación
-   */
   public buscarPorUbicacion(): void {
-    const filtroUbicacionInput = document.getElementById(
-      "filtroUbicacion"
-    ) as HTMLInputElement;
-    if (!filtroUbicacionInput) return;
+    const filtroUbicacion = (
+      document.getElementById("filtroUbicacion") as HTMLInputElement
+    ).value.toLocaleLowerCase();
 
-    const ubicacionBuscar = filtroUbicacionInput.value.toLowerCase().trim();
-    if (!ubicacionBuscar) {
+    console.log(filtroUbicacion);
+
+    if (!filtroUbicacion || filtroUbicacion.length === 0) {
       this.limpiarFiltros();
       return;
     }
 
-    this.filteredEnterprises = this.enterprises.filter((e) =>
-      e.ubicacion.toLowerCase().includes(ubicacionBuscar)
+    this.filteredEnterprises = this.filteredEnterprises.filter((e) =>
+      e.ubicacion.toLocaleLowerCase().includes(filtroUbicacion)
     );
-
     this.renderEnterprises();
   }
 
