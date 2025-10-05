@@ -65,56 +65,14 @@
         <!-- Detalles del Trabajo -->
         <div class="row">
             <div class="col-lg-8">
-                <div class="section-card">
-                    <div class="job-header mb-3">
-                        <img src="https://via.placeholder.com/70" alt="Logo empresa">
-                        <div>
-                            <h4 class="mb-0">Senior UX Designer</h4>
-                            <small class="text-muted">Instagram • Full Time • Featured</small>
-                        </div>
-                    </div>
-                
-                    <h5>Descripción del trabajo</h5>
-                    <p>
-                        Integer aliquet pretium consequat. Donec sit sapien in leo accumsan pellentesque...
-                    </p>
-                
-                    <h5>Responsabilidades</h5>
-                    <ul>
-                        <li>Quisque semper gravida est consectetur.</li>
-                        <li>Curabitur blandit lorem velit.</li>
-                        <li>Pellentesque sit amet lacus a sem tempus.</li>
-                    </ul>
-
-                    <button class="btn apply-btn w-100 mt-3" data-bs-toggle="modal" data-bs-target="#applyModal">
-                        Aplica Ahora
-                    </button>
+                <div id="jobDetails" class="section-card">
+                    
                 </div>
             </div>
         
             <!-- Sidebar derecha -->
-            <div class="col-lg-4">
-                <div class="section-card">
-                    <h5>Vista del trabajo</h5>
-                    <ul class="list-unstyled job-meta">
-                        <li><i class="bi bi-calendar"></i><strong>Publicado:</strong> 14 Junio 2021</li>
-                        <li><i class="bi bi-clock"></i><strong>Expira:</strong> 30 Junio 2021</li>
-                        <li><i class="bi bi-mortarboard"></i><strong>Educación:</strong> Graduación</li>
-                        <li><i class="bi bi-cash-stack"></i><strong>Salario:</strong> $50k - $80k/mes</li>
-                        <li><i class="bi bi-geo-alt"></i><strong>Ubicación:</strong> New York, USA</li>
-                        <li><i class="bi bi-briefcase"></i><strong>Tipo:</strong> Tiempo Completo</li>
-                        <li><i class="bi bi-award"></i><strong>Experiencia:</strong> 10-15 años</li>
-                    </ul>
-                </div>
-            
-                <div class="section-card">
-                    <h5>Sobre la Empresa</h5>
-                    <p><strong>Instagram</strong><br>
-                        Red social • Fundada en 2006
-                    </p>
-                    <p><strong>Empleados:</strong> 120-300</p>
-                    <p><strong>Email:</strong> career@instagram.com</p>
-                </div>
+            <div id="jobSideBar" class="col-lg-4">
+                
             </div>
         </div>
 
@@ -186,6 +144,11 @@
     <script type="module" src="/src/controllers/routeProtection.ts"></script>
 
     <script type="module" src="/src/controllers/candidate/perfilController.ts"></script>
+
+    <script type="module" src="../../controllers/logout.ts"></script>
+
+    <!-- Candidate Home Controller -->
+    <script type="module" src="../../controllers/candidate/view-job.controller.ts"></script>
 
     <!-- Load user data for navbar -->
     <script type="module">

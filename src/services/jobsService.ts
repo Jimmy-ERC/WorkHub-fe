@@ -91,9 +91,35 @@ export class JobsService {
         }
     }
 
-    public static async getJobs(): Promise<JobsResponse> {
+    public static async getJobsActive(): Promise<JobsResponse> {
         try {
-            const response = await fetch(`${apiUrl}/trabajos/`, {
+            const response = await fetch(`${apiUrl}/trabajos/activos`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            const data = await response.json();
+
+            return {
+                success: data.success || false,
+                data: data.data || [],
+                message: data.message || `Error ${response.status}: ${response.statusText}`
+            }
+        } catch (error) {
+            console.error('Error al consultar trabajos', error)
+            return {
+                success: false,
+                data: [],
+                message: error instanceof Error ? error.message : 'Error desconocido al consultar trabajos'
+            }
+        }
+    }
+
+    public static async getJobsById(jobId: number): Promise<JobsResponse> {
+        try {
+            const response = await fetch(`${apiUrl}/trabajos/trabajoId/${jobId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
