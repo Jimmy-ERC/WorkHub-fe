@@ -23,8 +23,6 @@ export class JobControllerEnterprise {
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
 
-          console.log("Formulario enviado para publicar trabajo");
-
           const data = {
             id_perfil: response.data.id_perfil,
             nombre_trabajo: (
@@ -68,6 +66,14 @@ export class JobControllerEnterprise {
               ) as HTMLTextAreaElement
             ).value,
             ubicacion: response.data.ubicacion,
+            cupos: parseInt(
+              (document.getElementById("cupos") as HTMLInputElement).value
+            ),
+            aplicar_por: (
+              document.querySelector(
+                'input[name="radioDefault"]:checked'
+              ) as HTMLInputElement
+            ).value,
           };
 
           await this.insertarTrabajo(data);

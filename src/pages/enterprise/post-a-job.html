@@ -310,28 +310,24 @@
                     <option selected value="">
                       Selecciona tipo de trabajo
                     </option>
-                    <option value="tiempo-completo">Tiempo completo</option>
-                    <option value="medio-tiempo">Medio tiempo</option>
-                    <option value="remoto">Remoto</option>
-                    <option value="temporal">Temporal</option>
+                    <option value="Tiempo completo">Tiempo completo</option>
+                    <option value="Medio tiempo">Medio tiempo</option>
+                    <option value="Remoto">Remoto</option>
+                    <option value="Temporal">Temporal</option>
                   </select>
                 </div>
               </div>
               <div class="row mb-4">
                 <div class="col-4">
                   <label for="cupos" class="form-label">Cupos</label>
-                  <select
-                    class="form-select"
+                  <input
+                    type="number"
+                    class="form-control"
                     id="cupos"
-                    aria-label="Default select example"
+                    placeholder="Agrega el número de cupos"
+                    min="1"
                     required
-                  >
-                    <option selected value="">Selecciona cupos</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="mas">Más de 3</option>
-                  </select>
+                  />
                 </div>
                 <div class="col-4">
                   <label for="fecha-expiracion" class="form-label"
@@ -358,10 +354,10 @@
                     <option selected value="">
                       Selecciona nivel de trabajo
                     </option>
-                    <option value="junior">Junior</option>
-                    <option value="intermedio">Intermedio</option>
-                    <option value="senior">Senior</option>
-                    <option value="lider">Líder</option>
+                    <option value="Junior">Junior</option>
+                    <option value="Intermedio">Intermedio</option>
+                    <option value="Senior">Senior</option>
+                    <option value="Líder">Líder</option>
                   </select>
                 </div>
               </div>
@@ -382,6 +378,7 @@
                     name="radioDefault"
                     id="radioWorkHub"
                     style="margin-right: 1%"
+                    value="WorkHub"
                     checked
                   />
                   <div>
@@ -405,6 +402,7 @@
                     name="radioDefault"
                     id="radioEmail"
                     style="margin-right: 1%"
+                    value="Email"
                   />
                   <div>
                     <h5 class="card-title">En tu email</h5>
