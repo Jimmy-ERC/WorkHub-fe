@@ -98,7 +98,7 @@ function createAlertHTML(alert: Datum): string {
     const formattedDate = formatRelativeDate(alert.enviado_en);
     const formattedSalary = formatSalaryRange(alert.salario_minimo, alert.salario_maximo);
     const logoUrl = alert.logo_empresa || '/src/assets/img/logo_grande.png';
-    
+
     // Clase para alertas no leídas
     const unreadClass = !alert.leido ? 'bg-light border-start border-primary border-3' : '';
 
@@ -111,10 +111,10 @@ function createAlertHTML(alert: Datum): string {
                 data-current-status="${alert.leido}"
                 title="${alert.leido ? 'Marcar como no leída' : 'Marcar como leída'}"
                 style="width: 32px; height: 32px; transition: all 0.2s ease;">
-            ${alert.leido 
-                ? '<i class="bi bi-check-circle-fill text-success fs-5"></i>' 
-                : '<i class="bi bi-circle text-muted fs-5"></i>'
-            }
+            ${alert.leido
+            ? '<i class="bi bi-check-circle-fill text-success fs-5"></i>'
+            : '<i class="bi bi-circle text-muted fs-5"></i>'
+        }
         </button>
     `;
 
@@ -182,10 +182,10 @@ function createAlertHTML(alert: Datum): string {
                                     </div>
                                 </div>
                                 <div class="text-end">
-                                    ${alert.estado_trabajo ? 
-                                        '<span class="badge bg-success-subtle text-success border border-success">Activo</span>' : 
-                                        '<span class="badge bg-danger-subtle text-danger border border-danger">Cerrado</span>'
-                                    }
+                                    ${alert.estado_trabajo ?
+            '<span class="badge bg-success-subtle text-success border border-success">Activo</span>' :
+            '<span class="badge bg-danger-subtle text-danger border border-danger">Cerrado</span>'
+        }
                                 </div>
                             </div>
                         </div>
@@ -358,10 +358,10 @@ function attachAlertListeners(): void {
         button.addEventListener('click', async (event) => {
             event.preventDefault();
             event.stopPropagation();
-            
+
             const alertId = (button as HTMLElement).dataset.alertId;
             const currentStatus = (button as HTMLElement).dataset.currentStatus === 'true';
-            
+
             if (alertId) {
                 // Cambiar al estado opuesto
                 await toggleAlertReadStatus(parseInt(alertId), !currentStatus);
@@ -417,7 +417,7 @@ async function toggleAlertReadStatus(alertId: number, newReadStatus: boolean): P
     } catch (error) {
         console.error('Error toggling alert read status:', error);
         showErrorToast('Error al actualizar el estado de la alerta');
-        
+
         // Recargar en caso de error para mantener consistencia
         await loadAllAlerts();
     }
@@ -479,14 +479,14 @@ async function markAllAlertsAsRead(): Promise<void> {
     } catch (error) {
         console.error('Error marking all alerts as read:', error);
         showErrorToast('Error al marcar las alertas como leídas');
-        
+
         // Restaurar el botón
         const markAllBtn = document.getElementById('markAllAsReadBtn') as HTMLButtonElement;
         if (markAllBtn) {
             markAllBtn.disabled = false;
             markAllBtn.innerHTML = '<i class="bi bi-check-all me-1"></i>Marcar todas como leídas';
         }
-        
+
         // Recargar en caso de error
         await loadAllAlerts();
     }

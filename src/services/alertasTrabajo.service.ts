@@ -135,7 +135,7 @@ export class AlertasTrabajoService {
     public static async markAllAsRead(alertIds: number[]): Promise<{ success: boolean; message: string }> {
         try {
             // Realizar todas las peticiones en paralelo
-            const promises = alertIds.map(alertId => 
+            const promises = alertIds.map(alertId =>
                 fetch(`${apiUrl}/candidate/perfiles/notificaciones/${alertId}`, {
                     method: 'PUT',
                     headers: {
@@ -148,7 +148,7 @@ export class AlertasTrabajoService {
             );
 
             const results = await Promise.all(promises);
-            
+
             // Verificar si todas las peticiones fueron exitosas
             const allSuccessful = results.every(response => response.ok);
 
