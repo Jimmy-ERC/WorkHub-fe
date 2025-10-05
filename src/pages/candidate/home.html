@@ -93,6 +93,37 @@
               >
             </li>
           </ul>
+            <!-- Buscador -->
+            <form class="d-none d-lg-flex mx-4 flex-grow-1">
+                <input class="form-control me-2" type="search" placeholder="Título, palabra clave o compañía"
+                    aria-label="Search">
+                <button class="btn btn-primary" type="submit">Encontrar</button>
+            </form>
+            <!-- Menú -->
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Empleos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Recursos</a></li>
+                <li class="nav-item"><a class="nav-link" href="/src/pages/forums/foros/index.html">Foros</a></li>
+            </ul>
+
+            <div class="dropdown ms-3">
+                <a href="#" class="d-flex align-items-center text-dark      text-decoration-none       dropdown-toggle"
+                    data-bs-toggle="dropdown">
+                    <img src="/src/assets/img/avatar.jpg" id="profilePic" alt="user" class="rounded-circle    me-2"
+                        width="35" height="35">
+                    <span id="userNameDisplay">username</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="../candidate/profile/index.html">Ver perfil</a></li>
+                    <li><a class="dropdown-item" href="#">Configuración</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item text-danger" href="/src/pages/auth/login.html">Cerrar Sesión</a></li>
+                </ul>
+            </div>
         </div>
       </div>
     </nav>

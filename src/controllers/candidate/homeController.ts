@@ -4,7 +4,7 @@ import { JobsService } from "@/services/jobsService.js";
 
 
 
-import { sessionManager } from '../../lib/session.js';
+// import { sessionManager } from '../../lib/session.js';
 
 
 export class CandidateHomeController {
@@ -36,7 +36,7 @@ export class CandidateHomeController {
             const runAll = async () => {
                 await loadUserData();
                 await this.loadJobs();
-                this.renderJobs();
+                //this.renderJobs();
             };
     
             if (document.readyState === "loading") {
@@ -60,13 +60,16 @@ export class CandidateHomeController {
             // console.log("ID de perfil obtenido:", profileId);
     
             try {
-                let jobsResponse = await JobsService.getJobs();
+                let jobsResponse = await JobsService.getJobsActive();
                 if (!jobsResponse.success) {
                     alert(jobsResponse.message);
                     return;
                 }
                 this.jobs = jobsResponse.data;
                 this.filteredJobs = [...this.jobs];
+
+                console.log("this.jobs:", this.jobs);
+        console.log("this.filteredJobs:", this.filteredJobs);
     
                 this.renderJobs();
             } catch (error) {
@@ -75,6 +78,7 @@ export class CandidateHomeController {
         }
 
         public renderJobs(): void {
+            console.log("Jobs", this.filteredJobs);
         const jobList = document.getElementById("jobList");
         if (!jobList) return;
 
@@ -85,6 +89,7 @@ export class CandidateHomeController {
 
         for (let i = 0; i < this.filteredJobs.length; i++) {
             const job = this.filteredJobs[i];
+            console.log("trabajo", job);
             if (!job) continue;
 
             let colorBadge = "grey";
@@ -97,11 +102,11 @@ export class CandidateHomeController {
             }
 
             // Cambios para trabajos cerrados
-            const isClosed = job.estado === false;
-            const lockIcon = isClosed ? `<i class="bi bi-lock-fill" style="margin-right: 6px;"></i>` : "";
-            const cardOpacity = isClosed ? "0.5" : "1";
-            const titleStyle = isClosed ? "text-decoration: line-through;" : "";
-            const pointerEvents = isClosed ? "pointer-events: none;" : "";
+            // const isClosed = job.estado === false;
+            // const lockIcon = isClosed ? `<i class="bi bi-lock-fill" style="margin-right: 6px;"></i>` : "";
+            // const cardOpacity = isClosed ? "0.5" : "1";
+            // const titleStyle = isClosed ? "text-decoration: line-through;" : "";
+            // const pointerEvents = isClosed ? "pointer-events: none;" : "";
 
             const lastRow = jobList.querySelector(".row:last-child");
             if (lastRow) {
@@ -121,6 +126,8 @@ export class CandidateHomeController {
                 //     </div>
                 // </button>`;
 
+                console.log("id", job.id_trabajo);
+
                 lastRow.innerHTML += `
             <div class="list-group-item job-card d-flex justify-content-between align-items-center p-3 mb-2">
                 <div class="d-flex align-items-center">
@@ -132,7 +139,7 @@ export class CandidateHomeController {
                 </div>
                 <div class="d-flex align-items-center gap-3">
                     <i class="bi bi-bookmark save-icon"></i>
-                    <a href="/src/pages/candidate/view-job.html" class="btn apply-btn btn-sm">Apply Now →</a>
+                    <a href="/src/pages/candidate/view-job.html" class="btn apply-btn btn-sm" onclick="localStorage.setItem('jobId', '${job.id_trabajo}')">Apply Now →</a>
                 </div>
             </div>`;
             }
