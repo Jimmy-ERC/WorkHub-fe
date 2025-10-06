@@ -1,11 +1,53 @@
 import { api } from "@/lib/api";
-import { NavigatorLockAcquireTimeoutError } from "@supabase/supabase-js";
 
 // Base API URL from environment variables
 const apiUrl = api.baseUrl;
 
 export class ForumService {
   constructor() {}
+
+  public static async crearForo(
+    id_categoria: number,
+    id_perfil: number,
+    titulo: string,
+    contenido: string,
+    fecha: Date
+  ): Promise<any> {
+    try {
+      const response = await fetch(`${apiUrl}/foro/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id_categoria,
+          id_perfil,
+          titulo,
+          contenido,
+          fecha,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      return {
+        success: true,
+        data,
+        message: "Foro creado correctamente",
+      };
+    } catch (error) {
+      console.error("Error al crear el foro:", error);
+      return {
+        success: false,
+        error: "Error al crear el foro",
+        message: error instanceof Error ? error.message : "Error desconocido",
+      };
+    }
+  }
 
   public static async getForos(): Promise<any> {
     try {
@@ -37,7 +79,7 @@ export class ForumService {
 
   public static async getRespuestasByForoId(id_foro: number): Promise<any> {
     try {
-      const response = await fetch(`${apiUrl}/foro/${id_foro}`, {
+      const response = await fetch(`${apiUrl}/respuesta/foro/${id_foro}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

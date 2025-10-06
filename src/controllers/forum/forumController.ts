@@ -1,5 +1,6 @@
 import type { Foro } from "@/interfaces/forum.interface";
 import type { ProfileResponse } from "@/interfaces/profileResponse.interface";
+import { CategoriasService } from "@/services/categorias.service";
 import { ForumService } from "@/services/forum.service";
 import { ProfileCandidateService } from "@/services/profileCandidate.service";
 import { ProfileEnterpriseService } from "@/services/profileEnterprise.service";
@@ -58,6 +59,14 @@ export class ForumController {
     }
 
     forosContainer.innerHTML = "";
+    // Botón "Crear Foro"
+    const crearBtn = document.createElement("button");
+    crearBtn.className = "btn btn-primary mb-3";
+    crearBtn.textContent = "Crear Foro";
+    crearBtn.addEventListener("click", () =>
+      this.renderCrearForoForm(forosContainer)
+    );
+    forosContainer.appendChild(crearBtn);
 
     if (this.foros.length === 0) {
       const emptyMsg = document.createElement("p");
@@ -75,9 +84,11 @@ export class ForumController {
       card.innerHTML = `
         <div class="card-body">
           <div class="d-flex align-items-center mb-2">
-            <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="avatar">
+           <img src="${foro.link_foto_perfil ?? 'https://via.placeholder.com/40'}" 
+     class="rounded-circle me-2" alt="avatar" style="width:40px; height:40px; object-fit:cover;">
+
             <div>
-              <h6 class="mb-0">@Usuario${foro.id_perfil}</h6>
+              <h6 class="mb-0">@${foro.nombre_usuario}</h6>
               <small class="text-muted">${this.formatFecha(foro.fecha)}</small>
             </div>
             <div class="ms-auto">
@@ -129,6 +140,102 @@ export class ForumController {
       forosContainer.appendChild(card);
     });
   }
+  private async renderCrearForoForm(container: HTMLElement): Promise<void> {
+    // Crear card
+    const card = document.createElement("div");
+    card.className = "card mb-3 shadow-sm";
+
+    // Obtener categorías
+    const categoriasResponse = await CategoriasService.getCategorias();
+    const categorias = categoriasResponse.success
+      ? categoriasResponse.data ?? []
+      : [];
+
+    const options = categorias
+      .map(
+        (c) =>
+          `<option value="${c.id_categoria}">${c.nombre_categoria}</option>`
+      )
+      .join("");
+
+    card.innerHTML = `
+    <div class="card-body">
+      <h5 class="card-title">Nuevo Foro</h5>
+      <form class="crear-foro-form d-flex flex-column gap-2">
+        <input type="text" class="form-control" placeholder="Título del foro" required />
+        <textarea class="form-control" placeholder="Contenido del foro" rows="3" required></textarea>
+        <select class="form-select" required>
+          <option value="" disabled selected>Selecciona una categoría</option>
+          ${options}
+        </select>
+        <button type="submit" class="btn btn-success mt-2">Publicar foro</button>
+      </form>
+      <div class="foro-msg mt-2 small"></div>
+    </div>
+  `;
+
+    container.prepend(card);
+
+    const form = card.querySelector(".crear-foro-form") as HTMLFormElement;
+    const msg = card.querySelector(".foro-msg") as HTMLElement;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const titulo = (
+        form.querySelector("input") as HTMLInputElement
+      ).value.trim();
+      const contenido = (
+        form.querySelector("textarea") as HTMLTextAreaElement
+      ).value.trim();
+      const categoriaId = parseInt(
+        (form.querySelector("select") as HTMLSelectElement).value
+      );
+
+      if (!titulo || !contenido || !categoriaId) return;
+
+      // Obtener id_perfil
+      let id_perfil: number | undefined;
+      const profileRes =
+        (await ProfileEnterpriseService.fetchEnterpriseProfile()) as ProfileResponse;
+      if (profileRes.success && profileRes.data?.id_perfil)
+        id_perfil = profileRes.data.id_perfil;
+      else {
+        const candidateRes =
+          (await ProfileCandidateService.fetchCandidateProfile()) as ProfileResponse;
+        if (candidateRes.success && candidateRes.data?.id_perfil)
+          id_perfil = candidateRes.data.id_perfil;
+      }
+
+      if (!id_perfil) {
+        msg.textContent = "❌ Debes crear un perfil antes de publicar un foro.";
+        msg.className = "foro-msg text-danger small";
+        return;
+      }
+
+      const fecha = new Date();
+      // Crear foro
+      const result = await ForumService.crearForo(
+        categoriaId,
+        id_perfil,
+        titulo,
+        contenido,
+        fecha
+      );
+
+      if (result.success) {
+        msg.textContent = "✅ Foro creado correctamente";
+        msg.className = "foro-msg text-success small";
+        form.reset();
+        // Recargar foros
+        await this.loadForos();
+        this.renderForos();
+      } else {
+        msg.textContent = "❌ Error al crear el foro";
+        msg.className = "foro-msg text-danger small";
+      }
+    });
+  }
 
   private async toggleRespuestas(
     id_foro: number,
@@ -141,7 +248,10 @@ export class ForumController {
 
     if (!respuestasContainer || !toggleLink) return;
 
-    if (respuestasContainer.style.display === "block") {
+    if (
+      respuestasContainer.style.display === "block" ||
+      respuestasContainer.style.display === ""
+    ) {
       respuestasContainer.style.display = "none";
       toggleLink.innerHTML = `<i class="bi bi-chevron-down"></i> Ver respuestas`;
       return;
@@ -151,35 +261,46 @@ export class ForumController {
     respuestasContainer.style.display = "block";
 
     const response = await ForumService.getRespuestasByForoId(id_foro);
+    console.log("Respuestas API:", response);
 
-    if (!response.success || !response.data.length) {
+    const respuestas = Array.isArray(response.data.data)
+      ? response.data.data
+      : [];
+
+    if (respuestas.length === 0) {
       respuestasContainer.innerHTML = `<div class="text-muted small">No hay respuestas todavía.</div>`;
       return;
     }
 
-    const respuestasHTML = response.data
+    const respuestasHTML = respuestas
       .map(
         (r: any) => `
-        <div class="card mt-2 ms-4 border-start border-3 border-primary-subtle">
-          <div class="card-body py-2">
-            <div class="d-flex align-items-center mb-1">
-              <img src="https://via.placeholder.com/30" class="rounded-circle me-2" alt="avatar">
-              <div>
-                <strong>@Usuario${r.id_perfil}</strong>
-                <small class="text-muted ms-2">${this.formatFecha(
-                  r.fecha
-                )}</small>
-              </div>
-            </div>
-            <p class="mb-0">${r.contenido}</p>
+    <div class="card mt-2 ms-4 border-start border-3 shadow-sm" 
+         style="
+           border-color: #2A6DFC; 
+           background-color: #f8f9fa; 
+           border-radius: 0.5rem;
+         ">
+      <div class="card-body py-2 px-3">
+        <div class="d-flex align-items-center mb-1">
+          <img src="${r.link_foto_perfil ?? 'https://via.placeholder.com/35'}" 
+     class="rounded-circle me-2" alt="avatar" style="width:35px; height:35px; object-fit:cover;">
+
+          <div class="d-flex flex-column">
+            <strong style="color: #343a40;">@${r.nombre_usuario}</strong>
+            <small class="text-muted">${this.formatFecha(new Date(r.fecha))}</small>
           </div>
-        </div>`
+        </div>
+        <p class="mb-0" style="word-break: break-word; font-size: 0.95rem; color: #343a40;">
+          ${r.contenido}
+        </p>
+      </div>
+    </div>`
       )
       .join("");
 
     respuestasContainer.innerHTML = respuestasHTML;
-
-    toggleLink.innerHTML = `<i class="bi bi-chevron-up"></i> Esconder respuestas (${response.data.length})`;
+    toggleLink.innerHTML = `<i class="bi bi-chevron-up"></i> Esconder respuestas (${respuestas.length})`;
   }
 
   private toggleResponder(id_foro: number, card: HTMLElement): void {
@@ -217,26 +338,40 @@ export class ForumController {
 
       let id_perfil: number | undefined = undefined;
 
-      // Intentar con perfil de empresa
+      // 1️⃣ Intentar con perfil de empresa
       let response =
         (await ProfileEnterpriseService.fetchEnterpriseProfile()) as ProfileResponse;
+      console.log("Perfil empresa:", response);
+
       if (response.success && response.data?.id_perfil) {
         id_perfil = response.data.id_perfil;
+        console.log("✅ ID perfil obtenido (empresa):", id_perfil);
       } else {
-        // Si no se encuentra, intentar con candidato
-        response =
+        // 2️⃣ Si no existe, intentar con candidato
+        const candidateResponse =
           (await ProfileCandidateService.fetchCandidateProfile()) as ProfileResponse;
-        if (response.success && response.data?.id_perfil) {
-          id_perfil = response.data.id_perfil;
+        console.log("Perfil candidato:", candidateResponse);
+
+        if (candidateResponse.success && candidateResponse.data?.id_perfil) {
+          id_perfil = candidateResponse.data.id_perfil;
+          console.log("✅ ID perfil obtenido (candidato):", id_perfil);
         }
       }
+
+      // 3️⃣ Validar si no se encontró ningún perfil
       if (!id_perfil) {
-        mensaje.textContent = "Debes iniciar sesión para responder";
+        mensaje.textContent = "❌ Debes crear un perfil antes de responder.";
         mensaje.className = "respuesta-msg text-danger small";
         return;
       }
 
       const fecha = new Date();
+      console.log("📤 Enviando respuesta con:", {
+        id_foro,
+        id_perfil,
+        contenido,
+        fecha,
+      });
 
       const result = await ForumService.crearRespuesta(
         id_foro,
@@ -250,8 +385,7 @@ export class ForumController {
         mensaje.className = "respuesta-msg text-success small";
         input.value = "";
         // Refrescar respuestas automáticamente
-        this.toggleRespuestas(id_foro, card);
-        this.toggleRespuestas(id_foro, card);
+        await this.toggleRespuestas(id_foro, card);
       } else {
         mensaje.textContent = "Error al publicar respuesta";
         mensaje.className = "respuesta-msg text-danger small";

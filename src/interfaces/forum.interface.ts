@@ -6,6 +6,8 @@ export interface Foro {
   titulo: string;
   contenido: string;
   fecha: Date;
+  nombre_usuario: string,
+  link_foto_perfil: string,
 }
 
 export interface CrearRespuestaDTO{
