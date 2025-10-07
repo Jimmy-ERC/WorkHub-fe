@@ -46,10 +46,16 @@
         </form>
         <!-- Menú -->
         <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="../candidate/home.html">Inicio</a>
+          </li>
           <li class="nav-item"><a class="nav-link" href="#">Empleos</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
-          <li class="nav-item dropdown">
+          <li class="nav-item">
+            <a class="nav-link" href="../candidate/view-enterprises.html"
+              >Empresas
+            </a>
+          </li>
+                    <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -216,6 +222,11 @@
     <script
       type="module"
       src="../../controllers/candidate/homeController.ts"
+    ></script>
+
+    <script
+      type="module"
+      src="../../controllers/candidate/view-job.controller.ts"
     ></script>
 
     <!-- script para mostrar modal -->
