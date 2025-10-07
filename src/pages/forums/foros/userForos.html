@@ -95,10 +95,11 @@
       </div>
     </nav>
 
-    <main class="d-flex" style="height: calc(100vh - 70px);">
+    <main class="d-flex" style="height: calc(100vh - 70px)">
       <!-- ===== Sidebar ===== -->
       <aside
-        class="border-end bg-white p-3" style="width: 250px; flex-shrink: 0; overflow-y: auto;"
+        class="border-end bg-white p-3"
+        style="width: 250px; flex-shrink: 0; overflow-y: auto"
         data-component="SidebarNav"
       >
         <!-- Buscador -->
@@ -154,9 +155,13 @@
       </aside>
 
       <section class="flex-grow-1 p-4 overflow-auto">
-        <h4 class="mb-4">Foros</h4>
-         <div id="lista-foros" class="d-flex flex-column gap-3"></div>
+        <h4 class="mb-4">Tus foros</h4>
 
+       <body data-mode="mis-foros">
+  <script type="module" src="/src/controllers/forum/forumController.ts"></script>
+</body>
+
+        
       </section>
     </main>
     <script type="module" src="/src/controllers/forum/forumController.ts"></script>
