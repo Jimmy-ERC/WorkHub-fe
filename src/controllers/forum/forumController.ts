@@ -12,18 +12,58 @@ export class ForumController {
     this.init();
   }
 
-  private init(): void {
-    const runAll = async () => {
-      await this.loadForos();
-      this.renderForos();
-    };
+private init(): void {
+  const runAll = async () => {
+    // Leer query param
+    const urlParams = new URLSearchParams(window.location.search);
+    const soloMisForos = urlParams.get("misforos") === "true";
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", runAll);
+    if (soloMisForos) {
+      await this.loadMisForos(); // Traer solo los foros del usuario
     } else {
-      runAll();
+      await this.loadForos(); // Traer todos los foros
     }
+
+    this.renderForos();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", runAll);
+  } else {
+    runAll();
   }
+}
+
+private async loadMisForos(): Promise<void> {
+  try {
+      let idPerfil: number | undefined = undefined;
+      const profileRes =
+        (await ProfileEnterpriseService.fetchEnterpriseProfile()) as ProfileResponse;
+      if (profileRes.success && profileRes.data?.id_perfil)
+        idPerfil = profileRes.data.id_perfil;
+      else {
+        const candidateRes =
+          (await ProfileCandidateService.fetchCandidateProfile()) as ProfileResponse;
+        if (candidateRes.success && candidateRes.data?.id_perfil)
+          idPerfil = candidateRes.data.id_perfil;
+      }
+    if (typeof idPerfil === "undefined") {
+      this.foros = [];
+      console.error("No se pudo obtener el id del perfil del usuario.");
+      return;
+    }
+    const response = await ForumService.getForosByUserId(idPerfil);
+    if (response.success) {
+      this.foros = response.data ?? [];
+    } else {
+      this.foros = [];
+      console.error("Error al traer tus foros:", response.message);
+    }
+  } catch (error) {
+    console.error("Error al cargar tus foros:", error);
+    this.foros = [];
+  }
+}
 
   private async loadForos(): Promise<void> {
     try {
@@ -59,7 +99,6 @@ export class ForumController {
     }
 
     forosContainer.innerHTML = "";
-    // Botón "Crear Foro"
     const crearBtn = document.createElement("button");
     crearBtn.className = "btn btn-primary mb-3";
     crearBtn.textContent = "Crear Foro";
@@ -119,7 +158,6 @@ export class ForumController {
         </div>
       `;
 
-      // Ver respuestas
       const verRespuestasLink = card.querySelector(".ver-respuestas");
       if (verRespuestasLink) {
         verRespuestasLink.addEventListener("click", (e) => {
@@ -128,7 +166,6 @@ export class ForumController {
         });
       }
 
-      // Responder
       const responderLink = card.querySelector(".responder");
       if (responderLink) {
         responderLink.addEventListener("click", (e) => {
@@ -208,7 +245,7 @@ export class ForumController {
       }
 
       if (!id_perfil) {
-        msg.textContent = "❌ Debes crear un perfil antes de publicar un foro.";
+        msg.textContent = "Debes crear un perfil antes de publicar un foro.";
         msg.className = "foro-msg text-danger small";
         return;
       }
@@ -224,14 +261,14 @@ export class ForumController {
       );
 
       if (result.success) {
-        msg.textContent = "✅ Foro creado correctamente";
+        msg.textContent = "Foro creado correctamente";
         msg.className = "foro-msg text-success small";
         form.reset();
         // Recargar foros
         await this.loadForos();
         this.renderForos();
       } else {
-        msg.textContent = "❌ Error al crear el foro";
+        msg.textContent = "Error al crear el foro";
         msg.className = "foro-msg text-danger small";
       }
     });
@@ -338,7 +375,6 @@ export class ForumController {
 
       let id_perfil: number | undefined = undefined;
 
-      // 1️⃣ Intentar con perfil de empresa
       let response =
         (await ProfileEnterpriseService.fetchEnterpriseProfile()) as ProfileResponse;
       console.log("Perfil empresa:", response);

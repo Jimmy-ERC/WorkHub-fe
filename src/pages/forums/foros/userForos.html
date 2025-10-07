@@ -157,60 +157,10 @@
       <section class="flex-grow-1 p-4 overflow-auto">
         <h4 class="mb-4">Tus foros</h4>
 
-        <div class="card mb-3 shadow-sm">
-          <div class="card-body">
-            <!-- Encabezado del usuario -->
-            <div class="d-flex align-items-center mb-2">
-              <img
-                src="https://via.placeholder.com/40"
-                class="rounded-circle me-2"
-                alt="avatar"
-              />
-              <div>
-                <h6 class="mb-0">@Andrea</h6>
-                <small class="text-muted">01 de noviembre de 2025</small>
-              </div>
-              <div class="ms-auto">
-                <button
-                  class="btn btn-sm btn-link text-muted"
-                  data-bs-toggle="dropdown"
-                >
-                  <i class="bi bi-three-dots-vertical"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <li><a class="dropdown-item" href="#">Editar</a></li>
-                  <li>
-                    <a class="dropdown-item text-danger" href="#">Eliminar</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
+       <body data-mode="mis-foros">
+  <script type="module" src="/src/controllers/forum/forumController.ts"></script>
+</body>
 
-            <!-- Texto -->
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ornare
-              rutrum amet, a nunc mi lacinia in iaculis. Pharetra ut integer
-              nibh urna.
-            </p>
-
-            <!-- Bloque de código -->
-            <pre class="bg-light p-2 rounded"><code>package main</code></pre>
-
-            <!-- Más texto -->
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-
-            <!-- Acciones -->
-            <div class="d-flex justify-content-between border-top pt-2">
-              <a href="#" class="small text-decoration-none text-muted">
-                <i class="bi bi-chevron-up"></i> Esconder todas las respuestas
-                (2)
-              </a>
-              <a href="#" class="small text-decoration-none">
-                <i class="bi bi-reply"></i> Responder
-              </a>
-            </div>
-          </div>
-        </div>
         
       </section>
     </main>
