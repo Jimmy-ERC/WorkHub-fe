@@ -127,16 +127,27 @@
       <div class="row g-2">
         <div class="col-md">
           <input
+            id="tituloBuscar"
             type="text"
             class="form-control"
             placeholder="Título de Trabajo..."
           />
         </div>
         <div class="col-md">
-          <input type="text" class="form-control" placeholder="Ubicación" />
+          <input
+            id="ubicacionBuscar"
+            type="text"
+            class="form-control"
+            placeholder="Ubicación"
+          />
         </div>
         <div class="col-md">
-          <input type="text" class="form-control" placeholder="Salario" />
+          <input
+            id="salarioBuscar"
+            type="text"
+            class="form-control"
+            placeholder="Salario"
+          />
         </div>
 
         <div class="col-md-auto">
@@ -146,7 +157,12 @@
         </div>
 
         <div class="col-md-auto">
-          <button class="btn btn-primary w-100">Encontrar</button>
+          <button
+            class="btn btn-primary w-100"
+            onclick="candidateHomeController.filtrarPorBusqueda()"
+          >
+            Encontrar
+          </button>
         </div>
       </div>
     </div>
@@ -170,16 +186,17 @@
           <div class="filter-section">
             <h3>Salario</h3>
             <label><input type="radio" name="salary" /> $1000 - $2000</label>
-            <label><input type="radio" name="salary" /> $2000 - $4000</label>
-            <label><input type="radio" name="salary" /> $4000 - $6000</label>
-            <label><input type="radio" name="salary" /> $6000 - $8000</label>
+            <label><input type="radio" name="salary" /> $2000 - $3000</label>
+            <label><input type="radio" name="salary" /> $3000 - $4000</label>
+            <label><input type="radio" name="salary" /> $4000 - $5000</label>
           </div>
 
           <div class="filter-section">
             <h3>Tipo de Trabajo</h3>
-            <label><input type="checkbox" /> Tiempo Completo</label>
-            <label><input type="checkbox" /> Medio Tiempo</label>
-            <label><input type="checkbox" /> Remoto</label>
+            <label><input id="tipoBuscarTiempoCompleto" type="checkbox" /> Tiempo Completo</label>
+            <label><input id="tipoBuscarMedioTiempo" type="checkbox" /> Medio Tiempo</label>
+            <label><input id="tipoBuscarRemoto" type="checkbox" /> Remoto</label>
+            <label><input id="tipoBuscarRemoto" type="checkbox" /> presencial</label>
           </div>
 
           <div class="filter-section">
@@ -187,16 +204,17 @@
             <label><input type="checkbox" /> Bachillerato</label>
             <label><input type="checkbox" /> Estudiante</label>
             <label><input type="checkbox" /> Graduado</label>
+            <label><input type="checkbox" /> Universitario</label>
           </div>
 
           <div class="filter-section">
             <h3>Nivel de Trabajo</h3>
-            <label><input type="radio" name="level" /> Principiante</label>
-            <label><input type="radio" name="level" /> Medio</label>
-            <label><input type="radio" name="level" /> Avanzado</label>
+            <label><input id="nivelJunior" type="radio" name="level" /> Junior</label>
+            <label><input id="nivelIntermedio" type="radio" name="level" /> Intermedio</label>
+            <label><input id="nivelSenior" type="radio" name="level" /> Senior</label>
           </div>
         </div>
-        <button class="btn-apply" id="apply">Aplicar Filtros</button>
+        <button class="btn-apply" id="btn-apply" onclick="candidateHomeController.filtrarPorBusqueda()">Aplicar Filtros</button>
       </div>
     </div>
 

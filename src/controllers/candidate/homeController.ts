@@ -8,27 +8,13 @@ import { JobsService } from "@/services/jobsService.js";
 
 
 export class CandidateHomeController {
-    // private jobs = [
-    //     { title: "Marketing Manager", location: "New Mexico, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Remote"], icon: "https://img.icons8.com/color/48/000000/briefcase.png" },
-    //     { title: "Project Manager", location: "Dhaka, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/ios-filled/50/apple-logo.png" },
-    //     { title: "Interaction Designer", location: "New York, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Featured", "Full Time"], icon: "https://img.icons8.com/color/48/000000/design--v1.png" },
-    //     { title: "Networking Engineer", location: "Washington, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/networking-manager.png" },
-    //     { title: "Product Designer", location: "Ohio, USA", salary: "$50k–80k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/box.png" },
-    //     { title: "Junior Graphic Designer", location: "Natore, Bangladesh", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/adobe-illustrator.png" },
-    //     { title: "Software Engineer", location: "Montana, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Part Time"], icon: "https://img.icons8.com/color/48/000000/source-code.png" },
-    //     { title: "Front End Developer", location: "Sivas, Turkey", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Contract Base"], icon: "https://img.icons8.com/color/48/000000/code.png" },
-    //     { title: "Technical Support Specialist", location: "Chattogram, Bangladesh", salary: "$10k–15k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/technical-support.png" },
-    //     { title: "Visual Designer", location: "Konya, Turkey", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/adobe-photoshop.png" },
-    //     { title: "Marketing Officer", location: "Paris, USA", salary: "$30k–35k", days: "4 Days Remaining", badges: ["Temporary"], icon: "https://img.icons8.com/color/48/000000/marketing.png" },
-    //     { title: "Senior UX Designer", location: "Mymensingh, Bangladesh", salary: "$50k–90k/month", days: "4 Days Remaining", badges: ["Full Time"], icon: "https://img.icons8.com/color/48/000000/ux.png" }
-    // ];
 
     private jobs: Job[] = [];
     
         private filteredJobs: Job[] = [...this.jobs];
     
         constructor() {
-            this.init(); //Espera a que el documento esté cargado y carga tanto los datos de usuario como los trabajos
+            this.init();
         }
     
         private init(): void {
@@ -78,7 +64,6 @@ export class CandidateHomeController {
         }
 
         public renderJobs(): void {
-            console.log("Jobs", this.filteredJobs);
         const jobList = document.getElementById("jobList");
         if (!jobList) return;
 
@@ -89,7 +74,6 @@ export class CandidateHomeController {
 
         for (let i = 0; i < this.filteredJobs.length; i++) {
             const job = this.filteredJobs[i];
-            console.log("trabajo", job);
             if (!job) continue;
 
             let colorBadge = "grey";
@@ -149,6 +133,83 @@ export class CandidateHomeController {
             }
         }
     }
+
+    public filtrarPorBusqueda(): void {
+    const tituloBuscar = (
+      document.getElementById("tituloBuscar") as HTMLInputElement
+    ).value.toLowerCase();
+    const ubicacionBuscar = (
+      document.getElementById("ubicacionBuscar") as HTMLInputElement
+    ).value.toLowerCase();
+    const salarioBuscar = (
+      document.getElementById("salarioBuscar") as HTMLInputElement
+    ).value;
+
+    const expRadio = document.querySelector<HTMLInputElement>('input[name="exp"]:checked');
+    const experiencia = expRadio ? expRadio.nextSibling?.textContent?.trim() : null;
+    const salaryRadio = document.querySelector<HTMLInputElement>('input[name="salary"]:checked');
+    let salarioMin = 0;
+    let salarioMax = 0;
+
+    const tiposSeleccionados: string[] = [];
+    if ((document.getElementById("tipoBuscarTiempoCompleto") as HTMLInputElement)?.checked) {
+        tiposSeleccionados.push("Tiempo Completo");
+    }
+    if ((document.getElementById("tipoBuscarMedioTiempo") as HTMLInputElement)?.checked) {
+        tiposSeleccionados.push("Medio Tiempo");
+    }
+    if ((document.getElementById("tipoBuscarRemoto") as HTMLInputElement)?.checked) {
+        tiposSeleccionados.push("Remoto");
+    }
+
+    const nivelSeleccionados: string[] = [];
+    if ((document.getElementById("nivelJunior") as HTMLInputElement)?.checked) {
+        nivelSeleccionados.push("Junior");
+    }
+    if ((document.getElementById("nivelIntermedio") as HTMLInputElement)?.checked) {
+        nivelSeleccionados.push("Intermedio");
+    }
+    if ((document.getElementById("nivelSenior") as HTMLInputElement)?.checked) {
+        nivelSeleccionados.push("Senior");
+    }
+
+    console.log("Buscando por:", {
+      tituloBuscar,
+      ubicacionBuscar,
+      salarioBuscar
+    });
+
+    if (salaryRadio) {
+        // Extrae los números del texto "$2000 - $4000"
+        const match = salaryRadio.nextSibling?.textContent?.match(/\$?(\d+)\s*-\s*\$?(\d+)/);
+        if (match && match[1] && match[2]) {
+            salarioMin = parseInt(match[1], 10);
+            salarioMax = parseInt(match[2], 10);
+        }
+}
+
+    this.filteredJobs = this.jobs.filter((job) => {
+      const matchesTitulo = job.nombre_trabajo
+        .toLowerCase()
+        .includes(tituloBuscar);
+      const matchesUbicacion = job.ubicacion
+        .toLowerCase()
+        .includes(ubicacionBuscar);
+      const matchesSalario = salarioBuscar
+        ? job.salario_minimo <= parseInt(salarioBuscar) &&
+          job.salario_maximo >= parseInt(salarioBuscar)
+        : true;
+      const matchesTipo = tiposSeleccionados.length === 0 || tiposSeleccionados.includes(job.modalidad);
+      const matchesNivel = nivelSeleccionados.length === 0 || nivelSeleccionados.includes(job.nivel);
+      const matchesSalarioRango = salarioMin && salarioMax
+        ? job.salario_minimo <= salarioMin &&
+          job.salario_maximo >= salarioMax
+        : true;
+
+      return matchesTitulo && matchesUbicacion && matchesSalario && matchesTipo && matchesSalarioRango && matchesNivel;
+    });
+    this.renderJobs();
+  }
 }
 
 
