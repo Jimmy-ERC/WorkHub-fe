@@ -5,11 +5,14 @@ import { BlogService } from "@/services/blogService";
 import { ProfileCandidateService } from "@/services/profileCandidate.service";
 import { ProfileEnterpriseService } from "@/services/profileEnterprise.service";
 
+declare var bootstrap: any;
+
 export class BlogController {
   private blogs: Blog[] = [];
   private blogsOriginales: Blog[] = [];
   private categoriasFiltradas: Set<number> = new Set();
   private searchTerm: string = "";
+  private id_perfil: any = null;
 
   constructor() {
     this.init();
@@ -17,6 +20,10 @@ export class BlogController {
 
   private init(): void {
     const runAll = async () => {
+      const currentUser =
+        (await ProfileCandidateService.fetchCandidateProfile()) as ProfileResponse;
+      this.id_perfil = currentUser.data.id_perfil;
+
       await this.loadCategorias();
       await this.loadBlogs();
       this.renderBlogs();
@@ -96,7 +103,6 @@ export class BlogController {
   }
 
   private setupFilters(): void {
-    // Setup de búsqueda
     const searchInput = document.getElementById(
       "searchInput"
     ) as HTMLInputElement;
@@ -109,7 +115,6 @@ export class BlogController {
       });
     }
 
-    // Setup de checkboxes de categorías
     const checkboxes = document.querySelectorAll(
       'input[type="checkbox"][id^="categoria"]'
     );
@@ -132,7 +137,6 @@ export class BlogController {
   private applyFilters(): void {
     let filteredBlogs = [...this.blogsOriginales];
 
-    // Filtrar por búsqueda
     if (this.searchTerm) {
       filteredBlogs = filteredBlogs.filter(
         (blog) =>
@@ -141,7 +145,6 @@ export class BlogController {
       );
     }
 
-    // Filtrar por categorías
     if (this.categoriasFiltradas.size > 0) {
       filteredBlogs = filteredBlogs.filter((blog) =>
         this.categoriasFiltradas.has(blog.id_categoria)
@@ -159,7 +162,6 @@ export class BlogController {
       return;
     }
 
-    // Actualizar contador
     const blogsCountBadge = document.getElementById("blogs-count");
     if (blogsCountBadge) {
       blogsCountBadge.textContent = `${this.blogs.length} ${
@@ -169,7 +171,6 @@ export class BlogController {
 
     blogsContainer.innerHTML = "";
 
-    // Botón crear blog
     const crearBtn = document.createElement("button");
     crearBtn.className = "btn btn-primary mb-4";
     crearBtn.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Crear Blog';
@@ -189,6 +190,7 @@ export class BlogController {
 
     this.blogs.forEach((blog) => {
       const card = document.createElement("div");
+
       card.className = "card blog-card border-0 shadow-sm overflow-hidden";
       card.setAttribute("data-blog-id", blog.id_blog.toString());
 
@@ -226,17 +228,62 @@ export class BlogController {
         <h5 class="card-title fw-bold mb-3">${blog.titulo}</h5>
         <p class="card-text text-muted mb-3">${preview}</p>
         
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 align-items-center">
           <button class="btn btn-link text-primary text-decoration-none p-0 ver-detalle" data-id="${
             blog.id_blog
           }">
-            Read more <i class="bi bi-arrow-right ms-1"></i>
+            Leer más <i class="bi bi-arrow-right ms-1"></i>
           </button>
+
+          ${
+            this.id_perfil === blog.id_perfil
+              ? `
+      <button class="btn btn-sm btn-outline-warning ms-2 editar-blog" data-id="${blog.id_blog}">
+        <i class="bi bi-pencil"></i>
+      </button>
+      <button class="btn btn-sm btn-outline-danger eliminar-blog" data-id="${blog.id_blog}">
+        <i class="bi bi-trash"></i>
+      </button>
+    `
+              : ""
+          }
+
         </div>
+
       </div>
     </div>
   </div>
 `;
+      // Botón editar
+      const editarBtn = card.querySelector(".editar-blog") as HTMLElement;
+      if (editarBtn) {
+        editarBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          this.openOptionsModal(blog.id_blog);
+        });
+      }
+
+      // Botón eliminar
+      const eliminarBtn = card.querySelector(".eliminar-blog") as HTMLElement;
+      if (eliminarBtn) {
+        eliminarBtn.addEventListener("click", async (e) => {
+          e.stopPropagation();
+
+          const confirmar = confirm(
+            "¿Estás seguro de que deseas eliminar este blog?"
+          );
+          if (!confirmar) return;
+
+          const result = await BlogService.eliminarBlog(blog.id_blog);
+          if (result.success) {
+            alert("Blog eliminado correctamente");
+            await this.loadBlogs();
+            this.renderBlogs();
+          } else {
+            alert("Error al eliminar el blog");
+          }
+        });
+      }
 
       // Hacer toda la card clickeable
       card.style.cursor = "pointer";
@@ -279,8 +326,10 @@ export class BlogController {
       countElement.textContent = comentarios.length.toString();
     }
   }
-
-  private async renderCrearBlogForm(container: HTMLElement): Promise<void> {
+  private async renderCrearBlogForm(
+    container: HTMLElement,
+    blogToEdit?: Blog
+  ): Promise<void> {
     const card = document.createElement("div");
     card.className = "card mb-4 shadow-sm";
 
@@ -292,50 +341,64 @@ export class BlogController {
     const options = categorias
       .map(
         (c) =>
-          `<option value="${c.id_categoria}">${c.nombre_categoria}</option>`
+          `<option value="${c.id_categoria}" ${
+            blogToEdit?.id_categoria === c.id_categoria ? "selected" : ""
+          }>${c.nombre_categoria}</option>`
       )
       .join("");
 
     card.innerHTML = `
-      <div class="card-body">
-        <h5 class="card-title mb-3">
-          <i class="bi bi-pencil-square me-2"></i>Crear Nuevo Blog
-        </h5>
-        <form class="crear-blog-form">
-          <div class="mb-3">
-            <label class="form-label">Título</label>
-            <input type="text" class="form-control" placeholder="Título del blog" required />
+    <div class="card-body">
+      <h5 class="card-title mb-3">
+        <i class="bi bi-pencil-square me-2"></i>${
+          blogToEdit ? "Editar Blog" : "Crear Nuevo Blog"
+        }
+      </h5>
+      <form class="crear-blog-form">
+        <div class="mb-3">
+          <label class="form-label">Título</label>
+          <input type="text" class="form-control" placeholder="Título del blog" required
+                 value="${blogToEdit?.titulo || ""}" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Contenido</label>
+          <textarea class="form-control" placeholder="Escribe el contenido de tu blog..." rows="5" required>${
+            blogToEdit?.contenido || ""
+          }</textarea>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Categoría</label>
+            <select class="form-select" required>
+              <option value="" disabled ${
+                blogToEdit ? "" : "selected"
+              }>Selecciona una categoría</option>
+              ${options}
+            </select>
           </div>
-          <div class="mb-3">
-            <label class="form-label">Contenido</label>
-            <textarea class="form-control" placeholder="Escribe el contenido de tu blog..." rows="5" required></textarea>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">URL de imagen miniatura</label>
+            <input type="url" class="form-control link-miniatura" placeholder="https://ejemplo.com/imagen.jpg" value="${
+              blogToEdit?.link_miniatura || ""
+            }" />
+            <small class="text-muted">Opcional - Deja vacío para usar imagen por defecto</small>
           </div>
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Categoría</label>
-              <select class="form-select" required>
-                <option value="" disabled selected>Selecciona una categoría</option>
-                ${options}
-              </select>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">URL de imagen miniatura</label>
-              <input type="url" class="form-control link-miniatura" placeholder="https://ejemplo.com/imagen.jpg" />
-              <small class="text-muted">Opcional - Deja vacío para usar imagen por defecto</small>
-            </div>
-          </div>
-          <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-success">
-              <i class="bi bi-check-circle me-2"></i>Publicar Blog
-            </button>
-            <button type="button" class="btn btn-secondary cancelar">Cancelar</button>
-          </div>
-        </form>
-        <div class="blog-msg mt-3"></div>
-      </div>
-    `;
+        </div>
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-success">
+            <i class="bi ${
+              blogToEdit ? "bi-pencil-square" : "bi-check-circle"
+            } me-2"></i>${blogToEdit ? "Actualizar Blog" : "Publicar Blog"}
+          </button>
+          <button type="button" class="btn btn-secondary cancelar">Cancelar</button>
+        </div>
+      </form>
+      <div class="blog-msg mt-3"></div>
+    </div>
+  `;
 
-    container.prepend(card);
+    container.innerHTML = "";
+    container.appendChild(card);
 
     const form = card.querySelector(".crear-blog-form") as HTMLFormElement;
     const msg = card.querySelector(".blog-msg") as HTMLElement;
@@ -365,8 +428,6 @@ export class BlogController {
         ).value.trim() ||
         "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&h=600&fit=crop";
 
-      if (!titulo || !contenido || !categoriaId) return;
-
       let id_perfil: number | undefined;
       const profileRes =
         (await ProfileEnterpriseService.fetchEnterpriseProfile()) as ProfileResponse;
@@ -381,30 +442,45 @@ export class BlogController {
 
       if (!id_perfil) {
         msg.innerHTML =
-          '<div class="alert alert-danger"><i class="bi bi-exclamation-triangle me-2"></i>Debes crear un perfil antes de publicar un blog.</div>';
+          '<div class="alert alert-danger">Debes crear un perfil antes de publicar un blog.</div>';
         return;
       }
 
       const fecha = new Date();
-      const result = await BlogService.crearBlog(
-        id_perfil,
-        categoriaId,
-        linkMiniatura,
-        titulo,
-        contenido,
-        fecha
-      );
+
+      let result;
+      if (blogToEdit) {
+        result = await BlogService.actualizarBlog(blogToEdit.id_blog, {
+          id_categoria: categoriaId,
+          id_perfil: id_perfil,
+          link_miniatura: linkMiniatura,
+          titulo: titulo,
+          contenido: contenido,
+          fecha: fecha,
+        });
+      } else {
+        result = await BlogService.crearBlog(
+          id_perfil,
+          categoriaId,
+          linkMiniatura,
+          titulo,
+          contenido,
+          fecha
+        );
+      }
 
       if (result.success) {
-        msg.innerHTML =
-          '<div class="alert alert-success"><i class="bi bi-check-circle me-2"></i>Blog creado correctamente</div>';
+        msg.innerHTML = `<div class="alert alert-success">${
+          blogToEdit ? "Blog actualizado" : "Blog creado"
+        } correctamente</div>`;
         form.reset();
         setTimeout(() => card.remove(), 2000);
         await this.loadBlogs();
         this.renderBlogs();
       } else {
-        msg.innerHTML =
-          '<div class="alert alert-danger"><i class="bi bi-x-circle me-2"></i>Error al crear el blog</div>';
+        msg.innerHTML = `<div class="alert alert-danger">Error al ${
+          blogToEdit ? "actualizar" : "crear"
+        } el blog</div>`;
       }
     });
   }
@@ -478,8 +554,25 @@ export class BlogController {
 
     toggleBtn.innerHTML = `<i class="bi bi-chevron-up"></i> Ocultar comentarios (${comentarios.length})`;
 
-    // Mostrar formulario de comentar
     this.renderComentarForm(id_blog, card, comentarContainer);
+  }
+
+  private async openOptionsModal(blogId: number): Promise<void> {
+    const modalElement = document.getElementById("blogOptionsModal");
+    if (!modalElement) return;
+
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+
+    const modalBody = document.getElementById("blogModalBody");
+    const modalTitle = document.getElementById("blogModalTitle");
+
+    const blog = this.blogs.find((b) => b.id_blog === blogId);
+    if (!blog || !modalBody || !modalTitle) return;
+
+    modalTitle.textContent = "Editar Blog";
+
+    await this.renderCrearBlogForm(modalBody, blog);
   }
 
   private renderComentarForm(
@@ -513,28 +606,10 @@ export class BlogController {
       const contenido = textarea.value.trim();
       if (!contenido) return;
 
-      let id_perfil: number | undefined;
-      const profileRes =
-        (await ProfileEnterpriseService.fetchEnterpriseProfile()) as ProfileResponse;
-      if (profileRes.success && profileRes.data?.id_perfil)
-        id_perfil = profileRes.data.id_perfil;
-      else {
-        const candidateRes =
-          (await ProfileCandidateService.fetchCandidateProfile()) as ProfileResponse;
-        if (candidateRes.success && candidateRes.data?.id_perfil)
-          id_perfil = candidateRes.data.id_perfil;
-      }
-
-      if (!id_perfil) {
-        msg.innerHTML =
-          '<small class="text-danger">Debes crear un perfil antes de comentar.</small>';
-        return;
-      }
-
       const fecha = new Date();
       const result = await BlogService.crearComentario(
         id_blog,
-        id_perfil,
+        this.id_perfil,
         contenido,
         fecha
       );
