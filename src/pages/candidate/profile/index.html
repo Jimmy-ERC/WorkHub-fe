@@ -85,62 +85,38 @@
             >
           </form>
 
-          <!-- Menú -->
-          <ul class="navbar-nav mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Candidatos</a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
-            <!-- Estos dos estaban comentados en home.html; se mantienen igual -->
-            <!-- <li class="nav-item"><a class="nav-link" href="#">Recursos</a></li>
+                <!-- Menú -->
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/src/pages/candidate/home.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Candidatos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
+                    <!-- Estos dos estaban comentados en home.html; se mantienen igual -->
+                    <!-- <li class="nav-item"><a class="nav-link" href="#">Recursos</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Foros</a></li> -->
           </ul>
 
-          <!-- Usuario -->
-          <div class="dropdown ms-3">
-            <a
-              href="#"
-              class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="/src/assets/img/avatar.jpg"
-                id="profilePic"
-                alt="Avatar de usuario"
-                class="rounded-circle me-2"
-                width="35"
-                height="35"
-              />
-              <span id="userNameDisplay">username</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li>
-                <a class="dropdown-item" href="#" data-route="profile"
-                  >Ver perfil</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" data-route="settings"
-                  >Configuración</a
-                >
-              </li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li>
-                <a
-                  class="dropdown-item text-danger"
-                  href="#"
-                  data-action="logout"
-                  >Cerrar sesión</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+                <!-- Usuario -->
+                <div class="dropdown ms-3">
+                    <a href="/src/pages/candidate/home.html"
+                        class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/src/assets/img/avatar.jpg" id="profilePic" alt="Avatar de usuario"
+                            class="rounded-circle me-2" width="35" height="35">
+                        <span id="userNameDisplay">username</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="/src/pages/candidate/profile/index.html"
+                                data-route="profile">Ver perfil</a></li>
+                        <li><a class="dropdown-item" href="/src/pages/candidate/profile/settings.html"
+                                data-route="settings">Configuración</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item text-danger" href="#" data-action="logout">Cerrar sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <!-- ===================== Layout principal ===================== -->
@@ -155,168 +131,131 @@
             <small class="text-muted fw-medium">Panel de candidato</small>
           </div>
 
-          <nav class="nav flex-column gap-1 px-2">
-            <a
-              class="nav-link d-flex align-items-center rounded-2 px-3 py-2 active bg-body-tertiary"
-              href="#"
-              data-route="dashboard"
-              aria-current="page"
-            >
-              <i class="bi bi-grid-1x2 me-2"></i> General
-            </a>
-            <a
-              class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
-              href="#"
-              data-route="applied"
-            >
-              <i class="bi bi-briefcase me-2"></i> Trabajos aplicados
-            </a>
-            <a
-              class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
-              href="#"
-              data-route="favorites"
-            >
-              <i class="bi bi-bookmark me-2"></i> Trabajos favoritos
-            </a>
-            <a
-              class="nav-link d-flex align-items-center justify-content-between rounded-2 px-3 py-2"
-              href="#"
-              data-route="alerts"
-            >
-              <span><i class="bi bi-bell me-2"></i> Alertas de trabajo</span>
-              <span
-                class="badge text-bg-primary-subtle border border-primary-subtle"
-                >09</span
-              >
-            </a>
-            <a
-              class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
-              href="/src/pages/candidate/profile/settings.html"
-              data-route="settings"
-            >
-              <i class="bi bi-gear me-2"></i> Ajustes
-            </a>
+                <nav class="nav flex-column gap-1 px-2">
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2 active bg-body-tertiary" href="#"
+                        data-route="dashboard" aria-current="page">
+                        <i class="bi bi-grid-1x2 me-2"></i> General
+                    </a>
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/trabajos_aplicados.html" data-route="applied">
+                        <i class="bi bi-briefcase me-2"></i> Trabajos aplicados
+                    </a>
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/trabajos_favoritos.html" data-route="favorites">
+                        <i class="bi bi-bookmark me-2"></i> Trabajos favoritos
+                    </a>
+                    <a class="nav-link d-flex align-items-center justify-content-between rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/alertas-trabajo.html" data-route="alerts">
+                        <span><i class="bi bi-bell me-2"></i> Alertas de trabajo</span>
+                        <span class="badge text-bg-primary border border-primary" id="jobAlertsCount">00</span>
+                    </a>
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/settings.html" data-route="settings">
+                        <i class="bi bi-gear me-2"></i> Ajustes
+                    </a>
 
-            <div class="mt-4 px-3">
-              <a
-                href="#"
-                class="text-decoration-none small d-inline-flex align-items-center gap-2 text-muted"
-              >
-                <i class="bi bi-box-arrow-left"></i> <span>Salir</span>
-              </a>
-            </div>
-          </nav>
-        </aside>
+                </nav>
+            </aside>
 
-        <!-- ===== Contenido ===== -->
-        <section class="col-12 col-md-9 col-lg-10 p-4">
-          <!-- Encabezado -->
-          <header class="mb-3">
-            <h5 class="mb-1">Hola, John Doe</h5>
-            <p class="text-muted mb-0">
-              Tus actividades diarias y alertas de trabajo
-            </p>
-          </header>
+            <!-- ===== Contenido ===== -->
+            <section class="col-12 col-md-9 col-lg-10 p-4">
+                <!-- Encabezado -->
+                <header class="mb-3">
+                    <h5 class="mb-1" id="userGreeting">Hola, John Doe</h5>
+                    <p class="text-muted mb-0">Tus actividades diarias y alertas de trabajo</p>
+                </header>
 
-          <!-- Tarjetas de métricas -->
-          <div class="row g-3 mb-4">
-            <!-- Card 1 -->
-            <article class="col-12 col-lg-4">
-              <div
-                class="stat-card d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border"
-              >
-                <div>
-                  <div class="fs-2 fw-semibold">589</div>
-                  <div class="text-muted">Trabajos aplicados</div>
-                </div>
-                <div
-                  class="icon-box d-inline-flex align-items-center justify-content-center rounded-3"
-                >
-                  <i class="bi bi-briefcase fs-4" aria-hidden="true"></i>
-                  <span class="visually-hidden">Trabajos aplicados</span>
-                </div>
-              </div>
-            </article>
+                <!-- Tarjetas de métricas -->
+                <div class="row g-3 mb-4">
+                    <!-- Card 1 -->
+                    <article class="col-12 col-lg-4">
+                        <a href="/src/pages/candidate/profile/trabajos_aplicados.html" class="text-decoration-none"
+                            data-action="see-all-applied">
+                            <div
+                                class="stat-card d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border">
+                                <div>
+                                    <div class="fs-2 fw-semibold" id="statsAppliedCount">0</div>
+                                    <div class="text-muted">Trabajos aplicados</div>
+                                </div>
+                                <div class="icon-box d-inline-flex align-items-center justify-content-center rounded-3">
+                                    <i class="bi bi-briefcase fs-4" aria-hidden="true"></i>
+                                    <span class="visually-hidden">Trabajos aplicados</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
 
-            <!-- Card 2 -->
-            <article class="col-12 col-lg-4">
-              <div
-                class="stat-card d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border"
-              >
-                <div>
-                  <div class="fs-2 fw-semibold">238</div>
-                  <div class="text-muted">Trabajos favoritos</div>
-                </div>
-                <div
-                  class="icon-box d-inline-flex align-items-center justify-content-center rounded-3 bg-info-subtle"
-                >
-                  <i class="bi bi-bookmark fs-4" aria-hidden="true"></i>
-                  <span class="visually-hidden">Trabajos favoritos</span>
-                </div>
-              </div>
-            </article>
+                    <!-- Card 2 -->
+                    <article class="col-12 col-lg-4">
+                        <a href="/src/pages/candidate/profile/trabajos_favoritos.html" class="text-decoration-none"
+                            data-action="see-all-favorites">
 
-            <!-- Card 3 -->
-            <article class="col-12 col-lg-4">
-              <div
-                class="stat-card d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border"
-              >
-                <div>
-                  <div class="fs-2 fw-semibold">574</div>
-                  <div class="text-muted">Alertas de trabajo</div>
-                </div>
-                <div
-                  class="icon-box d-inline-flex align-items-center justify-content-center rounded-3 bg-primary-subtle"
-                >
-                  <i class="bi bi-bell fs-4" aria-hidden="true"></i>
-                  <span class="visually-hidden">Alertas de trabajo</span>
+                            <div
+                                class="stat-card d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border">
+                                <div>
+                                    <div class="fs-2 fw-semibold" id="statsFavoritesCount">0</div>
+                                    <div class="text-muted">Trabajos favoritos</div>
+                                </div>
+                                <div
+                                    class="icon-box d-inline-flex align-items-center justify-content-center rounded-3 bg-info-subtle">
+                                    <i class="bi bi-bookmark fs-4" aria-hidden="true"></i>
+                                    <span class="visually-hidden">Trabajos favoritos</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                    <!-- Card 3 -->
+                    <article class="col-12 col-lg-4">
+                        <a href="/src/pages/candidate/profile/alertas-trabajo.html" class="text-decoration-none"
+                            data-action="see-all-alerts">
+
+                            <div
+                                class="stat-card d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border">
+                                <div>
+                                    <div class="fs-2 fw-semibold" id="statsAlertsCount">0</div>
+                                    <div class="text-muted">Alertas de trabajo</div>
+                                </div>
+                                <div
+                                    class="icon-box d-inline-flex align-items-center justify-content-center rounded-3 bg-primary-subtle">
+                                    <i class="bi bi-bell fs-4" aria-hidden="true"></i>
+                                    <span class="visually-hidden">Alertas de trabajo</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
                 </div>
               </div>
             </article>
           </div>
 
-          <!-- Banner perfil incompleto -->
-          <section
-            class="profile-banner rounded-3 p-3 p-md-4 mb-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3"
-          >
-            <div class="d-flex align-items-center gap-3">
-              <img
-                src="../../../assets//img/avatar.jpg"
-                alt="Avatar de John Doe"
-                class="rounded-circle border bg-white"
-                width="56"
-                height="56"
-              />
-              <div class="text-white">
-                <div class="fw-semibold">Tu perfil no está completado</div>
-                <small class="opacity-75"
-                  >Completa tu perfil y crea tu CV personalizado</small
-                >
-              </div>
-            </div>
-            <div class="text-md-end">
-              <button
-                class="btn btn-light"
-                type="button"
-                data-action="open-profile"
-              >
-                Editar perfil <i class="bi bi-arrow-right-short"></i>
-              </button>
-            </div>
-          </section>
+                <!-- Banner perfil incompleto -->
+                <!-- <section
+                    class="profile-banner rounded-3 p-3 p-md-4 mb-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="../../../assets//img/avatar.jpg" alt="Avatar de John Doe"
+                            class="rounded-circle border bg-white" width="56" height="56">
+                        <div class="text-white">
+                            <div class="fw-semibold">Tu perfil no está completado</div>
+                            <small class="opacity-75">Completa tu perfil y crea tu CV personalizado</small>
+                        </div>
+                    </div>
+                    <div class="text-md-end">
+                        <button class="btn btn-light" type="button" data-action="open-profile">Editar perfil <i
+                                class="bi bi-arrow-right-short"></i></button>
+                    </div>
+                </section> -->
 
-          <!-- Lista de aplicados recientemente -->
-          <section aria-labelledby="aplicados-title">
-            <div class="d-flex align-items-center justify-content-between mb-2">
-              <h6 id="aplicados-title" class="mb-0">Aplicados recientemente</h6>
-              <a
-                href="#"
-                class="link-primary small d-inline-flex align-items-center gap-1"
-                data-action="see-all-applied"
-              >
-                Ver todo <i class="bi bi-arrow-right"></i>
-              </a>
-            </div>
+                <!-- Lista de aplicados recientemente -->
+                <section aria-labelledby="aplicados-title">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <h6 id="aplicados-title" class="mb-0">Aplicados recientemente</h6>
+                        <a href="/src/pages/candidate/profile/trabajos_aplicados.html"
+                            class="link-primary small d-inline-flex align-items-center gap-1"
+                            data-action="see-all-applied">
+                            Ver todo <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
 
             <!-- Head -->
             <div
@@ -328,213 +267,8 @@
               <div class="col-2 text-end">Acción</div>
             </div>
 
-            <div class="list-group list-group-flush">
-              <!-- Row 1 -->
-              <article class="list-group-item px-2 py-3">
-                <div class="row g-2 align-items-center">
-                  <div class="col-lg-6 d-flex align-items-center gap-3">
-                    <img
-                      src="./assets/img/logo-up.png"
-                      class="rounded-3 border img-fluid"
-                      alt="Logo empresa Up"
-                      width="42"
-                      height="42"
-                    />
-                    <div>
-                      <div class="d-flex flex-wrap align-items-center gap-2">
-                        <a
-                          href="#"
-                          class="link-dark fw-medium text-decoration-none"
-                          >Networking Engineer</a
-                        >
-                        <span
-                          class="badge rounded-pill bg-body-tertiary border text-secondary"
-                          data-filter-tag="remote"
-                          >Remote</span
-                        >
-                      </div>
-                      <div
-                        class="text-muted small d-flex flex-wrap align-items-center gap-3"
-                      >
-                        <span
-                          ><i class="bi bi-geo-alt me-1"></i>Washington</span
-                        >
-                        <span
-                          ><i class="bi bi-cash-coin me-1"></i
-                          >$50k–80k/month</span
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-6 col-lg-2 text-lg-start text-muted small">
-                    Feb 2, 2019 19:28
-                  </div>
-                  <div class="col-6 col-lg-2">
-                    <span
-                      class="text-success d-inline-flex align-items-center gap-1"
-                      ><i class="bi bi-check2-circle"></i> Activo</span
-                    >
-                  </div>
-                  <div class="col-12 col-lg-2 text-lg-end">
-                    <button
-                      class="btn btn-outline-primary btn-sm"
-                      type="button"
-                      data-action="open-job"
-                      data-job-id="1"
-                    >
-                      Ver Detalles
-                    </button>
-                  </div>
-                </div>
-              </article>
+                    <div class="list-group list-group-flush">
 
-              <!-- Row 2 -->
-              <article class="list-group-item px-2 py-3">
-                <div class="row g-2 align-items-center">
-                  <div class="col-lg-6 d-flex align-items-center gap-3">
-                    <img
-                      src="./assets/img/logo-pink.png"
-                      class="rounded-3 border img-fluid"
-                      alt="Logo empresa (rosa)"
-                      width="42"
-                      height="42"
-                    />
-                    <div>
-                      <div class="d-flex flex-wrap align-items-center gap-2">
-                        <a
-                          href="#"
-                          class="link-dark fw-medium text-decoration-none"
-                          >Product Designer</a
-                        >
-                        <span
-                          class="badge rounded-pill bg-primary-subtle border border-primary-subtle text-primary"
-                          data-filter-tag="full-time"
-                          >Full Time</span
-                        >
-                      </div>
-                      <div
-                        class="text-muted small d-flex flex-wrap align-items-center gap-3"
-                      >
-                        <span><i class="bi bi-geo-alt me-1"></i>Dhaka</span>
-                        <span
-                          ><i class="bi bi-cash-coin me-1"></i
-                          >$50k–80k/month</span
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-6 col-lg-2 text-lg-start text-muted small">
-                    Dec 7, 2019 23:26
-                  </div>
-                  <div class="col-6 col-lg-2">
-                    <span
-                      class="text-success d-inline-flex align-items-center gap-1"
-                      ><i class="bi bi-check2-circle"></i> Activo</span
-                    >
-                  </div>
-                  <div class="col-12 col-lg-2 text-lg-end">
-                    <button
-                      class="btn btn-outline-primary btn-sm"
-                      type="button"
-                      data-action="open-job"
-                      data-job-id="2"
-                    >
-                      Ver Detalles
-                    </button>
-                  </div>
-                </div>
-              </article>
-
-              <!-- Row 3 -->
-              <article class="list-group-item px-2 py-3">
-                <div class="row g-2 align-items-center">
-                  <div class="col-lg-6 d-flex align-items-center gap-3">
-                    <img
-                      src="./assets/img/logo-apple.png"
-                      class="rounded-3 border img-fluid"
-                      alt="Logo empresa Apple"
-                      width="42"
-                      height="42"
-                    />
-                    <div>
-                      <div class="d-flex flex-wrap align-items-center gap-2">
-                        <a
-                          href="#"
-                          class="link-dark fw-medium text-decoration-none"
-                          >Junior Graphic Designer</a
-                        >
-                        <span
-                          class="badge rounded-pill bg-body-tertiary border text-secondary"
-                          data-filter-tag="temporary"
-                          >Temporary</span
-                        >
-                      </div>
-                      <div
-                        class="text-muted small d-flex flex-wrap align-items-center gap-3"
-                      >
-                        <span><i class="bi bi-geo-alt me-1"></i>Brazil</span>
-                        <span
-                          ><i class="bi bi-cash-coin me-1"></i
-                          >$50k–80k/month</span
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-6 col-lg-2 text-lg-start text-muted small">
-                    Feb 2, 2019 19:28
-                  </div>
-                  <div class="col-6 col-lg-2">
-                    <span
-                      class="text-success d-inline-flex align-items-center gap-1"
-                      ><i class="bi bi-check2-circle"></i> Activo</span
-                    >
-                  </div>
-                  <div class="col-12 col-lg-2 text-lg-end">
-                    <button
-                      class="btn btn-outline-primary btn-sm"
-                      type="button"
-                      data-action="open-job"
-                      data-job-id="3"
-                    >
-                      Ver Detalles
-                    </button>
-                  </div>
-                </div>
-              </article>
-
-              <!-- Row 4 (seleccionado estilo focus) -->
-              <article class="list-group-item px-2 py-3">
-                <div class="row g-2 align-items-center">
-                  <div class="col-lg-6 d-flex align-items-center gap-3">
-                    <img
-                      src="./assets/img/logo-ms.png"
-                      class="rounded-3 border img-fluid"
-                      alt="Logo empresa Microsoft"
-                      width="42"
-                      height="42"
-                    />
-                    <div>
-                      <div class="d-flex flex-wrap align-items-center gap-2">
-                        <a
-                          href="#"
-                          class="link-dark fw-medium text-decoration-none"
-                          >Visual Designer</a
-                        >
-                        <span
-                          class="badge rounded-pill bg-body-tertiary border text-secondary"
-                          data-filter-tag="contract"
-                          >Contract Base</span
-                        >
-                      </div>
-                      <div
-                        class="text-muted small d-flex flex-wrap align-items-center gap-3"
-                      >
-                        <span><i class="bi bi-geo-alt me-1"></i>Wisconsin</span>
-                        <span
-                          ><i class="bi bi-cash-coin me-1"></i
-                          >$50k–80k/month</span
-                        >
-                      </div>
                     </div>
                   </div>
                   <div class="col-6 col-lg-2 text-lg-start text-muted small">
@@ -576,10 +310,8 @@
     <!-- Route Protection Script (must load before other scripts) -->
     <script type="module" src="/src/controllers/routeProtection.ts"></script>
 
-    <script
-      type="module"
-      src="/src/controllers/candidate/perfilController.ts"
-    ></script>
+    <!-- Candidate Profile General Controller (for dashboard data) -->
+    <script type="module" src="/src/controllers/candidate/perfilGeneralController.ts"></script>
 
     <!-- Load user data for navbar -->
     <script type="module">

@@ -40,107 +40,55 @@
   >
     <!-- ===================== Header / Navbar (misma navbar de home.html) ===================== -->
     <header class="border-bottom bg-white">
-      <nav
-        class="navbar navbar-expand-lg navbar-light bg-white shadow-sm"
-        data-component="Navbar"
-      >
-        <div class="container-fluid px-4">
-          <a
-            class="navbar-brand d-flex align-items-center"
-            href="#"
-            aria-label="Workhub inicio"
-          >
-            <img
-              src="/src/assets/img/logo.png"
-              alt="Workhub"
-              style="height: 30px"
-              class="mx-2 img-fluid"
-            />
-          </a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" data-component="Navbar">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand d-flex align-items-center" href="#" aria-label="Workhub inicio">
+                    <img src="/src/assets/img/logo.png" alt="Workhub" style="height:30px" class="mx-2 img-fluid">
+                </a>
 
-          <!-- Buscador -->
-          <form
-            id="globalSearchForm"
-            class="d-none d-lg-flex mx-2 flex-grow-1 align-items-start"
-            style="max-width: 520px"
-            role="search"
-            aria-label="Buscar trabajos"
-            data-action="search"
-          >
-            <label for="q" class="visually-hidden"
-              >Título, palabra clave o compañía</label
-            >
-            <input
-              id="q"
-              class="form-control me-2"
-              type="search"
-              placeholder="Título, palabra clave o compañía"
-              aria-describedby="searchHelp"
-            />
-            <button class="btn btn-primary" type="button" aria-label="Buscar">
-              Encontrar
-            </button>
-            <small id="searchHelp" class="visually-hidden"
-              >Escribe una palabra clave para buscar ofertas.</small
-            >
-          </form>
+                <!-- Buscador -->
+                <form id="globalSearchForm" class="d-none d-lg-flex mx-2 flex-grow-1 align-items-start"
+                    style="max-width: 520px;" role="search" aria-label="Buscar trabajos" data-action="search">
+                    <label for="q" class="visually-hidden">Título, palabra clave o compañía</label>
+                    <input id="q" class="form-control me-2" type="search" placeholder="Título, palabra clave o compañía"
+                        aria-describedby="searchHelp">
+                    <button class="btn btn-primary" type="button" aria-label="Buscar">Encontrar</button>
+                    <small id="searchHelp" class="visually-hidden">Escribe una palabra clave para buscar
+                        ofertas.</small>
+                </form>
 
-          <!-- Menú -->
-          <ul class="navbar-nav mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Candidatos</a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
-            <!-- Estos dos estaban comentados en home.html; se mantienen igual -->
-            <!-- <li class="nav-item"><a class="nav-link" href="#">Recursos</a></li>
+                <!-- Menú -->
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/src/pages/candidate/home.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Candidatos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
+                    <!-- Estos dos estaban comentados en home.html; se mantienen igual -->
+                    <!-- <li class="nav-item"><a class="nav-link" href="#">Recursos</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Foros</a></li> -->
-          </ul>
+                </ul>
 
-          <!-- Usuario -->
-          <div class="dropdown ms-3">
-            <a
-              href="#"
-              class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="/src/assets/img/avatar.jpg"
-                id="profilePic"
-                alt="Avatar de usuario"
-                class="rounded-circle me-2"
-                width="35"
-                height="35"
-              />
-              <span id="userNameDisplay">username</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li>
-                <a class="dropdown-item" href="#" data-route="profile"
-                  >Ver perfil</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" data-route="settings"
-                  >Configuración</a
-                >
-              </li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li>
-                <a
-                  class="dropdown-item text-danger"
-                  href="#"
-                  data-action="logout"
-                  >Cerrar sesión</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+                <!-- Usuario -->
+                <div class="dropdown ms-3">
+                    <a href="/src/pages/candidate/home.html"
+                        class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/src/assets/img/avatar.jpg" id="profilePic" alt="Avatar de usuario"
+                            class="rounded-circle me-2" width="35" height="35">
+                        <span id="userNameDisplay">username</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="/src/pages/candidate/profile/index.html"
+                                data-route="profile">Ver perfil</a></li>
+                        <li><a class="dropdown-item" href="/src/pages/candidate/profile/settings.html"
+                                data-route="settings">Configuración</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item text-danger" href="#" data-action="logout">Cerrar sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <!-- ===================== Layout principal ===================== -->
@@ -249,7 +197,31 @@
                   Una imagen mayor a 400px funciona mejor. Tamaño máx.
                   5&nbsp;MB.
                 </div>
-              </label>
+
+                <nav class="nav flex-column gap-1 px-2">
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/index.html" data-route="dashboard">
+                        <i class="bi bi-grid-1x2 me-2"></i> General
+                    </a>
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/trabajos_aplicados.html" data-route="applied">
+                        <i class="bi bi-briefcase me-2"></i> Trabajos aplicados
+                    </a>
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/trabajos_favoritos.html" data-route="favorites">
+                        <i class="bi bi-bookmark me-2"></i> Trabajos favoritos
+                    </a>
+                    <a class="nav-link d-flex align-items-center justify-content-between rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/alertas-trabajo.html" data-route="alerts">
+                        <span><i class="bi bi-bell me-2"></i> Alertas de trabajo</span>
+                        <span class="badge text-bg-primary border border-primary" id="jobAlertsCount">00</span>
+                    </a>
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2 active bg-body-tertiary"
+                        href="/src/pages/candidate/profile/settings.html" data-route="settings" aria-current="page">
+                        <i class="bi bi-gear me-2"></i> Ajustes
+                    </a>
+
+                </nav>
             </aside>
 
             <!-- Columna derecha: Form -->
