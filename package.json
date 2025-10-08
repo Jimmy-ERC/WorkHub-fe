@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc -p tsconfig.app.json --noEmit",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
