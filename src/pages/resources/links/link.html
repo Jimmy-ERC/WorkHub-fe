@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Workhub - Blogs</title>
+    <title>Workhub - Recursos</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -21,24 +21,39 @@
     />
     <link rel="stylesheet" href="../../../assets/css/font.css" />
     <style>
-      .blog-card {
+      .resource-card {
         transition: transform 0.2s, box-shadow 0.2s;
         cursor: pointer;
+        height: 100%;
       }
-      .blog-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+      .resource-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
       }
-      .blog-image {
+      .resource-image {
         height: 200px;
         object-fit: cover;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       }
-      .category-checkbox {
-        cursor: pointer;
-        transition: background-color 0.2s;
+      .favicon-icon {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
       }
-      .category-checkbox:hover {
-        background-color: #f8f9fa;
+      .category-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1;
+      }
+      .card-body {
+        display: flex;
+        flex-direction: column;
+      }
+      .card-footer {
+        margin-top: auto;
+        background: transparent;
+        border-top: 1px solid rgba(0,0,0,.125);
       }
     </style>
   </head>
@@ -121,13 +136,12 @@
       <aside
         class="border-end bg-white p-3"
         style="width: 280px; flex-shrink: 0; overflow-y: auto"
-        data-component="BlogFilters"
       >
         <div class="px-2">
           <!-- Búsqueda -->
           <div class="mb-4">
             <h6 class="fw-bold mb-3">
-              <i class="bi bi-search me-2"></i>Search
+              <i class="bi bi-search me-2"></i>Buscar
             </h6>
             <div class="input-group input-group-sm">
               <span class="input-group-text bg-white border-end-0">
@@ -136,7 +150,7 @@
               <input
                 type="text"
                 class="form-control border-start-0"
-                placeholder="Buscar blogs..."
+                placeholder="Buscar recursos..."
                 id="searchInput"
               />
             </div>
@@ -145,7 +159,7 @@
           <!-- Categorías -->
           <div>
             <h6 class="fw-bold mb-3">
-              <i class="bi bi-tags me-2"></i>Category
+              <i class="bi bi-tags me-2"></i>Categorías
             </h6>
             <div id="categorias-container" class="d-flex flex-column gap-2">
               <div class="text-center text-muted small py-3">
@@ -160,51 +174,31 @@
         </div>
       </aside>
 
-      <!-- ===== Sección Principal de Blogs ===== -->
+      <!-- ===== Sección Principal de Recursos ===== -->
       <section class="flex-grow-1 p-4 overflow-auto">
         <div class="d-flex justify-content-between align-items-center mb-4">
-          <h4 class="mb-0">Blogs</h4>
-          <span class="badge bg-secondary" id="blogs-count">0 blogs</span>
+          <h4 class="mb-0">Recursos Externos</h4>
+          <span class="badge bg-secondary" id="resources-count">0 recursos</span>
         </div>
 
-        <div id="lista-foros" class="d-flex flex-column gap-4">
+        <div id="lista-recursos">
           <div class="text-center text-muted py-5">
             <div class="spinner-border mb-3" role="status"></div>
-            <p>Cargando blogs...</p>
+            <p>Cargando recursos...</p>
           </div>
         </div>
       </section>
     </main>
 
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js
+"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
     <script
       type="module"
-      src="/src/controllers/blog/blogController.ts"
+      src="/src/controllers/link/linkController.ts"
     ></script>
-    <div
-      class="modal fade"
-      id="blogOptionsModal"
-      tabindex="-1"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="blogModalTitle">Opciones del Blog</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Cerrar"
-            ></button>
-          </div>
-          <div class="modal-body" id="blogModalBody"></div>
-        </div>
-      </div>
-    </div>
   </body>
 </html>
