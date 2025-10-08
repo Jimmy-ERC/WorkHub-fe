@@ -1,7 +1,11 @@
 import type { Job } from "@/interfaces/job.interface.js";
 import { loadUserData } from "../../lib/userDataLoader.js";
 import { JobsService } from "@/services/jobsService.js";
+import { ApplicationService } from "@/services/application.service.js";
 
+import { CurriculumService } from "@/services/curriculumService.js";
+
+import { ProfileCandidateService } from "@/services/profileCandidate.service.js";
 
 export class ViewJobController {
 
@@ -252,7 +256,7 @@ export class ViewJobController {
                 <p>${job.aplicar_por}</p>
             </section>` : ''}
 
-            <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#applyModal">
+            <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#applyModal" onclick="viewJobController.loadCandidateCVs()">
                 <i class="bi bi-send me-2"></i>Aplicar Ahora
             </button>`;
 
@@ -382,6 +386,81 @@ export class ViewJobController {
                 <p class="small text-muted mb-0">${job.categoria.descripcion}</p>
             </div>
             ` : ''}`;
+    }
+
+    public async loadCandidateCVs() {
+        const userProfile = await ProfileCandidateService.fetchCandidateProfile();
+        if (userProfile.success && 'data' in userProfile){
+            try {
+        const result = await CurriculumService.fetchCurriculums(userProfile.data.id_perfil);
+
+        if (result.success && 'data' in result) {
+            console.log("CVs cargador", result.data);
+            const modalContent = document.getElementById("applyModalContent");
+            if(modalContent){
+                const options = result.data.length
+                        ? result.data.map(cv =>
+                            `<option value="${cv.id_curriculum}">${cv.nombre_archivo}</option>`
+                        ).join('')
+                        : `<option disabled>No tienes CVs subidos</option>`;
+
+                    modalContent.innerHTML = `
+                    <div class="modal-content p-3">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="applyModalLabel">Aplicar al Trabajo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <!-- Seleccionar CV -->
+                                <div class="mb-3">
+                                    <label for="cvSelect" class="form-label">Escoger Curriculum</label>
+                                    <select class="form-select" id="cvSelect">
+                                        <option selected disabled>Seleccionar Curriculum Subido</option>
+                                        ${options}
+                                    </select>
+                                </div>
+                                <!-- Descripción -->
+                                <div class="mb-3">
+                                    <label for="bioDescription" class="form-label">Descripción de biografía</label>
+                                    <textarea class="form-control" id="bioDescription" rows="4" placeholder="Escribe quién eres, una descripción que quieras que los empleadores vean"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" onClick="viewJobController.applyToJob()" data-bs-dismiss="modal">Aplicar Ahora <i class="bi bi-arrow-right"></i></button>
+                        </div>
+                    </div>
+                    `;
+            }
+
+        } //else {
+        //     const { renderCVList } = await import('@/lib/cvUpload');
+        //     renderCVList([]);
+        // }
+
+
+    } catch (error) {
+        console.error('Error loading CVs:', error);
+    }
+        }
+        
+}
+    public async applyToJob(){
+        const cvSelect =  (document.getElementById("cvSelect") as HTMLSelectElement);
+        const bioDescription = (document.getElementById("bioDescription") as HTMLTextAreaElement);
+        const userProfile = await ProfileCandidateService.fetchCandidateProfile();
+
+        const jobId = this.getJobIdFromURL();
+
+        if (jobId && cvSelect && bioDescription && userProfile.success && 'data' in userProfile) {
+            const selectedCV = cvSelect.value;
+            const mensaje = bioDescription.value;
+            ApplicationService.postApplication(jobId, userProfile.data.id_perfil, parseInt(selectedCV), mensaje);
+        } else {
+            alert("No se pudo aplicar al trabajo. Faltan datos requeridos.");
+        }
     }
 }
 
