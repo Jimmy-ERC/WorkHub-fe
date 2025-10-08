@@ -194,7 +194,6 @@ export class BlogController {
       card.className = "card blog-card border-0 shadow-sm overflow-hidden";
       card.setAttribute("data-blog-id", blog.id_blog.toString());
 
-      // Extraer primeras 150 caracteres del contenido
       const preview =
         blog.contenido.length > 150
           ? blog.contenido.substring(0, 150) + "..."
