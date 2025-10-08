@@ -76,15 +76,6 @@ export class CandidateHomeController {
             const job = this.filteredJobs[i];
             if (!job) continue;
 
-            let colorBadge = "grey";
-            if (job.modalidad === "Remota") {
-                colorBadge = "blue";
-            } else if (job.modalidad === "Híbrido" || job.modalidad === "Híbrida") {
-                colorBadge = "red";
-            } else {
-                colorBadge = "green";
-            }
-
             // Cambios para trabajos cerrados
             // const isClosed = job.estado === false;
             // const lockIcon = isClosed ? `<i class="bi bi-lock-fill" style="margin-right: 6px;"></i>` : "";
@@ -112,12 +103,20 @@ export class CandidateHomeController {
 
                 console.log("id", job.id_trabajo);
 
+                // Logo de la empresa o placeholder
+                const logoEmpresa = job.logo_empresa 
+                    ? `<img src="${job.logo_empresa}" class="me-3 rounded" alt="${job.nombre_empresa || 'Logo empresa'}" width="50" height="50" style="object-fit: cover; border: 1px solid #e0e0e0;">` 
+                    : `<div class="me-3 rounded d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; background: #f5f5f5; border: 1px solid #e0e0e0; font-size: 24px;">🏢</div>`;
+
+                const nombreEmpresa = job.nombre_empresa || 'Empresa no especificada';
+
                 lastRow.innerHTML += `
             <div class="list-group-item job-card d-flex justify-content-between align-items-center p-3 mb-2">
                 <div class="d-flex align-items-center">
-                    <img src="#" class="me-3" alt="icon" width="40">
+                    ${logoEmpresa}
                     <div>
-                        <h6 class="mb-1 fw-bold">${job.nombre_trabajo}</h6>
+                        <h6 class="mb-0 fw-bold">${job.nombre_trabajo}</h6>
+                        <small class="text-muted d-block">${nombreEmpresa}</small>
                         <small class="text-muted">${job.ubicacion} • $${job.salario_minimo}–$${job.salario_maximo}</small>
                     </div>
                 </div>
@@ -145,8 +144,6 @@ export class CandidateHomeController {
             document.getElementById("salarioBuscar") as HTMLInputElement
         ).value;
 
-        const expRadio = document.querySelector<HTMLInputElement>('input[name="exp"]:checked');
-        const experiencia = expRadio ? expRadio.nextSibling?.textContent?.trim() : null;
         const salaryRadio = document.querySelector<HTMLInputElement>('input[name="salary"]:checked');
         let salarioMin = 0;
         let salarioMax = 0;
