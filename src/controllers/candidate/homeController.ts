@@ -10,60 +10,60 @@ import { JobsService } from "@/services/jobsService.js";
 export class CandidateHomeController {
 
     private jobs: Job[] = [];
-    
-        private filteredJobs: Job[] = [...this.jobs];
-    
-        constructor() {
-            this.init();
-        }
-    
-        private init(): void {
-            //Soluciona error desconocida de carga
-            const runAll = async () => {
-                await loadUserData();
-                await this.loadJobs();
-                //this.renderJobs();
-            };
-    
-            if (document.readyState === "loading") {
-                document.addEventListener("DOMContentLoaded", runAll);
-            } else {
-                runAll();
-            }
-        }
-    
-        //Carga los trabajos desde el servicio
-        private async loadJobs(): Promise<void> {
-            // let profileResponse =
-            //     (await ProfileEnterpriseService.fetchEnterpriseProfile()) as ProfileResponse;
-    
-            // if (!profileResponse.success) {
-            //     alert(profileResponse.message);
-            //     return;
-            // }
-    
-            // const profileId = profileResponse.data.id_perfil;
-            // console.log("ID de perfil obtenido:", profileId);
-    
-            try {
-                let jobsResponse = await JobsService.getJobsActive();
-                if (!jobsResponse.success) {
-                    alert(jobsResponse.message);
-                    return;
-                }
-                this.jobs = jobsResponse.data;
-                this.filteredJobs = [...this.jobs];
 
-                console.log("this.jobs:", this.jobs);
-        console.log("this.filteredJobs:", this.filteredJobs);
-    
-                this.renderJobs();
-            } catch (error) {
-                console.error("Error al obtener los trabajos:", error);
-            }
-        }
+    private filteredJobs: Job[] = [...this.jobs];
 
-        public renderJobs(): void {
+    constructor() {
+        this.init();
+    }
+
+    private init(): void {
+        //Soluciona error desconocida de carga
+        const runAll = async () => {
+            await loadUserData();
+            await this.loadJobs();
+            //this.renderJobs();
+        };
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", runAll);
+        } else {
+            runAll();
+        }
+    }
+
+    //Carga los trabajos desde el servicio
+    private async loadJobs(): Promise<void> {
+        // let profileResponse =
+        //     (await ProfileEnterpriseService.fetchEnterpriseProfile()) as ProfileResponse;
+
+        // if (!profileResponse.success) {
+        //     alert(profileResponse.message);
+        //     return;
+        // }
+
+        // const profileId = profileResponse.data.id_perfil;
+        // console.log("ID de perfil obtenido:", profileId);
+
+        try {
+            let jobsResponse = await JobsService.getJobsActive();
+            if (!jobsResponse.success) {
+                alert(jobsResponse.message);
+                return;
+            }
+            this.jobs = jobsResponse.data;
+            this.filteredJobs = [...this.jobs];
+
+            console.log("this.jobs:", this.jobs);
+            console.log("this.filteredJobs:", this.filteredJobs);
+
+            this.renderJobs();
+        } catch (error) {
+            console.error("Error al obtener los trabajos:", error);
+        }
+    }
+
+    public renderJobs(): void {
         const jobList = document.getElementById("jobList");
         if (!jobList) return;
 
@@ -123,7 +123,7 @@ export class CandidateHomeController {
                 </div>
                 <div class="d-flex align-items-center gap-3">
                     <i class="bi bi-bookmark save-icon"></i>
-                    <a href="/src/pages/candidate/view-job.html" class="btn apply-btn btn-sm" onclick="localStorage.setItem('jobId', '${job.id_trabajo}')">Apply Now →</a>
+                    <a href="/src/pages/candidate/view-job.html?id=${job.id_trabajo}" class="btn apply-btn btn-sm">Apply Now →</a>
                 </div>
             </div>`;
             }
@@ -135,81 +135,81 @@ export class CandidateHomeController {
     }
 
     public filtrarPorBusqueda(): void {
-    const tituloBuscar = (
-      document.getElementById("tituloBuscar") as HTMLInputElement
-    ).value.toLowerCase();
-    const ubicacionBuscar = (
-      document.getElementById("ubicacionBuscar") as HTMLInputElement
-    ).value.toLowerCase();
-    const salarioBuscar = (
-      document.getElementById("salarioBuscar") as HTMLInputElement
-    ).value;
+        const tituloBuscar = (
+            document.getElementById("tituloBuscar") as HTMLInputElement
+        ).value.toLowerCase();
+        const ubicacionBuscar = (
+            document.getElementById("ubicacionBuscar") as HTMLInputElement
+        ).value.toLowerCase();
+        const salarioBuscar = (
+            document.getElementById("salarioBuscar") as HTMLInputElement
+        ).value;
 
-    const expRadio = document.querySelector<HTMLInputElement>('input[name="exp"]:checked');
-    const experiencia = expRadio ? expRadio.nextSibling?.textContent?.trim() : null;
-    const salaryRadio = document.querySelector<HTMLInputElement>('input[name="salary"]:checked');
-    let salarioMin = 0;
-    let salarioMax = 0;
+        const expRadio = document.querySelector<HTMLInputElement>('input[name="exp"]:checked');
+        const experiencia = expRadio ? expRadio.nextSibling?.textContent?.trim() : null;
+        const salaryRadio = document.querySelector<HTMLInputElement>('input[name="salary"]:checked');
+        let salarioMin = 0;
+        let salarioMax = 0;
 
-    const tiposSeleccionados: string[] = [];
-    if ((document.getElementById("tipoBuscarTiempoCompleto") as HTMLInputElement)?.checked) {
-        tiposSeleccionados.push("Tiempo Completo");
-    }
-    if ((document.getElementById("tipoBuscarMedioTiempo") as HTMLInputElement)?.checked) {
-        tiposSeleccionados.push("Medio Tiempo");
-    }
-    if ((document.getElementById("tipoBuscarRemoto") as HTMLInputElement)?.checked) {
-        tiposSeleccionados.push("Remoto");
-    }
-
-    const nivelSeleccionados: string[] = [];
-    if ((document.getElementById("nivelJunior") as HTMLInputElement)?.checked) {
-        nivelSeleccionados.push("Junior");
-    }
-    if ((document.getElementById("nivelIntermedio") as HTMLInputElement)?.checked) {
-        nivelSeleccionados.push("Intermedio");
-    }
-    if ((document.getElementById("nivelSenior") as HTMLInputElement)?.checked) {
-        nivelSeleccionados.push("Senior");
-    }
-
-    console.log("Buscando por:", {
-      tituloBuscar,
-      ubicacionBuscar,
-      salarioBuscar
-    });
-
-    if (salaryRadio) {
-        // Extrae los números del texto "$2000 - $4000"
-        const match = salaryRadio.nextSibling?.textContent?.match(/\$?(\d+)\s*-\s*\$?(\d+)/);
-        if (match && match[1] && match[2]) {
-            salarioMin = parseInt(match[1], 10);
-            salarioMax = parseInt(match[2], 10);
+        const tiposSeleccionados: string[] = [];
+        if ((document.getElementById("tipoBuscarTiempoCompleto") as HTMLInputElement)?.checked) {
+            tiposSeleccionados.push("Tiempo Completo");
         }
-}
+        if ((document.getElementById("tipoBuscarMedioTiempo") as HTMLInputElement)?.checked) {
+            tiposSeleccionados.push("Medio Tiempo");
+        }
+        if ((document.getElementById("tipoBuscarRemoto") as HTMLInputElement)?.checked) {
+            tiposSeleccionados.push("Remoto");
+        }
 
-    this.filteredJobs = this.jobs.filter((job) => {
-      const matchesTitulo = job.nombre_trabajo
-        .toLowerCase()
-        .includes(tituloBuscar);
-      const matchesUbicacion = job.ubicacion
-        .toLowerCase()
-        .includes(ubicacionBuscar);
-      const matchesSalario = salarioBuscar
-        ? job.salario_minimo <= parseInt(salarioBuscar) &&
-          job.salario_maximo >= parseInt(salarioBuscar)
-        : true;
-      const matchesTipo = tiposSeleccionados.length === 0 || tiposSeleccionados.includes(job.modalidad);
-      const matchesNivel = nivelSeleccionados.length === 0 || nivelSeleccionados.includes(job.nivel);
-      const matchesSalarioRango = salarioMin && salarioMax
-        ? job.salario_minimo <= salarioMin &&
-          job.salario_maximo >= salarioMax
-        : true;
+        const nivelSeleccionados: string[] = [];
+        if ((document.getElementById("nivelJunior") as HTMLInputElement)?.checked) {
+            nivelSeleccionados.push("Junior");
+        }
+        if ((document.getElementById("nivelIntermedio") as HTMLInputElement)?.checked) {
+            nivelSeleccionados.push("Intermedio");
+        }
+        if ((document.getElementById("nivelSenior") as HTMLInputElement)?.checked) {
+            nivelSeleccionados.push("Senior");
+        }
 
-      return matchesTitulo && matchesUbicacion && matchesSalario && matchesTipo && matchesSalarioRango && matchesNivel;
-    });
-    this.renderJobs();
-  }
+        console.log("Buscando por:", {
+            tituloBuscar,
+            ubicacionBuscar,
+            salarioBuscar
+        });
+
+        if (salaryRadio) {
+            // Extrae los números del texto "$2000 - $4000"
+            const match = salaryRadio.nextSibling?.textContent?.match(/\$?(\d+)\s*-\s*\$?(\d+)/);
+            if (match && match[1] && match[2]) {
+                salarioMin = parseInt(match[1], 10);
+                salarioMax = parseInt(match[2], 10);
+            }
+        }
+
+        this.filteredJobs = this.jobs.filter((job) => {
+            const matchesTitulo = job.nombre_trabajo
+                .toLowerCase()
+                .includes(tituloBuscar);
+            const matchesUbicacion = job.ubicacion
+                .toLowerCase()
+                .includes(ubicacionBuscar);
+            const matchesSalario = salarioBuscar
+                ? job.salario_minimo <= parseInt(salarioBuscar) &&
+                job.salario_maximo >= parseInt(salarioBuscar)
+                : true;
+            const matchesTipo = tiposSeleccionados.length === 0 || tiposSeleccionados.includes(job.modalidad);
+            const matchesNivel = nivelSeleccionados.length === 0 || nivelSeleccionados.includes(job.nivel);
+            const matchesSalarioRango = salarioMin && salarioMax
+                ? job.salario_minimo <= salarioMin &&
+                job.salario_maximo >= salarioMax
+                : true;
+
+            return matchesTitulo && matchesUbicacion && matchesSalario && matchesTipo && matchesSalarioRango && matchesNivel;
+        });
+        this.renderJobs();
+    }
 }
 
 
