@@ -102,4 +102,46 @@ export class FavoriteJobsService {
             return descending ? salaryB - salaryA : salaryA - salaryB;
         });
     }
+
+    /**
+     * Elimina un trabajo de favoritos
+     * @param idFavorito - El ID del favorito a eliminar (puede ser id_trabajo o id_favorito según backend)
+     */
+    public static async removeFavorite(idFavorito: number): Promise<{ success: boolean; message: string }> {
+        try {
+            if (!user || !user.id) {
+                return {
+                    success: false,
+                    message: 'No se pudo obtener la información del usuario. Por favor, inicia sesión nuevamente.'
+                };
+            }
+
+            const response = await fetch(`${apiUrl}/candidate/perfiles/favoritos/${idFavorito}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                return {
+                    success: false,
+                    message: data.message || `Error ${response.status}: ${response.statusText}`
+                };
+            }
+
+            return {
+                success: true,
+                message: data.message || 'Trabajo removido de favoritos exitosamente'
+            };
+        } catch (error) {
+            console.error('Error removing favorite job:', error);
+            return {
+                success: false,
+                message: error instanceof Error ? error.message : 'Error desconocido al quitar el trabajo de favoritos'
+            };
+        }
+    }
 }

@@ -6,6 +6,7 @@ export interface TrabajosFavoritosInterface {
 
 export interface DataTrabajosFavoritos {
     id_aplicacion: number;
+    id_favorito?: number; // ID del registro de favorito (opcional, para eliminar)
     id_usuario: string;
     id_candidato: number;
     id_trabajo: number;

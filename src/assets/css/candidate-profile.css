@@ -32,7 +32,8 @@
 
 /* Evitar desbordes en móviles */
 /* Ajuste sutil al azul del banner para aproximar el diseño */
---wh-banner: #4c74ff;
+:root {
+  --wh-banner: #4c74ff;
 }
 
 /* Cards de métricas */

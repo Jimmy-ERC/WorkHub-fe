@@ -147,6 +147,9 @@ function createFavoriteJobHTML(job: DataTrabajosFavoritos): string {
     // Usar un logo por defecto si no hay logo de empresa
     const logoUrl = job.logo_empresa || '/src/assets/img/logo_grande.png';
 
+    // Usar id_favorito si está disponible, de lo contrario usar id_trabajo
+    const removeId = job.id_favorito || job.id_trabajo;
+
     return `
         <article class="list-group-item px-2 py-3 position-relative">
             <div class="row g-2 align-items-center">
@@ -206,7 +209,7 @@ function createFavoriteJobHTML(job: DataTrabajosFavoritos): string {
                             <span class="d-lg-none">Detalles</span>
                         </button>
                         <button class="btn btn-outline-danger btn-sm flex-grow-1" type="button" 
-                                data-action="remove-favorite" data-job-id="${job.id_trabajo}"
+                                data-action="remove-favorite" data-remove-id="${removeId}"
                                 title="Quitar de favoritos">
                             <i class="bi bi-bookmark-x-fill"></i>
                             <span class="d-none d-lg-inline d-xl-none">Quitar</span>
@@ -366,12 +369,9 @@ function attachRemoveFavoriteListeners(): void {
     removeButtons.forEach(button => {
         button.addEventListener('click', async (event) => {
             event.preventDefault();
-            const jobId = (button as HTMLElement).dataset.jobId;
-            if (jobId) {
-                const confirmed = confirm('¿Estás seguro de que deseas quitar este trabajo de tus favoritos?');
-                if (confirmed) {
-                    await removeFavoriteJob(parseInt(jobId));
-                }
+            const removeId = (button as HTMLElement).dataset.removeId;
+            if (removeId) {
+                await removeFavoriteJob(parseInt(removeId));
             }
         });
     });
@@ -380,24 +380,46 @@ function attachRemoveFavoriteListeners(): void {
 /**
  * Quita un trabajo de favoritos
  */
-async function removeFavoriteJob(jobId: number): Promise<void> {
+async function removeFavoriteJob(removeId: number): Promise<void> {
     try {
-        // Aquí deberías implementar la lógica para eliminar el favorito del backend
-        // Por ahora, solo lo quitamos de la lista local
-        console.log('Quitando trabajo de favoritos:', jobId);
+        // Confirmar acción con el usuario
+        const confirmed = confirm('¿Estás seguro de que deseas quitar este trabajo de tus favoritos?');
+        if (!confirmed) {
+            return;
+        }
 
-        // Filtrar el trabajo eliminado
-        allJobs = allJobs.filter(job => job.id_trabajo !== jobId);
+        // Deshabilitar el botón mientras se procesa
+        const button = document.querySelector(`[data-action="remove-favorite"][data-remove-id="${removeId}"]`) as HTMLButtonElement;
+        if (button) {
+            button.disabled = true;
+            button.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+        }
 
-        // Aplicar filtros nuevamente
-        applyFilters();
+        // Llamar al servicio para eliminar del backend
+        const response = await FavoriteJobsService.removeFavorite(removeId);
+
+        if (!response.success) {
+            showErrorToast(response.message);
+            // Rehabilitar el botón si falló
+            if (button) {
+                button.disabled = false;
+                button.innerHTML = '<i class="bi bi-bookmark-x-fill"></i><span class="d-none d-lg-inline d-xl-none">Quitar</span>';
+            }
+            return;
+        }
+
+        // Recargar la lista de trabajos favoritos
+        await loadAllFavoriteJobs();
 
         // Mostrar mensaje de éxito
-        showSuccessToast('Trabajo removido de favoritos exitosamente');
+        showSuccessToast(response.message);
 
     } catch (error) {
         console.error('Error removing favorite job:', error);
         showErrorToast('Error al quitar el trabajo de favoritos. Intenta de nuevo.');
+
+        // Recargar en caso de error para mantener consistencia
+        await loadAllFavoriteJobs();
     }
 }
 
