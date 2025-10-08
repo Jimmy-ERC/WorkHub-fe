@@ -27,7 +27,7 @@
       }
       .blog-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
       }
       .blog-image {
         height: 200px;
@@ -70,9 +70,13 @@
           <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Empleos</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
-          <li class="nav-item"><a class="nav-link active" href="#">Recursos</a></li>
           <li class="nav-item">
-            <a class="nav-link" href="/src/pages/forums/foros/index.html">Foros</a>
+            <a class="nav-link active" href="#">Recursos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/src/pages/forums/foros/index.html"
+              >Foros</a
+            >
           </li>
         </ul>
 
@@ -94,23 +98,29 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
             <li>
-              <a class="dropdown-item" href="../candidate/profile/index.html">Ver perfil</a>
+              <a class="dropdown-item" href="../candidate/profile/index.html"
+                >Ver perfil</a
+              >
             </li>
             <li><a class="dropdown-item" href="#">Configuración</a></li>
             <li><hr class="dropdown-divider" /></li>
             <li>
-              <a class="dropdown-item text-danger" href="/src/pages/auth/login.html">Cerrar Sesión</a>
+              <a
+                class="dropdown-item text-danger"
+                href="/src/pages/auth/login.html"
+                >Cerrar Sesión</a
+              >
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <main class="d-flex" style="height: calc(100vh - 70px);">
+    <main class="d-flex" style="height: calc(100vh - 70px)">
       <!-- ===== Sidebar con Filtros ===== -->
       <aside
         class="border-end bg-white p-3"
-        style="width: 280px; flex-shrink: 0; overflow-y: auto;"
+        style="width: 280px; flex-shrink: 0; overflow-y: auto"
         data-component="BlogFilters"
       >
         <div class="px-2">
@@ -138,21 +148,13 @@
               <i class="bi bi-tags me-2"></i>Category
             </h6>
             <div id="categorias-container" class="d-flex flex-column gap-2">
-              <!-- Las categorías se cargarán dinámicamente -->
               <div class="text-center text-muted small py-3">
-                <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                <div
+                  class="spinner-border spinner-border-sm me-2"
+                  role="status"
+                ></div>
                 Cargando categorías...
               </div>
-            </div>
-          </div>
-
-          <!-- Posts recientes (opcional) -->
-          <div class="mt-4 pt-3 border-top">
-            <h6 class="fw-bold mb-3">
-              <i class="bi bi-clock-history me-2"></i>Posts recientes
-            </h6>
-            <div class="d-flex flex-column gap-2">
-              <small class="text-muted">No hay posts recientes</small>
             </div>
           </div>
         </div>
@@ -164,9 +166,8 @@
           <h4 class="mb-0">Blogs</h4>
           <span class="badge bg-secondary" id="blogs-count">0 blogs</span>
         </div>
-        
+
         <div id="lista-foros" class="d-flex flex-column gap-4">
-          <!-- Los blogs se renderizarán aquí -->
           <div class="text-center text-muted py-5">
             <div class="spinner-border mb-3" role="status"></div>
             <p>Cargando blogs...</p>
@@ -180,6 +181,30 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script type="module" src="/src/controllers/blog/blogController.ts"></script>
+    <script
+      type="module"
+      src="/src/controllers/blog/blogController.ts"
+    ></script>
+    <div
+      class="modal fade"
+      id="blogOptionsModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="blogModalTitle">Opciones del Blog</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body" id="blogModalBody"></div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
