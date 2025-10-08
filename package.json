@@ -9,7 +9,7 @@
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "sh -c 'vite preview --port ${PORT:-4173} --strictPort'"
+    "start": "sh -c 'BROWSER=none vite preview --port ${PORT:-4173} --strictPort --host 0.0.0.0'"
   },
   "repository": {
     "type": "git",
