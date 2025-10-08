@@ -1,5 +1,4 @@
 import { api } from "@/lib/api";
-import sessionManager from "@/lib/session";
 
 // Base API URL from environment variables
 const apiUrl = api.baseUrl;
@@ -10,10 +9,6 @@ export class ApplicationService {
 
     public static async postApplication(id_trabajo:number, id_candidato: number,id_curriculum:number, mensaje: string){
         try {
-            // console.log("id trabajo", id_trabajo);
-            // console.log("id candidato", id_candidato);
-            // console.log("id curriculum", id_curriculum);
-            // console.log("mensaje", mensaje);
 
           const response = await fetch(`${apiUrl}/enterprise/aplicaciones`, {
             method: "POST",

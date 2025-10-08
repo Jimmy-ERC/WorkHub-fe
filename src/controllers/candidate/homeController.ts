@@ -92,30 +92,9 @@ export class CandidateHomeController {
             const job = this.filteredJobs[i];
             if (!job) continue;
 
-            // Cambios para trabajos cerrados
-            // const isClosed = job.estado === false;
-            // const lockIcon = isClosed ? `<i class="bi bi-lock-fill" style="margin-right: 6px;"></i>` : "";
-            // const cardOpacity = isClosed ? "0.5" : "1";
-            // const titleStyle = isClosed ? "text-decoration: line-through;" : "";
-            // const pointerEvents = isClosed ? "pointer-events: none;" : "";
-
+            
             const lastRow = jobList.querySelector(".row:last-child");
             if (lastRow) {
-                // lastRow.innerHTML += `<button onclick="enterpriseHomeController.llenarModalDetalleTrabajo(${job.id_trabajo})" data-bs-toggle="modal" data-bs-target="#modalDetalleTrabajo" class="card col-md-4 col-6 mx-2"
-                //     style="width: 25rem; padding: 1%; background-color: #ECECEC; box-shadow: 0 2px 8px rgba(0,0,0,0.35); border: none; opacity: ${cardOpacity}; ${pointerEvents}">
-
-                //     <div class="card-body">
-                //         <div class="d-flex" style="text-align: center; justify-content: space-between; width: 100%;">
-                //             <h5 class="card-title" style="${titleStyle}">${lockIcon}${job.nombre_trabajo}</h5>
-                //             <span class="badge text-bg-secondary"
-                //             style="border-radius: 44px; text-align: center; padding-bottom: 0; display: inline-flex; align-items: center; background-color:${colorBadge}!important "> 
-                //                 <p style="margin: 0;">${job.modalidad}</p>
-                //             </span>
-                //         </div>
-                //         <p class="card-text">${job.nivel} - $${job.salario_minimo}–${job.salario_maximo}</p>
-                //         <p class="card-text"><i class="bi bi-geo-alt"></i>${job.ubicacion}.</p>
-                //     </div>
-                // </button>`;
 
                 console.log("id", job.id_trabajo);
 
