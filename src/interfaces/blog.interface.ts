@@ -6,6 +6,4 @@ export interface Blog {
   titulo: string;
   contenido: string;
   fecha: Date;
-
-  nombre_usuario: string;
 }

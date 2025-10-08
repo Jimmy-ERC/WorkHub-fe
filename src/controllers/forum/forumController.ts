@@ -7,39 +7,35 @@ import { ProfileEnterpriseService } from "@/services/profileEnterprise.service";
 
 export class ForumController {
   private foros: Foro[] = [];
-  private id_perfil: any = null;
 
   constructor() {
     this.init();
   }
 
-  private init(): void {
-    const runAll = async () => {
-      const currentUser =
-        (await ProfileCandidateService.fetchCandidateProfile()) as ProfileResponse;
-      this.id_perfil = currentUser.data.id_perfil;
+private init(): void {
+  const runAll = async () => {
+    // Leer query param
+    const urlParams = new URLSearchParams(window.location.search);
+    const soloMisForos = urlParams.get("misforos") === "true";
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const soloMisForos = urlParams.get("misforos") === "true";
-
-      if (soloMisForos) {
-        await this.loadMisForos(); 
-      } else {
-        await this.loadForos(); 
-      }
-
-      this.renderForos();
-    };
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", runAll);
+    if (soloMisForos) {
+      await this.loadMisForos(); // Traer solo los foros del usuario
     } else {
-      runAll();
+      await this.loadForos(); // Traer todos los foros
     }
-  }
 
-  private async loadMisForos(): Promise<void> {
-    try {
+    this.renderForos();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", runAll);
+  } else {
+    runAll();
+  }
+}
+
+private async loadMisForos(): Promise<void> {
+  try {
       let idPerfil: number | undefined = undefined;
       const profileRes =
         (await ProfileEnterpriseService.fetchEnterpriseProfile()) as ProfileResponse;
@@ -51,23 +47,23 @@ export class ForumController {
         if (candidateRes.success && candidateRes.data?.id_perfil)
           idPerfil = candidateRes.data.id_perfil;
       }
-      if (typeof idPerfil === "undefined") {
-        this.foros = [];
-        console.error("No se pudo obtener el id del perfil del usuario.");
-        return;
-      }
-      const response = await ForumService.getForosByUserId(idPerfil);
-      if (response.success) {
-        this.foros = response.data ?? [];
-      } else {
-        this.foros = [];
-        console.error("Error al traer tus foros:", response.message);
-      }
-    } catch (error) {
-      console.error("Error al cargar tus foros:", error);
+    if (typeof idPerfil === "undefined") {
       this.foros = [];
+      console.error("No se pudo obtener el id del perfil del usuario.");
+      return;
     }
+    const response = await ForumService.getForosByUserId(idPerfil);
+    if (response.success) {
+      this.foros = response.data ?? [];
+    } else {
+      this.foros = [];
+      console.error("Error al traer tus foros:", response.message);
+    }
+  } catch (error) {
+    console.error("Error al cargar tus foros:", error);
+    this.foros = [];
   }
+}
 
   private async loadForos(): Promise<void> {
     try {
@@ -127,9 +123,7 @@ export class ForumController {
       card.innerHTML = `
         <div class="card-body">
           <div class="d-flex align-items-center mb-2">
-           <img src="${
-             foro.link_foto_perfil ?? "https://via.placeholder.com/40"
-           }" 
+           <img src="${foro.link_foto_perfil ?? 'https://via.placeholder.com/40'}" 
      class="rounded-circle me-2" alt="avatar" style="width:40px; height:40px; object-fit:cover;">
 
             <div>
@@ -184,9 +178,11 @@ export class ForumController {
     });
   }
   private async renderCrearForoForm(container: HTMLElement): Promise<void> {
-
+    // Crear card
     const card = document.createElement("div");
     card.className = "card mb-3 shadow-sm";
+
+    // Obtener categorías
     const categoriasResponse = await CategoriasService.getCategorias();
     const categorias = categoriasResponse.success
       ? categoriasResponse.data ?? []
@@ -235,6 +231,7 @@ export class ForumController {
 
       if (!titulo || !contenido || !categoriaId) return;
 
+      // Obtener id_perfil
       let id_perfil: number | undefined;
       const profileRes =
         (await ProfileEnterpriseService.fetchEnterpriseProfile()) as ProfileResponse;
@@ -254,6 +251,7 @@ export class ForumController {
       }
 
       const fecha = new Date();
+      // Crear foro
       const result = await ForumService.crearForo(
         categoriaId,
         id_perfil,
@@ -266,6 +264,7 @@ export class ForumController {
         msg.textContent = "Foro creado correctamente";
         msg.className = "foro-msg text-success small";
         form.reset();
+        // Recargar foros
         await this.loadForos();
         this.renderForos();
       } else {
@@ -311,200 +310,34 @@ export class ForumController {
     }
 
     const respuestasHTML = respuestas
-      .map((r: any) => {
-        const isMine = r.id_perfil === this.id_perfil;
-        console.log("Respuesta API:", r);
-
-        return `
+      .map(
+        (r: any) => `
     <div class="card mt-2 ms-4 border-start border-3 shadow-sm" 
-         data-respuesta-id="${r.id_respuesta_foro}"
-
-         style="border-color: #2A6DFC; background-color: #f8f9fa; border-radius: 0.5rem;">
+         style="
+           border-color: #2A6DFC; 
+           background-color: #f8f9fa; 
+           border-radius: 0.5rem;
+         ">
       <div class="card-body py-2 px-3">
         <div class="d-flex align-items-center mb-1">
-          <img src="${r.link_foto_perfil ?? "https://via.placeholder.com/35"}" 
-               class="rounded-circle me-2" alt="avatar" style="width:35px; height:35px; object-fit:cover;">
-          <div class="d-flex flex-column flex-grow-1">
-            <strong style="color: #343a40;">@${r.nombre_usuario}</strong>
-            <small class="text-muted">${this.formatFecha(
-              new Date(r.fecha)
-            )}</small>
-          </div>
-          ${
-            isMine
-              ? `
-          <div class="ms-2 dropdown">
-<button class="btn btn-sm btn-link text-muted p-0 toggle-dropdown">
-  <i class="bi bi-three-dots"></i>
-</button>
-<ul class="dropdown-menu dropdown-menu-end">
-  <li><a class="dropdown-item editar-respuesta" href="#">Editar</a></li>
-  <li><a class="dropdown-item text-danger eliminar-respuesta" href="#">Eliminar</a></li>
-</ul>
+          <img src="${r.link_foto_perfil ?? 'https://via.placeholder.com/35'}" 
+     class="rounded-circle me-2" alt="avatar" style="width:35px; height:35px; object-fit:cover;">
 
-          </div>`
-              : ""
-          }
+          <div class="d-flex flex-column">
+            <strong style="color: #343a40;">@${r.nombre_usuario}</strong>
+            <small class="text-muted">${this.formatFecha(new Date(r.fecha))}</small>
+          </div>
         </div>
-        <p class="mb-0 respuesta-contenido" style="word-break: break-word; font-size: 0.95rem; color: #343a40;">
+        <p class="mb-0" style="word-break: break-word; font-size: 0.95rem; color: #343a40;">
           ${r.contenido}
         </p>
       </div>
-    </div>`;
-      })
+    </div>`
+      )
       .join("");
 
     respuestasContainer.innerHTML = respuestasHTML;
-    this.setupRespuestaActions(respuestasContainer, id_foro, card);
     toggleLink.innerHTML = `<i class="bi bi-chevron-up"></i> Esconder respuestas (${respuestas.length})`;
-  }
-  private setupRespuestaActions(
-    container: HTMLElement,
-    id_foro: number,
-    card: HTMLElement
-  ): void {
-    const editButtons = container.querySelectorAll(".editar-respuesta");
-    const deleteButtons = container.querySelectorAll(".eliminar-respuesta");
-
-    editButtons.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const respuestaCard = (e.target as HTMLElement).closest(
-          "[data-respuesta-id]"
-        ) as HTMLElement;
-        console.log("respuestaCard:", respuestaCard);
-        console.log(
-          "data-respuesta-id:",
-          respuestaCard.getAttribute("data-respuesta-id")
-        );
-
-        this.makeRespuestaEditable(respuestaCard, id_foro, card);
-      });
-    });
-
-    deleteButtons.forEach((btn) => {
-      btn.addEventListener("click", async (e) => {
-        e.preventDefault();
-        const respuestaCard = (e.target as HTMLElement).closest(
-          ".card"
-        ) as HTMLElement;
-        const id_respuesta = parseInt(
-          respuestaCard.getAttribute("data-respuesta-id")!
-        );
-
-        if (!confirm("¿Seguro que deseas eliminar esta respuesta?")) return;
-
-        const result = await ForumService.deleteRespuesta(id_respuesta);
-        if (result.success) {
-          respuestaCard.remove();
-        } else {
-          alert("Error al eliminar la respuesta");
-        }
-      });
-    });
-
-    const toggleButtons = container.querySelectorAll(".toggle-dropdown");
-    toggleButtons.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const menu = btn.nextElementSibling as HTMLElement;
-        if (!menu) return;
-
-        container.querySelectorAll(".dropdown-menu.show").forEach((m) => {
-          if (m !== menu) m.classList.remove("show");
-        });
-
-        menu.classList.toggle("show");
-      });
-    });
-
-    document.addEventListener("click", () => {
-      container.querySelectorAll(".dropdown-menu.show").forEach((m) => {
-        m.classList.remove("show");
-      });
-    });
-  }
-  private makeRespuestaEditable(
-    respuestaCard: HTMLElement,
-    id_foro: number,
-    card: HTMLElement
-  ): void {
-    const contentP = respuestaCard.querySelector(
-      ".respuesta-contenido"
-    ) as HTMLParagraphElement;
-    const originalText = contentP.textContent || "";
-    const id_respuesta = parseInt(
-      respuestaCard.getAttribute("data-respuesta-id")!
-    );
-    if (isNaN(id_respuesta)) {
-      console.error(
-        "No se pudo obtener id_respuesta del elemento:",
-        respuestaCard
-      );
-      return;
-    }
-    const textarea = document.createElement("textarea");
-    textarea.className = "form-control mb-2";
-    textarea.value = originalText;
-    contentP.replaceWith(textarea);
-
-    const saveBtn = document.createElement("button");
-    saveBtn.className = "btn btn-sm btn-primary me-2";
-    saveBtn.textContent = "Guardar";
-    const cancelBtn = document.createElement("button");
-    cancelBtn.className = "btn btn-sm btn-secondary";
-    cancelBtn.textContent = "Cancelar";
-
-    const btnContainer = document.createElement("div");
-    btnContainer.className = "mt-2";
-    btnContainer.append(saveBtn, cancelBtn);
-    textarea.after(btnContainer);
-
-    saveBtn.addEventListener("click", async () => {
-      const newContent = textarea.value.trim();
-      const id_respuesta = parseInt(
-        respuestaCard.getAttribute("data-respuesta-id")!
-      );
-
-      if (!newContent) return;
-
-      try {
-        console.log("Intentando editar respuesta:", {
-          id_respuesta,
-          newContent,
-        });
-        const result = await ForumService.editarRespuesta(
-          id_respuesta,
-          newContent
-        );
-        console.log("Resultado API:", result);
-
-        if (result.success) {
-          textarea.replaceWith(this.createRespuestaParagraph(newContent));
-          btnContainer.remove();
-        } else {
-          alert("Error al actualizar la respuesta: " + result.message);
-        }
-      } catch (error) {
-        console.error("Error al llamar a editarRespuesta:", error);
-        alert("Error al actualizar la respuesta, revisa la consola");
-      }
-    });
-
-    cancelBtn.addEventListener("click", () => {
-      textarea.replaceWith(this.createRespuestaParagraph(originalText));
-      btnContainer.remove();
-    });
-  }
-
-  private createRespuestaParagraph(text: string): HTMLParagraphElement {
-    const p = document.createElement("p");
-    p.className = "mb-0 respuesta-contenido";
-    p.style.wordBreak = "break-word";
-    p.style.fontSize = "0.95rem";
-    p.style.color = "#343a40";
-    p.textContent = text;
-    return p;
   }
 
   private toggleResponder(id_foro: number, card: HTMLElement): void {
@@ -548,26 +381,28 @@ export class ForumController {
 
       if (response.success && response.data?.id_perfil) {
         id_perfil = response.data.id_perfil;
-        console.log("ID perfil obtenido (empresa):", id_perfil);
+        console.log("✅ ID perfil obtenido (empresa):", id_perfil);
       } else {
+        // 2️⃣ Si no existe, intentar con candidato
         const candidateResponse =
           (await ProfileCandidateService.fetchCandidateProfile()) as ProfileResponse;
         console.log("Perfil candidato:", candidateResponse);
 
         if (candidateResponse.success && candidateResponse.data?.id_perfil) {
           id_perfil = candidateResponse.data.id_perfil;
-          console.log("ID perfil obtenido (candidato):", id_perfil);
+          console.log("✅ ID perfil obtenido (candidato):", id_perfil);
         }
       }
 
+      // 3️⃣ Validar si no se encontró ningún perfil
       if (!id_perfil) {
-        mensaje.textContent = "Debes crear un perfil antes de responder.";
+        mensaje.textContent = "❌ Debes crear un perfil antes de responder.";
         mensaje.className = "respuesta-msg text-danger small";
         return;
       }
 
       const fecha = new Date();
-      console.log("Enviando respuesta con:", {
+      console.log("📤 Enviando respuesta con:", {
         id_foro,
         id_perfil,
         contenido,
@@ -582,9 +417,10 @@ export class ForumController {
       );
 
       if (result.success) {
-        mensaje.textContent = "Respuesta publicada correctamente";
+        mensaje.textContent = "✅ Respuesta publicada correctamente";
         mensaje.className = "respuesta-msg text-success small";
         input.value = "";
+        // Refrescar respuestas automáticamente
         await this.toggleRespuestas(id_foro, card);
       } else {
         mensaje.textContent = "Error al publicar respuesta";
