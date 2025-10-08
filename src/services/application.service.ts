@@ -8,7 +8,7 @@ export class ApplicationService {
 
     constructor() {}
 
-    public static async postApplication( id_candidato: number, id_trabajo:number, id_curriculum:number, mensaje: string){
+    public static async postApplication(id_trabajo:number, id_candidato: number,id_curriculum:number, mensaje: string){
         try {
             // console.log("id trabajo", id_trabajo);
             // console.log("id candidato", id_candidato);
