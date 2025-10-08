@@ -8,8 +8,6 @@ import { ProfileEnterpriseService } from "@/services/profileEnterprise.service";
 export class BlogDetailController {
   private blogId: number | null = null;
   private blog: Blog | null = null;
-  private id_perfil: number | null = null;
-
 
   constructor() {
     this.init();
@@ -17,9 +15,6 @@ export class BlogDetailController {
 
   private init(): void {
     const runAll = async () => {
-            const currentUser =
-        (await ProfileCandidateService.fetchCandidateProfile()) as ProfileResponse;
-      this.id_perfil = currentUser.data.id_perfil;
       this.getBlogIdFromURL();
       if (this.blogId) {
         await this.loadBlog();
@@ -149,25 +144,25 @@ export class BlogDetailController {
       console.error("Error al cargar comentarios:", error);
     }
   }
-private renderComentarios(comentarios: any[]): void {
-  const commentsList = document.getElementById("comments-list");
-  const noComments = document.getElementById("no-comments");
 
-  if (!commentsList) return;
+  private renderComentarios(comentarios: any[]): void {
+    const commentsList = document.getElementById("comments-list");
+    const noComments = document.getElementById("no-comments");
 
-  if (comentarios.length === 0) {
-    commentsList.innerHTML = "";
-    if (noComments) noComments.style.display = "block";
-    return;
-  }
+    if (!commentsList) return;
 
-  if (noComments) noComments.style.display = "none";
+    if (comentarios.length === 0) {
+      commentsList.innerHTML = "";
+      if (noComments) noComments.style.display = "block";
+      return;
+    }
 
-  commentsList.innerHTML = comentarios
-    .map((comentario) => {
-      const isMine = comentario.id_perfil === this.id_perfil;
-      return `
-      <div class="card comment-card shadow-sm border-start border-4 border-primary" data-id="${comentario.id_comentario}">
+    if (noComments) noComments.style.display = "none";
+
+    commentsList.innerHTML = comentarios
+      .map(
+        (comentario) => `
+      <div class="card comment-card shadow-sm border-start border-4 border-primary">
         <div class="card-body">
           <div class="d-flex align-items-start mb-3">
             <img
@@ -182,152 +177,16 @@ private renderComentarios(comentarios: any[]): void {
                   <h6 class="mb-0 fw-bold">@${comentario.nombre_usuario}</h6>
                   <small class="text-muted">${this.formatFecha(comentario.fecha)}</small>
                 </div>
-                ${
-                  isMine
-                    ? `<div class="dropdown">
-                         <button class="btn btn-sm btn-link text-muted p-0" data-bs-toggle="dropdown" aria-expanded="false">
-                           <i class="bi bi-three-dots"></i>
-                         </button>
-                         <ul class="dropdown-menu dropdown-menu-end">
-                           <li><a class="dropdown-item editar-comentario" href="#">Editar</a></li>
-                           <li><a class="dropdown-item eliminar-comentario" href="#">Eliminar</a></li>
-                         </ul>
-                       </div>`
-                    : ""
-                }
               </div>
-              <p class="mb-0 comment-content" style="white-space: pre-wrap;">${comentario.contenido}</p>
             </div>
           </div>
+          <p class="mb-0" style="white-space: pre-wrap;">${comentario.contenido}</p>
         </div>
       </div>
-      `;
-    })
-    .join("");
-
-  this.setupCommentActions();
-}
-private setupCommentActions(): void {
-  const editButtons = document.querySelectorAll(".editar-comentario");
-  const deleteButtons = document.querySelectorAll(".eliminar-comentario");
-
-  editButtons.forEach((btn) => {
-    btn.addEventListener("click", async (e) => {
-      e.preventDefault();
-      const card = (e.target as HTMLElement).closest(".comment-card") as HTMLElement;
-      this.makeCommentEditable(card);
-    });
-  });
-
-  deleteButtons.forEach((btn) => {
-    btn.addEventListener("click", async (e) => {
-      e.preventDefault();
-      const card = (e.target as HTMLElement).closest(".comment-card") as HTMLElement;
-      const id_comentario = parseInt(card.getAttribute("data-id")!);
-
-      if (!confirm("¿Seguro que deseas eliminar este comentario?")) return;
-
-      const result = await BlogService.eliminarComentario(id_comentario);
-      if (result.success) {
-        card.remove();
-      } else {
-        alert("Error al eliminar comentario");
-      }
-    });
-  });
-}
-private makeCommentEditable(card: HTMLElement): void {
-  const contentP = card.querySelector(".comment-content") as HTMLParagraphElement;
-  const originalText = contentP.textContent || "";
-
-  const textarea = document.createElement("textarea");
-  textarea.className = "form-control mb-2";
-  textarea.value = originalText;
-  contentP.replaceWith(textarea);
-
-  const saveBtn = document.createElement("button");
-  saveBtn.className = "btn btn-sm btn-primary me-2";
-  saveBtn.textContent = "Guardar";
-  const cancelBtn = document.createElement("button");
-  cancelBtn.className = "btn btn-sm btn-secondary";
-  cancelBtn.textContent = "Cancelar";
-
-  const btnContainer = document.createElement("div");
-  btnContainer.className = "mt-2";
-  btnContainer.append(saveBtn, cancelBtn);
-  textarea.after(btnContainer);
-
-  saveBtn.addEventListener("click", async () => {
-    const newContent = textarea.value.trim();
-    const id_comentario = parseInt(card.getAttribute("data-id")!);
-
-    if (!newContent) return;
-
-    const result = await BlogService.actualizarComentario(id_comentario, newContent, new Date());
-    if (result.success) {
-      textarea.replaceWith(this.createContentParagraph(newContent));
-      btnContainer.remove();
-    } else {
-      alert("Error al actualizar el comentario");
-    }
-  });
-
-  cancelBtn.addEventListener("click", () => {
-    textarea.replaceWith(this.createContentParagraph(originalText));
-    btnContainer.remove();
-  });
-}
-
-private createContentParagraph(text: string): HTMLParagraphElement {
-  const p = document.createElement("p");
-  p.className = "mb-0 comment-content";
-  p.style.whiteSpace = "pre-wrap";
-  p.textContent = text;
-  return p;
-}
-
-  // private renderComentarios(comentarios: any[]): void {
-  //   const commentsList = document.getElementById("comments-list");
-  //   const noComments = document.getElementById("no-comments");
-
-  //   if (!commentsList) return;
-
-  //   if (comentarios.length === 0) {
-  //     commentsList.innerHTML = "";
-  //     if (noComments) noComments.style.display = "block";
-  //     return;
-  //   }
-
-  //   if (noComments) noComments.style.display = "none";
-
-  //   commentsList.innerHTML = comentarios
-  //     .map(
-  //       (comentario) => `
-  //     <div class="card comment-card shadow-sm border-start border-4 border-primary">
-  //       <div class="card-body">
-  //         <div class="d-flex align-items-start mb-3">
-  //           <img
-  //             src="${comentario.link_foto_perfil || "https://via.placeholder.com/40"}"
-  //             alt="${comentario.nombre_usuario}"
-  //             class="rounded-circle me-3"
-  //             style="width: 40px; height: 40px; object-fit: cover;"
-  //           />
-  //           <div class="flex-grow-1">
-  //             <div class="d-flex justify-content-between align-items-start">
-  //               <div>
-  //                 <h6 class="mb-0 fw-bold">@${comentario.nombre_usuario}</h6>
-  //                 <small class="text-muted">${this.formatFecha(comentario.fecha)}</small>
-  //               </div>
-  //             </div>
-  //           </div>
-  //         </div>
-  //         <p class="mb-0" style="white-space: pre-wrap;">${comentario.contenido}</p>
-  //       </div>
-  //     </div>
-  //   `
-  //     )
-  //     .join("");
-  // }
+    `
+      )
+      .join("");
+  }
 
   private setupCommentForm(): void {
     const form = document.getElementById("comment-form") as HTMLFormElement;
