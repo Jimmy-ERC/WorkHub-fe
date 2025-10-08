@@ -4,6 +4,8 @@ import { CategoriasService } from "@/services/categorias.service";
 import { LinkService } from "@/services/linkServices";
 import { ProfileCandidateService } from "@/services/profileCandidate.service";
 import { ProfileEnterpriseService } from "@/services/profileEnterprise.service";
+import { loadUserData } from "../../lib/userDataLoader.js";
+
 
 export class LinksController {
   private links: Link[] = [];
@@ -18,6 +20,7 @@ export class LinksController {
 
   private init(): void {
     const runAll = async () => {
+      await loadUserData();
       const currentUser =
         (await ProfileCandidateService.fetchCandidateProfile()) as ProfileResponse;
       this.id_perfil = currentUser.data.id_perfil;

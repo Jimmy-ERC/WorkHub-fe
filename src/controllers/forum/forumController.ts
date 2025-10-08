@@ -5,6 +5,8 @@ import { ForumService } from "@/services/forum.service";
 import { ProfileCandidateService } from "@/services/profileCandidate.service";
 import { ProfileEnterpriseService } from "@/services/profileEnterprise.service";
 
+import { loadUserData } from "../../lib/userDataLoader.js";
+
 export class ForumController {
   private foros: Foro[] = [];
   private id_perfil: any = null;
@@ -15,6 +17,7 @@ export class ForumController {
 
   private init(): void {
     const runAll = async () => {
+      await loadUserData();
       const currentUser =
         (await ProfileCandidateService.fetchCandidateProfile()) as ProfileResponse;
       this.id_perfil = currentUser.data.id_perfil;

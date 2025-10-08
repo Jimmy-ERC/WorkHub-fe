@@ -4,6 +4,8 @@ import { CategoriasService } from "@/services/categorias.service";
 import { BlogService } from "@/services/blogService";
 import { ProfileCandidateService } from "@/services/profileCandidate.service";
 import { ProfileEnterpriseService } from "@/services/profileEnterprise.service";
+import { loadUserData } from "../../lib/userDataLoader.js";
+
 
 declare var bootstrap: any;
 
@@ -20,6 +22,7 @@ export class BlogController {
 
   private init(): void {
     const runAll = async () => {
+      await loadUserData();
       const currentUser =
         (await ProfileCandidateService.fetchCandidateProfile()) as ProfileResponse;
       this.id_perfil = currentUser.data.id_perfil;
