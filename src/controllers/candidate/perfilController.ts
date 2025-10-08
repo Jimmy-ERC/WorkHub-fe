@@ -2,10 +2,14 @@ import type { ProfileResponse } from "@/interfaces/profileResponse.interface";
 import sessionManager from "@/lib/session";
 import { diagnoseStorageSetup } from "@/lib/avatarUpload";
 import { ProfileCandidateService } from "@/services/profileCandidate.service";
+import { ProfileGeneralCandidateService } from "@/services/profileGeneralCandidate.service";
 import { loadUserData } from "@/lib/userDataLoader";
+import { initCVUpload } from "@/lib/cvUpload";
+import { CurriculumService } from "@/services/curriculumService";
 
 // Variable to track if profile exists (for create vs update logic)
 let profileExists = false;
+let currentProfileId: number | null = null;
 
 // Populación de los campos del formulario con los datos del perfil
 function populateProfileForm(profileData: ProfileResponse['data']) {
@@ -101,6 +105,24 @@ function showSuccess(message: string) {
             successAlert.parentNode.removeChild(successAlert);
         }
     }, 5000);
+}
+
+/**
+ * Actualiza el contador de alertas en el sidebar
+ */
+async function updateAlertsBadge(): Promise<void> {
+    try {
+        const response = await ProfileGeneralCandidateService.fetchProfileStats();
+        if (response.success && response.data) {
+            const alertBadge = document.getElementById('jobAlertsCount');
+            if (alertBadge) {
+                const alertCount = parseInt(response.data.alertas_trabajo_count);
+                alertBadge.textContent = alertCount > 0 ? alertCount.toString().padStart(2, '0') : '00';
+            }
+        }
+    } catch (error) {
+        console.error('Error updating alerts badge:', error);
+    }
 }
 
 // Function to get current avatar URL from the preview
@@ -291,10 +313,15 @@ async function loadCandidateProfile() {
         if (result.success && 'data' in result) {
             // Profile exists, populate form
             profileExists = true;
+            currentProfileId = result.data.id_perfil;
             populateProfileForm(result.data);
+
+            // Load CVs after profile is loaded
+            await loadCandidateCVs(result.data.id_perfil);
         } else {
             // Profile doesn't exist or error occurred
             profileExists = false;
+            currentProfileId = null;
             if (result.message && !result.message.includes('404') && !result.message.includes('no encontrado')) {
                 // Only show error if it's not a "profile not found" error
                 console.warn('Profile not found or error loading:', result.message);
@@ -307,9 +334,33 @@ async function loadCandidateProfile() {
     } catch (error) {
         console.error('Error loading candidate profile:', error);
         profileExists = false;
+        currentProfileId = null;
         showError(error instanceof Error ? error.message : 'Error desconocido al cargar el perfil');
     } finally {
         setLoadingState(false);
+    }
+}
+
+// ==================== CV Management Functions ====================
+
+/**
+ * Load candidate CVs
+ */
+async function loadCandidateCVs(idPerfil: number) {
+    try {
+        const result = await CurriculumService.fetchCurriculums(idPerfil);
+
+        if (result.success && 'data' in result) {
+            const { renderCVList } = await import('@/lib/cvUpload');
+            renderCVList(result.data);
+        } else {
+            const { renderCVList } = await import('@/lib/cvUpload');
+            renderCVList([]);
+        }
+    } catch (error) {
+        console.error('Error loading CVs:', error);
+        const { renderCVList } = await import('@/lib/cvUpload');
+        renderCVList([]);
     }
 }
 
@@ -449,6 +500,9 @@ function initProfileController() {
         // Initialize avatar upload functionality
         initAvatarUpload();
 
+        // Initialize CV upload functionality after profile loads
+        // This will be triggered in loadCandidateProfile after we have the profile ID
+
         // Add event listener for save profile button
         const saveButton = document.querySelector('[data-action="save-profile"]') as HTMLButtonElement;
         if (saveButton) {
@@ -463,8 +517,16 @@ function initProfileController() {
         initializeController();
     }
 
-    // Load candidate profile data
-    loadCandidateProfile();
+    // Load candidate profile data (this will also load CVs)
+    loadCandidateProfile().then(() => {
+        // Initialize CV upload after profile is loaded
+        if (currentProfileId) {
+            initCVUpload(currentProfileId);
+        }
+    });
+
+    // Update alerts badge in sidebar
+    updateAlertsBadge();
 }
 
 // Export functions for potential external use

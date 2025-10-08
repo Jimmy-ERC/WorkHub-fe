@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alertas de Trabajo — Workhub</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5.3.8 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/src/assets/img/logo_grande.png">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/src/assets/css/candidate-profile.css">
+</head>
+
+<body
+    style="font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';">
+
+    <!-- ===================== Header / Navbar ===================== -->
+    <header class="border-bottom bg-white">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" data-component="Navbar">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand d-flex align-items-center" href="/src/pages/candidate/home.html"
+                    aria-label="Workhub inicio">
+                    <img src="/src/assets/img/logo.png" alt="Workhub" style="height:30px" class="mx-2 img-fluid">
+                </a>
+
+                <!-- Buscador -->
+                <form id="globalSearchForm" class="d-none d-lg-flex mx-2 flex-grow-1 align-items-start"
+                    style="max-width: 520px;" role="search" aria-label="Buscar trabajos" data-action="search">
+                    <label for="q" class="visually-hidden">Título, palabra clave o compañía</label>
+                    <input id="q" class="form-control me-2" type="search" placeholder="Título, palabra clave o compañía"
+                        aria-describedby="searchHelp">
+                    <button class="btn btn-primary" type="button" aria-label="Buscar">Encontrar</button>
+                    <small id="searchHelp" class="visually-hidden">Escribe una palabra clave para buscar
+                        ofertas.</small>
+                </form>
+
+                <!-- Menú -->
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/src/pages/candidate/home.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Candidatos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
+                </ul>
+
+                <!-- Usuario -->
+                <div class="dropdown ms-3">
+                    <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/src/assets/img/avatar.jpg" id="profilePic" alt="Avatar de usuario"
+                            class="rounded-circle me-2" width="35" height="35">
+                        <span id="userNameDisplay">username</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="/src/pages/candidate/profile/index.html"
+                                data-route="profile">Ver perfil</a></li>
+                        <li><a class="dropdown-item" href="/src/pages/candidate/profile/settings.html"
+                                data-route="settings">Configuración</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item text-danger" href="#" data-action="logout">Cerrar sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ===================== Layout principal ===================== -->
+    <main class="container-fluid">
+        <div class="row">
+            <!-- ===== Sidebar ===== -->
+            <aside class="col-12 col-md-3 col-lg-2 border-end bg-white min-vh-100 py-3" data-component="SidebarNav">
+                <div class="px-3 mb-3">
+                    <small class="text-muted fw-medium">Panel de candidato</small>
+                </div>
+
+                <nav class="nav flex-column gap-1 px-2">
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/index.html" data-route="dashboard">
+                        <i class="bi bi-grid-1x2 me-2"></i> General
+                    </a>
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/trabajos_aplicados.html" data-route="applied">
+                        <i class="bi bi-briefcase me-2"></i> Trabajos aplicados
+                    </a>
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/trabajos_favoritos.html" data-route="favorites">
+                        <i class="bi bi-bookmark me-2"></i> Trabajos favoritos
+                    </a>
+                    <a class="nav-link d-flex align-items-center justify-content-between rounded-2 px-3 py-2 active bg-body-tertiary"
+                        href="/src/pages/candidate/profile/alertas-trabajo.html" data-route="alerts"
+                        aria-current="page">
+                        <span><i class="bi bi-bell me-2"></i> Alertas de trabajo</span>
+                        <span class="badge text-bg-primary border border-primary" id="jobAlertsCount">00</span>
+                    </a>
+                    <a class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+                        href="/src/pages/candidate/profile/settings.html" data-route="settings">
+                        <i class="bi bi-gear me-2"></i> Ajustes
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- ===== Contenido ===== -->
+            <section class="col-12 col-md-9 col-lg-10 p-4">
+                <!-- Encabezado -->
+                <header class="mb-4">
+                    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                        <div>
+                            <h4 class="mb-1">
+                                <i class="bi bi-bell-fill text-primary me-2"></i>
+                                Alertas de Trabajo
+                            </h4>
+                            <p class="text-muted mb-0">
+                                Mantente al día con las notificaciones sobre tus aplicaciones
+                                <span id="totalAlertsCount" class="badge bg-primary-subtle text-primary ms-2">0</span>
+                                <span id="unreadAlertsCount" class="badge bg-danger ms-1">0 sin leer</span>
+                            </p>
+                        </div>
+                        <div class="d-flex gap-2 align-items-center flex-wrap">
+                            <!-- Filtro por estado de lectura -->
+                            <select id="filterReadStatus" class="form-select form-select-sm" style="min-width: 150px;">
+                                <option value="all">Todas las alertas</option>
+                                <option value="unread">No leídas</option>
+                                <option value="read">Leídas</option>
+                            </select>
+                            <!-- Filtro por tipo -->
+                            <select id="filterType" class="form-select form-select-sm" style="min-width: 150px;">
+                                <option value="all">Todos los tipos</option>
+                                <option value="aplicacion">Aplicación</option>
+                                <option value="actualizacion">Actualización</option>
+                                <option value="expiracion">Expiración</option>
+                            </select>
+                            <!-- Botón marcar todas como leídas -->
+                            <button class="btn btn-outline-primary btn-sm" type="button" id="markAllAsReadBtn">
+                                <i class="bi bi-check-all me-1"></i>
+                                Marcar todas como leídas
+                            </button>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Lista de alertas -->
+                <section aria-labelledby="alerts-title">
+                    <div class="visually-hidden" id="alerts-title">Lista de alertas de trabajo</div>
+
+                    <!-- Contenedor de alertas -->
+                    <div id="alertsListContainer" class="list-group">
+                        <!-- Las alertas se renderizarán aquí dinámicamente -->
+                    </div>
+                </section>
+            </section>
+        </div>
+    </main>
+
+    <!-- ===================== Footer ===================== -->
+    <footer class="py-4 border-top bg-white mt-5">
+        <div class="container">
+            <p class="small text-muted mb-0">© <span id="year">2025</span> Workhub. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Route Protection Script (must load before other scripts) -->
+    <script type="module" src="/src/controllers/routeProtection.ts"></script>
+
+    <!-- Alertas Trabajo Controller -->
+    <script type="module" src="/src/controllers/candidate/alertasTrabajoController.ts"></script>
+
+    <!-- Load user data for navbar -->
+    <script type="module">
+        import { loadUserData } from '/src/lib/userDataLoader.ts';
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadUserData();
+        });
+    </script>
+
+    <!-- Logout functionality -->
+    <script type="module">
+        import { handleLogout } from '/src/controllers/logout.ts';
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutLinks = document.querySelectorAll('[data-action="logout"]');
+            logoutLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    handleLogout();
+                });
+            });
+        });
+    </script>
+
+    <!-- Bootstrap JS (bundle) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

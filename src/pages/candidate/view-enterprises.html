@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workhub - Encontrar Trabajo</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/src/assets/img/logo_grande.png"
+    />
+
+    <!-- bootstrap icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/enterprise-home.css" />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container-fluid px-4">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <img
+            src="../../assets/img/logo.png"
+            alt="Workhub"
+            style="height: 30px"
+            class="me-2"
+          />
+        </a>
+        <!-- Buscador -->
+        <form class="d-none d-lg-flex mx-4 flex-grow-1">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Título, palabra clave o compañía"
+            aria-label="Search"
+          />
+          <button class="btn btn-primary" type="submit">Encontrar</button>
+        </form>
+        <!-- Menú -->
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="../candidate/home.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../candidate/view-jobs.html">Empleos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../candidate/view-enterprises.html"
+              >Empresas</a
+            >
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#">Recursos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Foros</a></li>
+        </ul>
+
+        <div class="dropdown ms-3">
+          <a
+            href="#"
+            class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
+            data-bs-toggle="dropdown"
+          >
+            <img
+              src="/src/assets/img/avatar.jpg"
+              id="profilePic"
+              alt="user"
+              class="rounded-circle me-2"
+              width="35"
+              height="35"
+            />
+            <span id="userNameDisplay">username</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" href="../candidate/profile/index.html"
+                >Ver perfil</a
+              >
+            </li>
+            <li><a class="dropdown-item" href="#">Configuración</a></li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a
+                class="dropdown-item text-danger"
+                href="/src/pages/auth/login.html"
+                >Cerrar Sesión</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Listado de trabajos -->
+    <div class="container mt-2">
+      <!-- Filtros activos -->
+      <div class="row row-space flex-wrap">
+        <div
+          class="col-12 col-md-5 d-flex align-items-center gap-2 justify-content-start mb-2 mb-md-0"
+        >
+          <!-- etiquetas de filtro -->
+          <span class="badge text-bg-secondary"
+            >Diseño <i class="bi bi-x"></i
+          ></span>
+          <span class="badge text-bg-secondary"
+            >Desarrollo <i class="bi bi-x"></i
+          ></span>
+          <span class="badge text-bg-secondary"
+            >Marketing <i class="bi bi-x"></i
+          ></span>
+          <span class="badge text-bg-secondary"
+            >New york <i class="bi bi-x"></i
+          ></span>
+        </div>
+        <div
+          class="col-12 col-md-3 d-flex justify-content-end mb-2 mb-md-0"
+        ></div>
+        <div class="col-6 col-md-2 d-flex justify-content-end mb-2 mb-md-0">
+          <!-- seleccion de vista -->
+          <div
+            class="btn-group"
+            role="group"
+            aria-label="Basic radio toggle button group"
+          >
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="btnradio1"
+              autocomplete="off"
+              checked
+            />
+            <label class="btn btn-outline-primary" for="btnradio1">
+              <i class="bi bi-grid"></i>
+            </label>
+
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="btnradio2"
+              autocomplete="off"
+            />
+            <label class="btn btn-outline-primary" for="btnradio2">
+              <i class="bi bi-list-ul"></i>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- lista de vacantes, esta vacia porque se cargan en el controller -->
+      <div class="container">
+        <div class="row">
+          <!-- sidebar de filtro -->
+          <div
+            class="col-12 col-lg-3 col-md-3 col-sm-12 card mb-md-0"
+            style="padding-left: 2%; margin-right: 2%"
+          >
+            <form id="filtroExperiencia">
+              <h6 class="mt-3 mb-2">Buscar por nombre</h6>
+              <div class="mb-3" style="width: 90%">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="filtroNombre"
+                  onkeydown="if(event.key==='Enter')
+                                { candidateViewEnterprisesController.buscarPorNombre() }"
+                  placeholder="Ejemplo: WorkHub"
+                />
+              </div>
+              <h6 class="mt-3 mb-2">Buscar por ubicación</h6>
+              <div class="mb-3" style="width: 90%">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="filtroUbicacion"
+                  onkeydown="if(event.key==='Enter')
+                                { candidateViewEnterprisesController.buscarPorUbicacion() }"
+                  placeholder="Ejemplo: Ciudad, Estado o País"
+                />
+              </div>
+
+              <div class="mt-3 mb-4 d-flex" style="width: 90%">
+                <button
+                  type="button"
+                  class="btn btn-primary w-100"
+                  onclick="candidateViewEnterprisesController.limpiarFiltros()"
+                >
+                  Limpiar
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+            <h5 id="nombreVacante">Nombre de la empresa</h5>
+            <div id="listEmpresas">
+              <!-- Empresa -->
+              <div
+                class="card flex row mb-2"
+                style="
+                  width: 100%;
+                  display: flex !important;
+                  flex-direction: row;
+                  overflow: auto;
+                  justify-content: center;
+                  flex-wrap: wrap;
+                "
+              >
+                <!-- contenido  -->
+                <div
+                  class="col-12 col-md-9 d-flex align-items-center"
+                  style="padding: 1%"
+                >
+                  <img
+                    src="https://octodex.github.com/images/orderedlistocat.png"
+                    class="card-img-top"
+                    style="max-width: 90px; border-radius: 20px; height: auto"
+                    alt="..."
+                  />
+                  <div class="card-body">
+                    <h5 class="card-title">Nombre</h5>
+                    <div class="d-flex flex-wrap">
+                      <p class="me-3">
+                        <i class="bi bi-geo-alt"></i> Ubicación
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para detalle de candidato -->
+    <div
+      class="modal fade"
+      id="modalDetalleCandidato"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+      style="justify-content: center; justify-items: center"
+    >
+      <div class="modal-dialog" style="width: 70%; margin: 0; max-width: 100%">
+        <div class="modal-content" style="width: 100%; padding-left: 5%">
+          <div class="modal-header" style="justify-content: left">
+            <h1
+              class="modal-title fs-5"
+              id="modalTitulo"
+              style="
+                margin-left: 5%;
+                width: 70%;
+                font-size: xxx-large !important;
+              "
+            >
+              Detalle de candidato
+            </h1>
+
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div
+              style="display: flex; align-items: center; margin-bottom: 5%"
+              class="row"
+            >
+              <img
+                id="fotoCandidato"
+                style="max-width: 100px; border-radius: 120px"
+                src="https://octodex.github.com/images/orderedlistocat.png"
+                class="img-thumbnail col-md-2"
+                alt="..."
+              />
+              <h1
+                class="modal-title fs-5 col-md-8 mb-3"
+                style="padding-left: 5%"
+                id="nombreCandidato"
+              >
+                Nombre
+              </h1>
+              <a
+                id="enviarCorreoCandidato"
+                href="mailto:example@gmail.com"
+                class="btn btn-primary col-md-2"
+                style="display: flex; justify-content: center"
+              >
+                <i style="margin-right: 4%" class="bi bi-envelope"></i
+                ><span>Enviar correo</span></a
+              >
+            </div>
+
+            <!-- contenido  -->
+            <div class="container">
+              <div class="row">
+                <!-- texto principal -->
+                <div class="col-12 col-sm-5 col-md-7" style="margin-bottom: 2%">
+                  <h6>Biografía:</h6>
+                  <p id="biografiaCandidato" style="font-weight: 100">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Adipisci quae illum voluptate delectus porro nobis
+                    asperiores omnis? Sint, dolore accusantium expedita quaerat
+                    error pariatur suscipit consectetur at in aut praesentium.
+                  </p>
+                  <hr />
+                  <h6>Carta de presentación:</h6>
+                  <p id="cartaPresentacionCandidato" style="font-weight: 100">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Adipisci quae illum voluptate delectus porro nobis
+                    asperiores omnis? Sint, dolore accusantium expedita quaerat
+                    error pariatur suscipit consectetur at in aut praesentium.
+                  </p>
+                  <hr />
+                  <a
+                    id="redSocialCandidato"
+                    style="
+                      color: #0d6efd;
+                      font-size: xx-large;
+                      justify-content: space-around;
+                      display: flex;
+                    "
+                  >
+                    <i id="redSocialIconoCandidato" class="bi bi-facebook"></i>
+                  </a>
+                </div>
+
+                <!-- datos adicionales -->
+                <div class="col-12 col-sm-7 col-md-5">
+                  <!-- datos personales -->
+                  <div
+                    style="
+                      border: 1px solid #dedede;
+                      border-radius: 5px;
+                      width: 100%;
+                      justify-self: center;
+                      padding-bottom: 6%;
+                      margin-bottom: 5%;
+                      padding-top: 6%;
+                    "
+                  >
+                    <div
+                      class="d-flex"
+                      style="
+                        justify-content: center;
+                        align-items: center;
+                        gap: 10px;
+                        margin-bottom: 7%;
+                      "
+                    >
+                      <div style="width: 40%">
+                        <i
+                          style="font-size: x-large; color: #1682fd"
+                          class="bi bi-cake"
+                        ></i>
+                        <h6 class="m-0">Fecha de nacimiento</h6>
+                        <p id="nacimientoCandidato" class="m-0">yyyy-mm-dddd</p>
+                      </div>
+                      <div style="width: 40%">
+                        <i
+                          style="font-size: x-large; color: #1682fd"
+                          class="bi bi-map"
+                        ></i>
+                        <h6>Nacionalidad</h6>
+                        <p id="nacionalidadCandidato" class="m-0">American</p>
+                      </div>
+                    </div>
+                    <div
+                      class="d-flex"
+                      style="
+                        justify-content: center;
+                        align-items: center;
+                        gap: 10px;
+                        margin-bottom: 7%;
+                      "
+                    >
+                      <div style="width: 40%">
+                        <i
+                          style="font-size: x-large; color: #1682fd"
+                          class="bi bi-gender-ambiguous"
+                        ></i>
+                        <h6 class="m-0">Género</h6>
+                        <p id="generoCandidato" class="m-0">Masculino</p>
+                      </div>
+                      <div style="width: 40%">
+                        <i
+                          style="font-size: x-large; color: #1682fd"
+                          class="bi bi-person-hearts"
+                        ></i>
+                        <h6 class="m-0">Estado civil</h6>
+                        <p id="estadoCivilCandidato" class="m-0">Soltero/a</p>
+                      </div>
+                    </div>
+
+                    <div
+                      class="d-flex"
+                      style="
+                        justify-content: center;
+                        align-items: center;
+                        gap: 10px;
+                      "
+                    >
+                      <div style="width: 40%">
+                        <i
+                          style="font-size: x-large; color: #1682fd"
+                          class="bi bi-briefcase"
+                        ></i>
+                        <h6 class="m-0">Experiencia</h6>
+                        <p id="experienciaCandidato" class="m-0">1-2 años</p>
+                      </div>
+                      <div style="width: 40%">
+                        <i
+                          style="font-size: x-large; color: #1682fd"
+                          class="bi bi-mortarboard"
+                        ></i>
+                        <h6 class="m-0">Educacion</h6>
+                        <p id="EducacionCandidato" class="m-0">Ingenieria</p>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- descarga CV -->
+                  <div
+                    style="
+                      border: 1px solid #dedede;
+                      border-radius: 5px;
+                      width: 100%;
+                      justify-self: center;
+                      text-align: center;
+                      padding-top: 3%;
+                      padding-bottom: 3%;
+                      margin-bottom: 5%;
+                    "
+                  >
+                    <h5>Descarga mi CV</h5>
+                    <div
+                      class="d-flex"
+                      style="
+                        width: 80%;
+                        justify-self: center;
+                        align-items: center;
+                      "
+                    >
+                      <i
+                        style="font-size: xxx-large; width: 30%; color: #dedede"
+                        class="bi bi-file-earmark-pdf"
+                      ></i>
+                      <div style="width: 50%; color: #767f8c">
+                        <p id="nombreCandidatoPDF" class="m-0">
+                          Howard Griffin
+                        </p>
+                        <p class="fw-bold m-0">PDF</p>
+                      </div>
+                      <a
+                        id="descargaCVCandidato"
+                        href="url"
+                        download="nombre_cv"
+                      >
+                        <button
+                          type="button"
+                          class="btn"
+                          style="
+                            background-color: #e7f0fa;
+                            color: #0d6efd;
+                            width: 100%;
+                          "
+                        >
+                          <i class="bi bi-download"></i>
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+                  <!-- datos de contacto -->
+                  <div
+                    style="
+                      border: 1px solid #dedede;
+                      border-radius: 5px;
+                      width: 100%;
+                      justify-self: center;
+                      padding-bottom: 6%;
+                      margin-bottom: 5%;
+                      padding-top: 6%;
+                      overflow: auto;
+                      padding: 9%;
+                    "
+                  >
+                    <h4>Información de contacto</h4>
+                    <div class="d-flex" style="gap: 20px; align-items: center">
+                      <i
+                        class="bi bi-globe"
+                        style="font-size: 40px; color: #1682fd"
+                      ></i>
+                      <div>
+                        <h6 class="m-0" style="font-weight: lighter">
+                          Sitio web
+                        </h6>
+                        <p class="m-0 fw-bold">www.example.com</p>
+                      </div>
+                    </div>
+                    <hr style="width: 85%; justify-self: center" />
+                    <div class="d-flex" style="gap: 20px; align-items: center">
+                      <i
+                        class="bi bi-geo-alt"
+                        style="font-size: 40px; color: #1682fd"
+                      ></i>
+                      <div>
+                        <h6 class="m-0" style="font-weight: lighter">
+                          Ubicación
+                        </h6>
+                        <p class="m-0 fw-bold">new york</p>
+                      </div>
+                    </div>
+                    <hr style="width: 85%; justify-self: center" />
+                    <div class="d-flex" style="gap: 20px; align-items: center">
+                      <i
+                        class="bi bi-telephone"
+                        style="font-size: 40px; color: #1682fd"
+                      ></i>
+                      <div>
+                        <h6 class="m-0" style="font-weight: lighter">
+                          Teléfono
+                        </h6>
+                        <p class="m-0 fw-bold">+1 234 567 890</p>
+                      </div>
+                    </div>
+                    <hr style="width: 85%; justify-self: center" />
+                    <div class="d-flex" style="gap: 20px; align-items: center">
+                      <i
+                        class="bi bi-envelope"
+                        style="font-size: 40px; color: #1682fd"
+                      ></i>
+                      <div>
+                        <h6 class="m-0" style="font-weight: lighter">
+                          Correo Electrónico
+                        </h6>
+                        <p class="m-0 fw-bold">correo@example.com</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Route Protection Script (must load before other scripts) -->
+    <script type="module" src="../../controllers/routeProtection.ts"></script>
+
+    <!-- Bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Útil para búsqueda global -->
+    <script
+      type="module"
+      src="../../controllers/candidate/homeController.ts"
+    ></script>
+
+    <script
+      type="module"
+      src="../../controllers/candidate/viewCandidateEnterprisesController.ts"
+    ></script>
+  </body>
+
+  <style>
+    @media (max-width: 768px) {
+      .card.flex.row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+      }
+
+      .card.flex.row .col-md-6,
+      .card.flex.row .col-md-5 {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+
+      .card.flex.row .btn {
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .card.justify-content-center {
+        padding-left: 0 !important;
+        margin-bottom: 1rem;
+      }
+
+      #listEmpresas {
+        margin-top: 1rem;
+      }
+    }
+  </style>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workhub - Foros</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/src/assets/img/logo_grande.png"
+    />
+    <link rel="stylesheet" href="../../assets/css/candidate-home.css" />
+  </head>
+
+  <body>
+    <!-- ===== Navbar ===== -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container-fluid px-4">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <img
+            src="/src/assets/img/logo.png"
+            alt="Workhub"
+            style="height: 30px"
+            class="me-2"
+          />
+        </a>
+        <!-- Buscador -->
+        <form class="d-none d-lg-flex mx-4 flex-grow-1">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Título, palabra clave o compañía"
+            aria-label="Search"
+          />
+          <button class="btn btn-primary" type="submit">Encontrar</button>
+        </form>
+        <!-- Menú -->
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Empleos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Recursos</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="/src/pages/forums/foros/index.html"
+              >Foros</a
+            >
+          </li>
+        </ul>
+
+        <div class="dropdown ms-3">
+          <a
+            href="#"
+            class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
+            data-bs-toggle="dropdown"
+          >
+            <img
+              src="/src/assets/img/avatar.jpg"
+              id="profilePic"
+              alt="user"
+              class="rounded-circle me-2"
+              width="35"
+              height="35"
+            />
+            <span id="userNameDisplay">username</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" href="../candidate/profile/index.html"
+                >Ver perfil</a
+              >
+            </li>
+            <li><a class="dropdown-item" href="#">Configuración</a></li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a
+                class="dropdown-item text-danger"
+                href="/src/pages/auth/login.html"
+                >Cerrar Sesión</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="d-flex" style="height: calc(100vh - 70px)">
+      <!-- ===== Sidebar ===== -->
+      <aside
+        class="border-end bg-white p-3"
+        style="width: 250px; flex-shrink: 0; overflow-y: auto"
+        data-component="SidebarNav"
+      >
+        <!-- Buscador -->
+        <form class="d-none d-lg-flex mx-4 flex-grow-1">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Buscar"
+            aria-label="Search"
+          />
+          <button class="btn btn-primary" type="submit">Encontrar</button>
+        </form>
+
+        <nav class="nav flex-column gap-1 px-2">
+          <div class="px-3 mb-3 p-2">
+            <small class="text-muted fw-medium">Menú</small>
+          </div>
+          <a
+            class="nav-link d-flex align-items-center rounded-2 px-3 py-2 active bg-body-tertiary"
+            href="/src/pages/forums/foros/index.html"
+            data-route="foros"
+            aria-current="page"
+          >
+            <i class="bi bi-grid-1x2 me-2"></i> Foros
+          </a>
+          <div class="px-3 mb-3 p-2">
+            <small class="text-muted fw-medium">Información personal</small>
+          </div>
+          <a
+            class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+            href="./userForos.html"
+            data-route="applied"
+          >
+            <i class="bi bi-briefcase me-2"></i> Tus foros abiertos
+          </a>
+          <a
+            class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+            href="./userRespuestas.html"
+            data-route="favorites"
+          >
+            <i class="bi bi-bookmark me-2"></i> Tus respuestas
+          </a>
+
+          <div class="mt-4 px-3">
+            <a
+              href="#"
+              class="text-decoration-none small d-inline-flex align-items-center gap-2 text-muted"
+            >
+              <i class="bi bi-box-arrow-left"></i> <span>Salir</span>
+            </a>
+          </div>
+        </nav>
+      </aside>
+
+      <section class="flex-grow-1 p-4 overflow-auto">
+        <h4 class="mb-4">Tus respuestas</h4>
+
+        <div class="card mb-3 shadow-sm">
+          <div class="card-body">
+            <!-- Encabezado del usuario -->
+            <div class="d-flex align-items-center mb-2">
+              <img
+                src="https://via.placeholder.com/40"
+                class="rounded-circle me-2"
+                alt="avatar"
+              />
+              <div>
+                <h6 class="mb-0">@Andrea</h6>
+                <small class="text-muted">01 de noviembre de 2025</small>
+              </div>
+              <div class="ms-auto">
+                <button
+                  class="btn btn-sm btn-link text-muted"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="#">Editar</a></li>
+                  <li>
+                    <a class="dropdown-item text-danger" href="#">Eliminar</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Texto -->
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ornare
+              rutrum amet, a nunc mi lacinia in iaculis. Pharetra ut integer
+              nibh urna.
+            </p>
+
+            <!-- Bloque de código -->
+            <pre class="bg-light p-2 rounded"><code>package main</code></pre>
+
+            <!-- Más texto -->
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+            <!-- Acciones -->
+            <div class="d-flex justify-content-between border-top pt-2">
+              <a href="#" class="small text-decoration-none text-muted">
+                <i class="bi bi-chevron-up"></i> Esconder todas las respuestas
+                (2)
+              </a>
+              <a href="#" class="small text-decoration-none">
+                <i class="bi bi-reply"></i> Responder
+              </a>
+            </div>
+          </div>
+        </div>
+        
+      </section>
+    </main>
+    <script type="module" src="/src/controllers/forum/forumController.ts"></script>
+  </body>
+</html>

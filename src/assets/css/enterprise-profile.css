@@ -63,16 +63,148 @@
   opacity: 1 !important;
 }
 
+/* ===== CV Item Styles ===== */
+.cv-item {
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: .5rem;
+  padding: 1rem;
+  margin-bottom: .75rem;
+  background: #fff;
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+
+.cv-item:hover {
+  border-color: rgba(var(--bs-primary-rgb), .3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+}
+
+.cv-item-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--bs-primary-rgb), .1);
+  border-radius: .375rem;
+  flex-shrink: 0;
+}
+
+.cv-item-info {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.cv-item-name {
+  font-weight: 600;
+  color: var(--bs-dark);
+  margin-bottom: .25rem;
+  word-wrap: break-word;
+  cursor: pointer;
+}
+
+.cv-item-name:hover {
+  text-decoration: underline;
+}
+
+.cv-item-name.editing {
+  padding: .25rem .5rem;
+  border: 1px solid var(--bs-primary);
+  border-radius: .25rem;
+  background: #fff;
+  outline: none;
+}
+
+.cv-item-size {
+  font-size: .875rem;
+  color: #6c757d;
+}
+
+.cv-item-actions {
+  display: flex;
+  gap: .5rem;
+  flex-shrink: 0;
+}
+
+.cv-item-actions .btn {
+  padding: .375rem .75rem;
+  font-size: .875rem;
+}
+
+.cv-empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #6c757d;
+}
+
+.cv-empty-state i {
+  font-size: 3rem;
+  opacity: .3;
+  margin-bottom: 1rem;
+}
+
+/* Loading spinner for CV operations */
+.cv-loading {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(var(--bs-primary-rgb), .2);
+  border-top-color: var(--bs-primary);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ===== Ajustes visuales menores ===== */
 img {
   max-width: 100%;
   height: auto;
 }
 
+/* Avatar / profile images: keep a perfect circle and avoid stretching.
+   Use object-fit to crop the image while preserving aspect ratio.
+   Provide a reusable .avatar class and a specific rule for #profilePic
+   (the HTML already sets width/height attributes; this ensures CSS-enforced
+   square sizing so object-fit works consistently). */
+.avatar,
+img#profilePic {
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  /* ensures replaced element respects object-fit sizing */
+  object-fit: cover;
+  /* crop to fill the box without stretching */
+  object-position: center;
+  border-radius: 50%;
+}
+
+/* Larger avatar variants (use .avatar-lg) */
+.avatar-lg {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
 /* Responsive: separaciones suaves en móviles */
 @media (max-width: 767.98px) {
   main .row.g-4>[class*="col-"] {
     padding-top: .25rem;
+  }
+
+  .cv-item {
+    flex-direction: column;
+    gap: .75rem;
+  }
+
+  .cv-item-actions {
+    width: 100%;
+    justify-content: flex-end;
   }
 }
 
