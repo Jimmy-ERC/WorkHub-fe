@@ -5,9 +5,11 @@ import { api } from "@/lib/api";
 // Base API URL from environment variables
 const apiUrl = api.baseUrl;
 export class EnterprisesEnterpriseService {
-  constructor() { }
+  constructor() {}
 
-  public static async getEnterprises(enterprise_id: number): Promise<EmpresaResponse> {
+  public static async getEnterprises(
+    enterprise_id: number
+  ): Promise<EmpresaResponse> {
     try {
       const response = await fetch(
         `${apiUrl}/enterprise/empresas/${enterprise_id}`,
@@ -40,7 +42,9 @@ export class EnterprisesEnterpriseService {
     }
   }
 
-  public static async getApplicationsByEnterpriseId(enterpriseId: number): Promise<any> {
+  public static async getApplicationsByEnterpriseId(
+    enterpriseId: number
+  ): Promise<any> {
     try {
       const response = await fetch(
         `${apiUrl}/enterprise/aplicaciones/by-empresa/${enterpriseId}`,
@@ -73,20 +77,19 @@ export class EnterprisesEnterpriseService {
     }
   }
 
-  public static async seguirEmpresa(id_seguidor: number, id_seguido: number): Promise<any> {
-
+  public static async seguirEmpresa(
+    id_seguidor: number,
+    id_seguido: number
+  ): Promise<any> {
     console.log("Seguir empresa:", { id_seguidor, id_seguido });
     try {
-      const response = await fetch(
-        `${apiUrl}/enterprise/empresas/seguir`,
-        {
-          method: "POST",
-          body: JSON.stringify({ id_seguidor, id_seguido }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${apiUrl}/enterprise/empresas/seguir`, {
+        method: "POST",
+        body: JSON.stringify({ id_seguidor, id_seguido }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const data = await response.json();
 
@@ -109,7 +112,10 @@ export class EnterprisesEnterpriseService {
     }
   }
 
-  public static async dejarDeSeguirEmpresa(id_seguidor: number, id_seguido: number): Promise<any> {
+  public static async dejarDeSeguirEmpresa(
+    id_seguidor: number,
+    id_seguido: number
+  ): Promise<any> {
     console.log("Dejar de seguir empresa:", { id_seguidor, id_seguido });
     try {
       const response = await fetch(
@@ -143,6 +149,4 @@ export class EnterprisesEnterpriseService {
       };
     }
   }
-
-
 }

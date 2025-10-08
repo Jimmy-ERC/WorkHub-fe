@@ -1,30 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Workhub — Panel de candidato</title>
 
     <!-- Google Fonts (aprox del diseño) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Bootstrap 5.3.8 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
     <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
 
     <!-- Favicon (opcional) -->
-    <link rel="icon" type="image/png" href="./assets/img/logo_grande.png">
+    <link rel="icon" type="image/png" href="./assets/img/logo_grande.png" />
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/src/assets/css/enterprise-profile.css">
-</head>
+    <link rel="stylesheet" href="/src/assets/css/enterprise-profile.css" />
+  </head>
 
-<body
-    style="font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';">
-
+  <body
+    style="
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto,
+        'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji',
+        'Segoe UI Emoji';
+    "
+  >
     <!-- ===================== Header / Navbar (misma navbar de home.html) ===================== -->
     <header class="border-bottom bg-white">
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" data-component="Navbar">
@@ -80,11 +93,109 @@
 
     <!-- ===================== Layout principal ===================== -->
     <main class="container-fluid">
-        <div class="row">
-            <!-- ===== Sidebar ===== -->
-            <aside class="col-12 col-md-3 col-lg-2 border-end bg-white min-vh-100 py-3" data-component="SidebarNav">
-                <div class="px-3 mb-3">
-                    <small class="text-muted fw-medium">Panel de candidato</small>
+      <div class="row">
+        <!-- ===== Sidebar ===== -->
+        <aside
+          class="col-12 col-md-3 col-lg-2 border-end bg-white min-vh-100 py-3"
+          data-component="SidebarNav"
+        >
+          <div class="px-3 mb-3">
+            <small class="text-muted fw-medium">Panel de candidato</small>
+          </div>
+
+          <nav class="nav flex-column gap-1 px-2">
+            <a
+              class="nav-link d-flex align-items-center rounded-2 px-3 py-2 active bg-body-tertiary"
+              href="/src/pages/candidate/profile/index.html"
+              data-route="dashboard"
+              aria-current="page"
+            >
+              <i class="bi bi-grid-1x2 me-2"></i> General
+            </a>
+            <a
+              class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+              href="#"
+              data-route="applied"
+            >
+              <i class="bi bi-briefcase me-2"></i> Trabajos aplicados
+            </a>
+            <a
+              class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+              href="#"
+              data-route="favorites"
+            >
+              <i class="bi bi-bookmark me-2"></i> Trabajos favoritos
+            </a>
+            <a
+              class="nav-link d-flex align-items-center justify-content-between rounded-2 px-3 py-2"
+              href="#"
+              data-route="alerts"
+            >
+              <span><i class="bi bi-bell me-2"></i> Alertas de trabajo</span>
+              <span
+                class="badge text-bg-primary-subtle border border-primary-subtle"
+                >09</span
+              >
+            </a>
+            <a
+              class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
+              href="#"
+              data-route="settings"
+            >
+              <i class="bi bi-gear me-2"></i> Ajustes
+            </a>
+
+            <div class="mt-4 px-3">
+              <a
+                href="#"
+                class="text-decoration-none small d-inline-flex align-items-center gap-2 text-muted"
+              >
+                <i class="bi bi-box-arrow-left"></i> <span>Salir</span>
+              </a>
+            </div>
+          </nav>
+        </aside>
+
+        <!-- ===== Contenido ===== -->
+        <section class="col-12 col-md-9 col-lg-10 p-4">
+          <h4 class="mb-4">Ajustes</h4>
+
+          <form id="settingsForm" class="row g-4" novalidate>
+            <!-- Columna izquierda: Foto -->
+            <aside class="col-12 col-lg-4">
+              <h6 class="mb-3">Información básica</h6>
+
+              <div class="mb-2">
+                <small class="text-muted">Foto de perfil</small>
+              </div>
+
+              <!-- Dropzone -->
+              <input
+                class="visually-hidden"
+                id="profilePhoto"
+                type="file"
+                accept="image/*"
+                data-action="upload-file"
+                data-dropzone="#dropArea"
+              />
+              <label
+                for="profilePhoto"
+                id="dropArea"
+                class="dropzone w-100 d-flex flex-column align-items-center justify-content-center text-center p-4"
+                role="button"
+                tabindex="0"
+                aria-describedby="photoHelp"
+                data-component="UploadZone"
+              >
+                <i
+                  class="bi bi-cloud-arrow-up fs-1 mb-2 text-primary"
+                  aria-hidden="true"
+                ></i>
+                <div class="fw-medium">Explorar foto</div>
+                <small class="text-muted">o suéltala aquí</small>
+                <div class="text-muted small mt-2" id="photoHelp">
+                  Una imagen mayor a 400px funciona mejor. Tamaño máx.
+                  5&nbsp;MB.
                 </div>
 
                 <nav class="nav flex-column gap-1 px-2">
@@ -113,191 +224,259 @@
                 </nav>
             </aside>
 
-            <!-- ===== Contenido ===== -->
-            <section class="col-12 col-md-9 col-lg-10 p-4">
-                <h4 class="mb-4">Ajustes</h4>
+            <!-- Columna derecha: Form -->
+            <section class="col-12 col-lg-8">
+              <div class="row g-3">
+                <!-- Nombre completo -->
+                <div class="col-12">
+                  <label for="fullName" class="form-label"
+                    >Nombre completo</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fullName"
+                    data-field="fullName"
+                    placeholder="Juan Pérez"
+                  />
+                </div>
 
-                <form id="settingsForm" class="row g-4" novalidate>
-                    <!-- Columna izquierda: Foto -->
-                    <aside class="col-12 col-lg-4">
-                        <h6 class="mb-3">Información básica</h6>
+                <!-- Genero y estado civil -->
+                <div class="col-12 col-md-6">
+                  <label for="gender" class="form-label">Género</label>
+                  <select id="gender" class="form-select" data-field="gender">
+                    <option value="">Selecciona...</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="femenino">Femenino</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="maritalStatus" class="form-label"
+                    >Estado Civil</label
+                  >
+                  <select
+                    id="maritalStatus"
+                    class="form-select"
+                    data-field="maritalStatus"
+                  >
+                    <option value="">Selecciona...</option>
+                    <option value="soltero">Soltero/a</option>
+                    <option value="casado">Casado/a</option>
+                    <option value="divorciado">Divorciado/a</option>
+                  </select>
+                </div>
 
-                        <div class="mb-2"><small class="text-muted">Foto de perfil</small></div>
+                <!-- experiencia y educacion -->
+                <div class="col-12 col-md-6">
+                  <label for="experience" class="form-label"
+                    >Experiencia Laboral</label
+                  >
+                  <textarea
+                    id="experience"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Describe tu experiencia laboral..."
+                  ></textarea>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="education" class="form-label">Educación</label>
+                  <textarea
+                    id="education"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Describe tu educación..."
+                  ></textarea>
+                </div>
 
-                        <!-- Dropzone -->
-                        <input class="visually-hidden" id="profilePhoto" type="file" accept="image/*"
-                            data-action="upload-file" data-dropzone="#dropArea">
-                        <label for="profilePhoto" id="dropArea"
-                            class="dropzone w-100 d-flex flex-column align-items-center justify-content-center text-center p-4"
-                            role="button" tabindex="0" aria-describedby="photoHelp" data-component="UploadZone">
-                            <i class="bi bi-cloud-arrow-up fs-1 mb-2 text-primary" aria-hidden="true"></i>
-                            <div class="fw-medium">Explorar foto</div>
-                            <small class="text-muted">o suéltala aquí</small>
-                            <div class="text-muted small mt-2" id="photoHelp">
-                                Una imagen mayor a 400px funciona mejor. Tamaño máx. 5&nbsp;MB.
-                            </div>
-                        </label>
-                    </aside>
+                <!-- Biografía -->
+                <div class="col-12">
+                  <label for="about" class="form-label">Biografía</label>
+                  <textarea
+                    id="about"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Escribe sobre tu compañía. Que los candidatos sepan quiénes son…"
+                  ></textarea>
+                </div>
 
-                    <!-- Columna derecha: Form -->
-                    <section class="col-12 col-lg-8">
-                        <div class="row g-3">
-                            <!-- Nombre completo -->
-                            <div class="col-12">
-                                <label for="fullName" class="form-label">Nombre completo</label>
-                                <input type="text" class="form-control" id="fullName" data-field="fullName"
-                                    placeholder="Juan Pérez">
-                            </div>
+                <!-- Fecha de nacimiento / Teléfono -->
+                <div class="col-12 col-md-6">
+                  <label for="foundedAt" class="form-label"
+                    >Fecha de nacimiento</label
+                  >
+                  <div class="input-group">
+                    <span class="input-group-text" id="calendarIcon"
+                      ><i class="bi bi-calendar-event"></i
+                    ></span>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="foundedAt"
+                      aria-describedby="calendarIcon"
+                      data-plugin="datepicker"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="phone" class="form-label">Teléfono</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="phone"
+                    placeholder="+503 1234-5678"
+                  />
+                </div>
 
-                            <!-- Genero y estado civil -->
-                            <div class="col-12 col-md-6">
-                                <label for="gender" class="form-label">Género</label>
-                                <select id="gender" class="form-select" data-field="gender">
-                                    <option value="">Selecciona...</option>
-                                    <option value="masculino">Masculino</option>
-                                    <option value="femenino">Femenino</option>
-                                    <option value="otro">Otro</option>
-                                </select>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <label for="maritalStatus" class="form-label">Estado Civil</label>
-                                <select id="maritalStatus" class="form-select" data-field="maritalStatus">
-                                    <option value="">Selecciona...</option>
-                                    <option value="soltero">Soltero/a</option>
-                                    <option value="casado">Casado/a</option>
-                                    <option value="divorciado">Divorciado/a</option>
-                                </select>
-                            </div>
+                <!-- Ubicación -->
+                <div class="col-12">
+                  <label for="location" class="form-label">Ubicación</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="location"
+                    data-field="location"
+                    placeholder="San Salvador, El Salvador"
+                  />
+                </div>
 
-                            <!-- experiencia y educacion -->
-                            <div class="col-12 col-md-6">
-                                <label for="experience" class="form-label">Experiencia Laboral</label>
-                                <textarea id="experience" class="form-control" rows="4"
-                                    placeholder="Describe tu experiencia laboral..."></textarea>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <label for="education" class="form-label">Educación</label>
-                                <textarea id="education" class="form-control" rows="4"
-                                    placeholder="Describe tu educación..."></textarea>
-                            </div>
+                <!-- Email -->
+                <div class="col-12">
+                  <label for="email" class="form-label">Email</label>
+                  <div class="input-group">
+                    <span class="input-group-text" id="emailIcon"
+                      ><i class="bi bi-envelope"></i
+                    ></span>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      aria-describedby="emailIcon"
+                      placeholder="correo@empresa.com"
+                    />
+                  </div>
+                </div>
 
-                            <!-- Biografía -->
-                            <div class="col-12">
-                                <label for="about" class="form-label">Biografía</label>
-                                <textarea id="about" class="form-control" rows="4"
-                                    placeholder="Escribe sobre tu compañía. Que los candidatos sepan quiénes son…"></textarea>
-                            </div>
+                <!-- Página web -->
+                <div class="col-12">
+                  <label for="website" class="form-label"
+                    >Likedin / Portafolio</label
+                  >
+                  <div class="input-group">
+                    <span class="input-group-text" id="linkIcon"
+                      ><i class="bi bi-link-45deg"></i
+                    ></span>
+                    <input
+                      type="url"
+                      class="form-control"
+                      id="website"
+                      data-field="website"
+                      aria-describedby="linkIcon"
+                      placeholder="https://empresa.com"
+                    />
+                  </div>
+                </div>
 
-                            <!-- Fecha de nacimiento / Teléfono -->
-                            <div class="col-12 col-md-6">
-                                <label for="foundedAt" class="form-label">Fecha de nacimiento</label>
-                                <div class="input-group">
-                                    <span class="input-group-text" id="calendarIcon"><i
-                                            class="bi bi-calendar-event"></i></span>
-                                    <input type="date" class="form-control" id="foundedAt"
-                                        aria-describedby="calendarIcon" data-plugin="datepicker">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <label for="phone" class="form-label">Teléfono</label>
-                                <input type="tel" class="form-control" id="phone" placeholder="+503 1234-5678">
-                            </div>
+                <!-- Social -->
+                <div class="col-12">
+                  <label for="social" class="form-label">Social Link</label>
+                  <input
+                    type="url"
+                    class="form-control"
+                    id="social"
+                    data-field="social"
+                    placeholder="https://linkedin.com/company/tu-empresa"
+                  />
+                </div>
 
-                            <!-- Ubicación -->
-                            <div class="col-12">
-                                <label for="location" class="form-label">Ubicación</label>
-                                <input type="text" class="form-control" id="location" data-field="location"
-                                    placeholder="San Salvador, El Salvador">
-                            </div>
+                <!-- Separador para CVs -->
+                <div class="col-12">
+                  <hr class="my-4" />
+                  <h5 class="mb-3">Tu Cv/Resumen</h5>
+                </div>
 
-                            <!-- Email -->
-                            <div class="col-12">
-                                <label for="email" class="form-label">Email</label>
-                                <div class="input-group">
-                                    <span class="input-group-text" id="emailIcon"><i class="bi bi-envelope"></i></span>
-                                    <input type="email" class="form-control" id="email" aria-describedby="emailIcon"
-                                        placeholder="correo@empresa.com">
-                                </div>
-                            </div>
+                <!-- Lista de CVs -->
+                <div class="col-12">
+                  <div id="cvList" class="mb-3">
+                    <!-- Los CVs se cargarán dinámicamente aquí -->
+                  </div>
+                </div>
 
-                            <!-- Página web -->
-                            <div class="col-12">
-                                <label for="website" class="form-label">Likedin / Portafolio</label>
-                                <div class="input-group">
-                                    <span class="input-group-text" id="linkIcon"><i class="bi bi-link-45deg"></i></span>
-                                    <input type="url" class="form-control" id="website" data-field="website"
-                                        aria-describedby="linkIcon" placeholder="https://empresa.com">
-                                </div>
-                            </div>
+                <!-- Botón para agregar CV -->
+                <div class="col-12" id="addCvSection">
+                  <input
+                    class="visually-hidden"
+                    id="cvFile"
+                    type="file"
+                    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    data-action="upload-cv"
+                    data-dropzone="#cvDropArea"
+                  />
+                  <label
+                    for="cvFile"
+                    id="cvDropArea"
+                    class="dropzone w-100 d-flex flex-column align-items-center justify-content-center text-center p-4"
+                    role="button"
+                    tabindex="0"
+                    aria-describedby="cvHelp"
+                    data-component="CvUploadZone"
+                  >
+                    <i
+                      class="bi bi-file-earmark-arrow-up fs-1 mb-2 text-primary"
+                      aria-hidden="true"
+                    ></i>
+                    <div class="fw-medium">Add Cv/Resume</div>
+                    <small class="text-muted"
+                      >Browse file o suéltalo aquí. only pdf</small
+                    >
+                    <div class="text-muted small mt-2" id="cvHelp">
+                      Formatos permitidos: PDF, DOC, DOCX. Tamaño máx. 30 MB.
+                      (Máximo 3 archivos)
+                    </div>
+                  </label>
+                </div>
 
-                            <!-- Social -->
-                            <div class="col-12">
-                                <label for="social" class="form-label">Social Link</label>
-                                <input type="url" class="form-control" id="social" data-field="social"
-                                    placeholder="https://linkedin.com/company/tu-empresa">
-                            </div>
-
-                            <!-- Separador para CVs -->
-                            <div class="col-12">
-                                <hr class="my-4">
-                                <h5 class="mb-3">Tu Cv/Resumen</h5>
-                            </div>
-
-                            <!-- Lista de CVs -->
-                            <div class="col-12">
-                                <div id="cvList" class="mb-3">
-                                    <!-- Los CVs se cargarán dinámicamente aquí -->
-                                </div>
-                            </div>
-
-                            <!-- Botón para agregar CV -->
-                            <div class="col-12" id="addCvSection">
-                                <input class="visually-hidden" id="cvFile" type="file"
-                                    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                                    data-action="upload-cv" data-dropzone="#cvDropArea">
-                                <label for="cvFile" id="cvDropArea"
-                                    class="dropzone w-100 d-flex flex-column align-items-center justify-content-center text-center p-4"
-                                    role="button" tabindex="0" aria-describedby="cvHelp" data-component="CvUploadZone">
-                                    <i class="bi bi-file-earmark-arrow-up fs-1 mb-2 text-primary"
-                                        aria-hidden="true"></i>
-                                    <div class="fw-medium">Add Cv/Resume</div>
-                                    <small class="text-muted">Browse file o suéltalo aquí. only pdf</small>
-                                    <div class="text-muted small mt-2" id="cvHelp">
-                                        Formatos permitidos: PDF, DOC, DOCX. Tamaño máx. 30 MB. (Máximo 3 archivos)
-                                    </div>
-                                </label>
-                            </div>
-
-                            <!-- Acción -->
-                            <div class="col-12">
-                                <button type="button" class="btn btn-primary px-4" data-action="save-profile">Guardar
-                                    Cambios</button>
-                            </div>
-                        </div>
-                    </section>
-                </form>
+                <!-- Acción -->
+                <div class="col-12">
+                  <button
+                    type="button"
+                    class="btn btn-primary px-4"
+                    data-action="save-profile"
+                  >
+                    Guardar Cambios
+                  </button>
+                </div>
+              </div>
             </section>
-        </div>
+          </form>
+        </section>
+      </div>
     </main>
 
     <!-- ===================== Footer ===================== -->
     <footer class="py-4 border-top bg-white">
-        <div class="container">
-            <p class="small text-muted mb-0">© <span id="year">2025</span> Workhub. Todos los derechos reservados.</p>
-        </div>
+      <div class="container">
+        <p class="small text-muted mb-0">
+          © <span id="year">2025</span> Workhub. Todos los derechos reservados.
+        </p>
+      </div>
     </footer>
 
     <!-- Bootstrap JS (bundle) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- Route Protection Script (must load before other scripts) -->
     <script type="module" src="/src/controllers/routeProtection.ts"></script>
     <!-- Candidate Profile Controller Script -->
-    <script type="module" src="/src/controllers/candidate/perfilController.ts"></script>
+    <script
+      type="module"
+      src="/src/controllers/candidate/perfilController.ts"
+    ></script>
     <!-- Logout Controller Script -->
     <script type="module" src="/src/controllers/logout.ts"></script>
-</body>
-
+  </body>
 </html>
