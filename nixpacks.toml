@@ -1,0 +1,16 @@
+[variables]
+# Mejor usa Node LTS 20 para evitar edge-cases de npm en 22
+NIXPACKS_NODE_VERSION = "20.18.1"
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = [
+  "npm run build",
+  "ls -la dist"            # (debug opcional)
+]
+
+[start]
+# Ejecuta binario local y escucha en 0.0.0.0
+cmd = "./node_modules/.bin/serve -s dist -l tcp://0.0.0.0:${PORT:-3000}"

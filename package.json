@@ -9,7 +9,7 @@
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "sh -c 'BROWSER=none vite preview --port ${PORT:-4173} --strictPort --host 0.0.0.0'"
+    "start": "sh -c './node_modules/.bin/serve -s dist -l tcp://0.0.0.0:${PORT:-3000}'"
   },
   "repository": {
     "type": "git",
@@ -39,6 +39,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
     "bootstrap": "^5.3.3",
-    "bootstrap-icons": "^1.13.1"
+    "bootstrap-icons": "^1.13.1",
+    "serve": "^14.1.2"
   }
 }
