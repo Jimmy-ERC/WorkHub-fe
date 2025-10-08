@@ -1,17 +1,16 @@
 import type { Job } from "@/interfaces/job.interface.js";
 import { loadUserData } from "../../lib/userDataLoader.js";
 import { JobsService } from "@/services/jobsService.js";
-
-
-
-// import { sessionManager } from '../../lib/session.js';
+import { FavoriteJobsService } from "@/services/favoriteJobs.service.js";
+import { ProfileCandidateService } from "@/services/profileCandidate.service.js";
+import { toast } from "@/lib/toast.js";
 
 
 export class CandidateHomeController {
 
     private jobs: Job[] = [];
-
     private filteredJobs: Job[] = [...this.jobs];
+    private currentProfileId: number | null = null;
 
     constructor() {
         this.init();
@@ -21,6 +20,7 @@ export class CandidateHomeController {
         //Soluciona error desconocida de carga
         const runAll = async () => {
             await loadUserData();
+            await this.loadProfileId();
             await this.loadJobs();
             //this.renderJobs();
         };
@@ -29,6 +29,22 @@ export class CandidateHomeController {
             document.addEventListener("DOMContentLoaded", runAll);
         } else {
             runAll();
+        }
+    }
+
+    // Obtener el ID del perfil del candidato
+    private async loadProfileId(): Promise<void> {
+        try {
+            const profileResponse = await ProfileCandidateService.fetchCandidateProfile();
+            
+            if (profileResponse.success && 'data' in profileResponse) {
+                this.currentProfileId = profileResponse.data.id_perfil;
+                console.log("ID de perfil cargado:", this.currentProfileId);
+            } else {
+                console.error("No se pudo obtener el perfil del candidato:", profileResponse.message);
+            }
+        } catch (error) {
+            console.error("Error al obtener perfil del candidato:", error);
         }
     }
 
@@ -104,8 +120,8 @@ export class CandidateHomeController {
                 console.log("id", job.id_trabajo);
 
                 // Logo de la empresa o placeholder
-                const logoEmpresa = job.logo_empresa 
-                    ? `<img src="${job.logo_empresa}" class="me-3 rounded" alt="${job.nombre_empresa || 'Logo empresa'}" width="50" height="50" style="object-fit: cover; border: 1px solid #e0e0e0;">` 
+                const logoEmpresa = job.logo_empresa
+                    ? `<img src="${job.logo_empresa}" class="me-3 rounded" alt="${job.nombre_empresa || 'Logo empresa'}" width="50" height="50" style="object-fit: cover; border: 1px solid #e0e0e0;">`
                     : `<div class="me-3 rounded d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; background: #f5f5f5; border: 1px solid #e0e0e0; font-size: 24px;">🏢</div>`;
 
                 const nombreEmpresa = job.nombre_empresa || 'Empresa no especificada';
@@ -121,7 +137,11 @@ export class CandidateHomeController {
                     </div>
                 </div>
                 <div class="d-flex align-items-center gap-3">
-                    <i class="bi bi-bookmark save-icon"></i>
+                    <i class="bi bi-bookmark save-icon" 
+                       data-job-id="${job.id_trabajo}" 
+                       role="button"
+                       aria-label="Agregar a favoritos"
+                       tabindex="0"></i>
                     <a href="/src/pages/candidate/view-job.html?id=${job.id_trabajo}" class="btn apply-btn btn-sm">Apply Now →</a>
                 </div>
             </div>`;
@@ -130,6 +150,75 @@ export class CandidateHomeController {
             if ((i + 1) % 3 === 0) {
                 jobList.innerHTML += `<div class="row p-2" style="justify-content: center; justify-self: center;"></div>`;
             }
+        }
+
+        // Agregar event listeners a los iconos de favorito
+        this.attachFavoriteListeners();
+    }
+
+    // Agregar event listeners a los iconos de favorito
+    private attachFavoriteListeners(): void {
+        const saveIcons = document.querySelectorAll('.save-icon');
+        saveIcons.forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                const target = e.currentTarget as HTMLElement;
+                const jobId = parseInt(target.getAttribute('data-job-id') || '0');
+                if (jobId) {
+                    this.handleAddToFavorites(jobId, target);
+                }
+            });
+        });
+    }
+
+    // Manejar la adición a favoritos
+    private async handleAddToFavorites(jobId: number, iconElement: HTMLElement): Promise<void> {
+        // Validar que tenemos el ID del perfil
+        if (!this.currentProfileId) {
+            toast.error('No se pudo obtener tu perfil. Por favor, recarga la página.');
+            return;
+        }
+
+        // Verificar si ya está guardado
+        if (iconElement.classList.contains('saved')) {
+            toast.info('Este trabajo ya está en tus favoritos');
+            return;
+        }
+
+        // Cambiar a estado loading (guardar clases originales)
+        const originalClasses = iconElement.className;
+        iconElement.className = 'spinner-border spinner-border-sm loading';
+
+        try {
+            const result = await FavoriteJobsService.addFavorite({
+                id_perfil: this.currentProfileId,
+                id_trabajo: jobId
+            });
+
+            if (result.success) {
+                // Cambiar icono a guardado (bookmark-fill)
+                iconElement.className = 'bi bi-bookmark-fill save-icon saved';
+                
+                // Mostrar toast de éxito
+                toast.success(
+                    'Trabajo agregado a favoritos exitosamente. Puedes consultarlo en tu perfil.',
+                    '¡Guardado!'
+                );
+            } else {
+                // Si es error de duplicado, marcar como guardado
+                if (result.message.includes('ya está en tus favoritos')) {
+                    iconElement.className = 'bi bi-bookmark-fill save-icon saved';
+                    toast.warning('Este trabajo ya está en tus favoritos');
+                } else {
+                    // Restaurar estado original
+                    iconElement.className = originalClasses;
+                    toast.error(result.message || 'Error al agregar favorito');
+                }
+            }
+        } catch (error) {
+            // Error de red u otro - restaurar estado original
+            iconElement.className = originalClasses;
+            console.error('Error al agregar favorito:', error);
+            toast.error('Error al conectar con el servidor. Inténtalo de nuevo.');
         }
     }
 

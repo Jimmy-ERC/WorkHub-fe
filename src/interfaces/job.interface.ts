@@ -19,7 +19,7 @@ export interface Job {
   aplicar_por: string;
   estado?: boolean;
 
- 
+
   nombre_empresa?: string;
   logo_empresa?: string;
 

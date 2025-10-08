@@ -1,4 +1,5 @@
 import type { TrabajosFavoritosInterface } from "@/interfaces/trabajosFavoritos.interface";
+import type { AgregarFavoritoDTO, FavoritoResponse } from "@/interfaces/favorito.interface";
 import { api } from "@/lib/api";
 import sessionManager from "@/lib/session";
 
@@ -14,6 +15,50 @@ const { user } = await sessionManager.getUserFromSupabase();
 export class FavoriteJobsService {
 
     constructor() { }
+
+    /**
+     * Agrega un trabajo a favoritos
+     * @param datos - Datos del favorito (id_perfil, id_trabajo)
+     */
+    public static async addFavorite(datos: AgregarFavoritoDTO): Promise<FavoritoResponse> {
+        try {
+            if (!user || !user.id) {
+                return {
+                    success: false,
+                    message: 'No se pudo obtener la información del usuario. Por favor, inicia sesión nuevamente.'
+                };
+            }
+
+            const response = await fetch(`${apiUrl}/trabajos/favoritos`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datos)
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                return {
+                    success: false,
+                    message: data.message || `Error ${response.status}: ${response.statusText}`
+                };
+            }
+
+            return {
+                success: true,
+                data: data.data,
+                message: data.message || 'Trabajo agregado a favoritos exitosamente'
+            };
+        } catch (error) {
+            console.error('Error adding favorite job:', error);
+            return {
+                success: false,
+                message: error instanceof Error ? error.message : 'Error desconocido al agregar favorito'
+            };
+        }
+    }
 
     /**
      * Obtiene TODOS los trabajos favoritos del candidato
