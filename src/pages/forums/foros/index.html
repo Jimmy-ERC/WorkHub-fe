@@ -19,7 +19,7 @@
       type="image/svg+xml"
       href="/src/assets/img/logo_grande.png"
     />
-    <link rel="stylesheet" href="../../assets/css/candidate-home.css" />
+    <link rel="stylesheet" href="../../../assets/css/font.css" />
   </head>
 
   <body>
@@ -46,10 +46,42 @@
         </form>
         <!-- Menú -->
         <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Empleos</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Recursos</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../candidate/home.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../candidate/view-enterprises.html"
+              >Empresas
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="recursosDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Recursos
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="recursosDropdown">
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="/src//pages/resources/links/link.html"
+                  >Links externos</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="/src/pages/resources/blogs/blog.html"
+                  >Blogs</a
+                >
+              </li>
+            </ul>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="/src/pages/forums/foros/index.html"
               >Foros</a
@@ -95,10 +127,11 @@
       </div>
     </nav>
 
-    <main class="d-flex" style="height: calc(100vh - 70px);">
+    <main class="d-flex" style="height: calc(100vh - 70px)">
       <!-- ===== Sidebar ===== -->
       <aside
-        class="border-end bg-white p-3" style="width: 250px; flex-shrink: 0; overflow-y: auto;"
+        class="border-end bg-white p-3"
+        style="width: 250px; flex-shrink: 0; overflow-y: auto"
         data-component="SidebarNav"
       >
         <!-- Buscador -->
@@ -125,40 +158,24 @@
             <i class="bi bi-grid-1x2 me-2"></i> Foros
           </a>
           <div class="px-3 mb-3 p-2">
-            <small class="text-muted fw-medium">Información personal</small>
-          </div>
-          <a
-            class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
-            href="./userForos.html"
-            data-route="applied"
-          >
-            <i class="bi bi-briefcase me-2"></i> Tus foros abiertos
-          </a>
-          <a
-            class="nav-link d-flex align-items-center rounded-2 px-3 py-2"
-            href="./userRespuestas.html"
-            data-route="favorites"
-          >
-            <i class="bi bi-bookmark me-2"></i> Tus respuestas
-          </a>
-
-          <div class="mt-4 px-3">
-            <a
-              href="#"
-              class="text-decoration-none small d-inline-flex align-items-center gap-2 text-muted"
-            >
-              <i class="bi bi-box-arrow-left"></i> <span>Salir</span>
-            </a>
-          </div>
+            
         </nav>
       </aside>
 
       <section class="flex-grow-1 p-4 overflow-auto">
         <h4 class="mb-4">Foros</h4>
-         <div id="lista-foros" class="d-flex flex-column gap-3"></div>
-
+        <div id="lista-foros" class="d-flex flex-column gap-3"></div>
       </section>
     </main>
-    <script type="module" src="/src/controllers/forum/forumController.ts"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      type="module"
+      src="/src/controllers/forum/forumController.ts"
+    ></script>
   </body>
 </html>

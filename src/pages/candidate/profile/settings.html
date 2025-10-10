@@ -25,58 +25,104 @@
 <body
     style="font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';">
 
-    <!-- ===================== Header / Navbar (misma navbar de home.html) ===================== -->
-    <header class="border-bottom bg-white">
-        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" data-component="Navbar">
-            <div class="container-fluid px-4">
-                <a class="navbar-brand d-flex align-items-center" href="#" aria-label="Workhub inicio">
-                    <img src="/src/assets/img/logo.png" alt="Workhub" style="height:30px" class="mx-2 img-fluid">
-                </a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container-fluid px-4">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <img
+            src="/src/assets/img/logo.png"
+            alt="Workhub"
+            style="height: 30px"
+            class="me-2"
+          />
+        </a>
+        <!-- Buscador -->
+        <form class="d-none d-lg-flex mx-4 flex-grow-1">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Título, palabra clave o compañía"
+            aria-label="Search"
+          />
+          <button class="btn btn-primary" type="submit">Encontrar</button>
+        </form>
+        <!-- Menú -->
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/src/pages/candidate/home.html">Inicio</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="/src/pages/candidate/home.html">Empleos</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="/src/pages/candidate/view-enterprises.html"
+              >Empresas
+            </a>
+          </li>
+                    <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="recursosDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Recursos
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="recursosDropdown">
+              <li><a class="dropdown-item" href="/src/pages/resources/links/link.html">Links externos</a></li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="/src/pages/resources/blogs/blog.html"
+                  >Blogs</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/src/pages/forums/foros/index.html"
+              >Foros</a
+            >
+          </li>
+        </ul>
 
-                <!-- Buscador -->
-                <form id="globalSearchForm" class="d-none d-lg-flex mx-2 flex-grow-1 align-items-start"
-                    style="max-width: 520px;" role="search" aria-label="Buscar trabajos" data-action="search">
-                    <label for="q" class="visually-hidden">Título, palabra clave o compañía</label>
-                    <input id="q" class="form-control me-2" type="search" placeholder="Título, palabra clave o compañía"
-                        aria-describedby="searchHelp">
-                    <button class="btn btn-primary" type="button" aria-label="Buscar">Encontrar</button>
-                    <small id="searchHelp" class="visually-hidden">Escribe una palabra clave para buscar
-                        ofertas.</small>
-                </form>
-
-                <!-- Menú -->
-                <ul class="navbar-nav mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="/src/pages/candidate/home.html">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Candidatos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
-                    <!-- Estos dos estaban comentados en home.html; se mantienen igual -->
-                    <!-- <li class="nav-item"><a class="nav-link" href="#">Recursos</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Foros</a></li> -->
-                </ul>
-
-                <!-- Usuario -->
-                <div class="dropdown ms-3">
-                    <a href="/src/pages/candidate/home.html"
-                        class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="/src/assets/img/avatar.jpg" id="profilePic" alt="Avatar de usuario"
-                            class="rounded-circle me-2" width="35" height="35">
-                        <span id="userNameDisplay">username</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="/src/pages/candidate/profile/index.html"
-                                data-route="profile">Ver perfil</a></li>
-                        <li><a class="dropdown-item" href="/src/pages/candidate/profile/settings.html"
-                                data-route="settings">Configuración</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item text-danger" href="#" data-action="logout">Cerrar sesión</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+        <div class="dropdown ms-3">
+          <a
+            href="#"
+            class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
+            data-bs-toggle="dropdown"
+          >
+            <img
+              src="/src/assets/img/avatar.jpg"
+              id="profilePic"
+              alt="user"
+              class="rounded-circle me-2"
+              width="35"
+              height="35"
+            />
+            <span id="userNameDisplay">username</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" href="../candidate/profile/index.html"
+                >Ver perfil</a
+              >
+            </li>
+            <li><a class="dropdown-item" href="#">Configuración</a></li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a
+                class="dropdown-item text-danger"
+                data-action="logout"
+                href="/src/pages/auth/login.html"
+                >Cerrar Sesión</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
     <!-- ===================== Layout principal ===================== -->
     <main class="container-fluid">
@@ -172,13 +218,30 @@
                             <!-- experiencia y educacion -->
                             <div class="col-12 col-md-6">
                                 <label for="experience" class="form-label">Experiencia Laboral</label>
-                                <textarea id="experience" class="form-control" rows="4"
-                                    placeholder="Describe tu experiencia laboral..."></textarea>
+                                <select id="experience" class="form-select" data-field="experience">
+                                    <option value="">Selecciona experiencia</option>
+                                    <option value="Recién graduado">Recién graduado</option>
+                                    <option value="1-2 años">1-2 años</option>
+                                    <option value="3-4 años">3-4 años</option>
+                                    <option value="4-6 años">4-6 años</option>
+                                    <option value="6-8 años">6-8 años</option>
+                                    <option value="8-10 años">8-10 años</option>
+                                    <option value="10-15 años">10-15 años</option>
+                                    <option value="Más de 15 años">Más de 15 años</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
                             </div>
                             <div class="col-12 col-md-6">
                                 <label for="education" class="form-label">Educación</label>
-                                <textarea id="education" class="form-control" rows="4"
-                                    placeholder="Describe tu educación..."></textarea>
+                                <select id="education" class="form-select" data-field="education">
+                                    <option value="">Selecciona nivel educativo</option>
+                                    <option value="Secundaria">Secundaria</option>
+                                    <option value="Técnico">Técnico</option>
+                                    <option value="Diplomado">Diplomado</option>
+                                    <option value="Licenciatura">Licenciatura</option>
+                                    <option value="Ingeniería">Ingeniería</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
                             </div>
 
                             <!-- Biografía -->

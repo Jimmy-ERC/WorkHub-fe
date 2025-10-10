@@ -22,12 +22,35 @@ function populateProfileForm(profileData: ProfileResponse['data']) {
         }
     };
 
+    // Función especial para select que verifica si el valor existe en las opciones
+    // Hace comparación case-insensitive para manejar datos en minúsculas de la BD
+    const setSelectValue = (id: string, value: string | null | undefined) => {
+        const selectElement = document.getElementById(id) as HTMLSelectElement;
+        if (selectElement && value !== null && value !== undefined) {
+            const valueLower = value.toLowerCase().trim();
+
+            // Buscar si el valor existe en alguna opción del select (case-insensitive)
+            const options = Array.from(selectElement.options);
+            const matchingOption = options.find(option =>
+                option.value.toLowerCase() === valueLower
+            );
+
+            if (matchingOption) {
+                // Si se encuentra una coincidencia, usar el valor exacto de la opción
+                selectElement.value = matchingOption.value;
+            } else if (value.trim() !== '') {
+                // Si el valor no existe y no está vacío, seleccionar "Otro"
+                selectElement.value = 'Otro';
+            }
+        }
+    };
+
     // Populate form fields with profile data
     setInputValue('fullName', profileData.nombre);
     setInputValue('gender', profileData.genero);
     setInputValue('maritalStatus', profileData.estado_civil);
-    setInputValue('experience', profileData.experiencia);
-    setInputValue('education', profileData.educacion);
+    setSelectValue('experience', profileData.experiencia);
+    setSelectValue('education', profileData.educacion);
     setInputValue('about', profileData.biografia);
     setInputValue('phone', profileData.telefono);
     setInputValue('location', profileData.ubicacion);

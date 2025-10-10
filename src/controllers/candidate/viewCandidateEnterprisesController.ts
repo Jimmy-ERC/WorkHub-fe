@@ -36,6 +36,7 @@ export class CandidateViewEnterprisesController {
         pagina_web: item.pagina_web || "",
         red_social: item.red_social || "",
         email: item.email || "",
+        seguidores: item.seguidores || [],
       }));
 
       this.filteredEnterprises = [...this.enterprises];
@@ -66,6 +67,29 @@ export class CandidateViewEnterprisesController {
     }
 
     for (const enterprise of this.filteredEnterprises) {
+      let seguidoresMsg = "";
+
+      const seguidores: Array<{ nombre: string }> = Array.isArray(
+        enterprise.seguidores
+      )
+        ? enterprise.seguidores
+        : [];
+
+      if (seguidores.length > 0) {
+        const nombres = seguidores.map((s) => s.nombre);
+        if (seguidores.length === 1) {
+          seguidoresMsg = `${nombres[0]} la sigue`;
+        } else if (seguidores.length === 2) {
+          seguidoresMsg = `${nombres[0]} y ${nombres[1]} la siguen`;
+        } else if (seguidores.length === 3) {
+          seguidoresMsg = `${nombres[0]}, ${nombres[1]} y ${nombres[2]} la siguen`;
+        } else {
+          seguidoresMsg = `${nombres[0]}, ${nombres[1]}, ${
+            nombres[2]
+          } y otros ${seguidores.length - 3} la siguen`;
+        }
+      }
+
       const empresaHTML = `
         <div
           class="card flex row mb-2"
@@ -97,6 +121,13 @@ export class CandidateViewEnterprisesController {
                   ${enterprise.ubicacion || "Ubicación no disponible"}
                 </p>
               </div>
+              ${
+                seguidoresMsg
+                  ? `<div style="font-size: 0.95em; color: #555; margin-top: 4px;">
+                                <i class="bi bi-people"></i> ${seguidoresMsg}
+                            </div>`
+                  : ""
+              }
             </div>
           </div>
         </div>

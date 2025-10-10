@@ -19,7 +19,11 @@ export interface Job {
   aplicar_por: string;
   estado?: boolean;
 
-  // Información de la empresa (desde el backend mejorado)
+
+  nombre_empresa?: string;
+  logo_empresa?: string;
+
+  // Información de la empresa (desde el backend mejorado en otros endpoints)
   empresa?: {
     id_perfil: number;
     nombre: string;

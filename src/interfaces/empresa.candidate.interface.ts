@@ -10,4 +10,5 @@ export interface EmpresaCandidate {
   pagina_web: string;
   red_social: string;
   email: string;
+  seguidores: [];
 }
